@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00BCD4</color>
+    <color name="colorPrimaryDark">#0097A7</color>
+    <color name="colorSecondary">#00BCD4</color>
+    <color name="color_primary_1">#4DCFDF</color>
+    <color name="purple_200">#E1F5F8</color>
+    <color name="purple_700">#B2EBF2</color>
+    <color name="teal_200">#0097A7</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#212121</color>
+    <color name="text_sec">#FF018786</color>
+    <color name="gray">#B0E5ECEB</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="dialogBg">#44212121</color>
+    <color name="creamBg">#FBC7C7</color>
+    <color name="dark_gray">#392F2F</color>
+    <color name="dialogBgTransparent">#00000000</color>
+    <color name="red">#F44336</color>
+    <color name="orange">#FF3D00</color>
+    <color name="orange_lite">#FFA726</color>
+    <color name="green">#76FF03</color>
+</resources>

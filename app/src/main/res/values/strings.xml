@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Cage Factory Nav</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="please_check_your_network_connection">Please check your network connection</string>
+    <string name="txt_loading">Loading</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="ok">Ok</string>
+</resources>

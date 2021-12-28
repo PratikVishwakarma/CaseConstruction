@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/dimen_dp20"
+    android:background="@color/dialogBgTransparent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.flyco.roundview.RoundLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.flyco.roundview.RoundFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_dp45"
+            app:rv_backgroundColor="@color/colorPrimary"
+            app:rv_cornerRadius_TL="@dimen/dimen_dp12"
+            app:rv_cornerRadius_TR="@dimen/dimen_dp12" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/no_internet_connection" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_dp20"
+                android:gravity="center"
+                android:text="@string/please_check_your_network_connection"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_18sp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/tvOk"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_dp45"
+            android:layout_gravity="center"
+            android:background="@color/colorSecondary"
+            android:gravity="center"
+            android:padding="@dimen/dimen_dp12"
+            android:text="@string/ok"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_16sp"
+            android:textStyle="bold" />
+    </com.flyco.roundview.RoundLinearLayout>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

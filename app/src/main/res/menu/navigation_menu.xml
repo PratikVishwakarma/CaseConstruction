@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText">
+
+    <item
+        android:id="@+id/nav_subscriptions"
+        android:title="Menu 1"
+        android:icon="@mipmap/ic_launcher"/>
+    <item
+        android:id="@+id/nav_my_orders"
+        android:title="Menu 2"
+        android:icon="@mipmap/ic_launcher"/>
+
+    <item
+        android:id="@+id/nav_complain"
+        android:title="Menu 3"
+        android:icon="@mipmap/ic_launcher"/>
+
+    <item
+        android:id="@+id/nav_logout"
+        android:title="Menu 4"
+        android:icon="@mipmap/ic_launcher"/>
+
+</menu>

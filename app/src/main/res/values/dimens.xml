@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="vertical_margin_dp16">16dp</dimen>
+    <dimen name="horizontal_margin_dp16">16dp</dimen>
+    <dimen name="dimen_dp_dot_5">0.5dp</dimen>
+    <dimen name="dimen_dp0">0dp</dimen>
+    <dimen name="dimen_dp1">1dp</dimen>
+    <dimen name="dimen_dp2">2dp</dimen>
+    <dimen name="dimen_dp3">3dp</dimen>
+    <dimen name="dimen_dp4">4dp</dimen>
+    <dimen name="dimen_dp6">6dp</dimen>
+    <dimen name="dimen_dp8">8dp</dimen>
+    <dimen name="dimen_dp10">10dp</dimen>
+    <dimen name="dimen_dp12">12dp</dimen>
+    <dimen name="dimen_dp20">20dp</dimen>
+    <dimen name="dimen_dp24">24dp</dimen>
+    <dimen name="dimen_dp25">25dp</dimen>
+    <dimen name="dimen_dp28">28dp</dimen>
+    <dimen name="dimen_dp30">30dp</dimen>
+    <dimen name="dimen_dp35">35dp</dimen>
+    <dimen name="dimen_dp40">40dp</dimen>
+    <dimen name="dimen_dp50">50dp</dimen>
+    <dimen name="header_height">50dp</dimen>
+    <dimen name="dimen_dp60">60dp</dimen>
+    <dimen name="dimen_dp70">70dp</dimen>
+    <dimen name="dimen_dp80">80dp</dimen>
+    <dimen name="dimen_dp100">100dp</dimen>
+    <dimen name="dimen_dp120">120dp</dimen>
+    <dimen name="dimen_dp150">150dp</dimen>
+
+
+
+    <!--text size-->
+    <dimen name="text_9sp">9sp</dimen>
+    <dimen name="text_10sp">10sp</dimen>
+    <dimen name="text_11sp">11sp</dimen>
+    <dimen name="text_12sp">12sp</dimen>
+    <dimen name="text_13sp">13sp</dimen>
+    <dimen name="text_14sp">14sp</dimen>
+    <dimen name="text_15sp">15sp</dimen>
+    <dimen name="text_16sp">16sp</dimen>
+    <dimen name="text_18sp">18sp</dimen>
+    <dimen name="text_20sp">20sp</dimen>
+    <dimen name="text_22sp">22sp</dimen>
+    <dimen name="text_32sp">32sp</dimen>
+    <dimen name="text_36sp">36sp</dimen>
+    <dimen name="text_42sp">42sp</dimen>
+    <dimen name="dimen_dp65">65dp</dimen>
+    <dimen name="dimen_dp45">45dp</dimen>
+    <dimen name="dimen_15dp">15dp</dimen>
+    <dimen name="dimen_dp18">18dp</dimen>
+</resources>

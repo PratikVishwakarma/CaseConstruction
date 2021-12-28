@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Projects/Android/FactoryNavigation/app/src/main/res/layout/dialog_error.xml" value="0.406570841889117" />
+        <entry key="..\:/Projects/Android/FactoryNavigation/app/src/main/res/layout/fragment_get_started.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/FactoryNavigation/app/src/main/res/layout/fragment_home.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/FactoryNavigation/app/src/main/res/layout/fragment_splash.xml" value="0.11197916666666667" />
+        <entry key="..\:/Projects/Android/FactoryNavigation/app/src/main/res/layout/item_category.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/FactoryNavigation/app/src/main/res/menu/navigation_menu.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/drawable/blur_dark_bg.xml" value="0.2526041666666667" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/drawable/default_dot.xml" value="0.2526041666666667" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/drawable/selected_dot.xml" value="0.2526041666666667" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/drawable/tab_selector_dot.xml" value="0.2526041666666667" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/activity_main.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/dialog_enter_customer_no_manually.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/dialog_enter_offer_code.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/dialog_error.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/dialog_loading.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/dialog_single_item_select.xml" value="0.22239583333333332" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/dialog_update_address_details.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_add_user_details.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_complaint.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_create_subscription.xml" value="0.264" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_customer_order_subscription_list.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_get_started.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_home.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_mobile.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_my_order.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_my_subscription.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_order_detail.xml" value="0.264" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_product_cart.xml" value="0.19293478260869565" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_product_detail.xml" value="0.264" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_splash.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_sub_category.xml" value="0.14312736443883986" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_subscription_details.xml" value="0.264" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_user_profile.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/fragment_vendor_customer_list.xml" value="0.4" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/item-my_subscription_cart.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/item_list_selection.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/item_my_order.xml" value="0.264" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/item_my_subscription.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/item_offer_fragment.xml" value="0.4" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/item_product.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/item_product_cart.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/item_product_customer_sub.xml" value="0.4" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/item_product_order_list.xml" value="0.4" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/item_sub_category_large.xml" value="0.11614583333333334" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/item_sub_category_tile.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/layout/item_subscription_cart.xml" value="0.23645833333333333" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2526041666666667" />
+        <entry key="..\:/Projects/Android/ProductDelivery/app/src/main/res/xml/file_paths.xml" value="0.23645833333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

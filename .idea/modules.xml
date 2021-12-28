@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CaseConstructino.iml" filepath="$PROJECT_DIR$/.idea/modules/CaseConstructino.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/CaseConstructino.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/CaseConstructino.app.iml" />
+    </modules>
+  </component>
+</project>

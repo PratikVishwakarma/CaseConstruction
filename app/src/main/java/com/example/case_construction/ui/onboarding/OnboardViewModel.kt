@@ -19,4 +19,11 @@ class OnboardViewModel @Inject constructor(private val dataUseCase: DataUseCase)
             emit(dataUseCase.getBaseURLDataRepo())
         }
     }
+
+    fun loginWithUsernameAndPassword(username: String, password: String): LiveData<ResultData<UserListAPIDTO>> {
+        return liveData<ResultData<UserListAPIDTO>> {
+            emit(ResultData.Loading())
+            emit(dataUseCase.loginWithUsernameAndPasswordRepo(username, password))
+        }
+    }
 }

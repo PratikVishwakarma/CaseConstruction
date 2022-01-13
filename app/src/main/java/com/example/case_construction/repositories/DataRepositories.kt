@@ -10,5 +10,8 @@ class DataRepositories @Inject constructor(private val apiService: ApiService) {
     suspend fun getBaseURLDataRepo(): BaseURLAPIDTO {
         return apiService.getBaseURLData()
     }
+    suspend fun loginWithUsernameAndPasswordRepo(username: String, password: String): UserListAPIDTO {
+        return apiService.loginWithUsernameAndPassword(username, password)
+    }
 
 }

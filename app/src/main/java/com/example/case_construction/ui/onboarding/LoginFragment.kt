@@ -60,11 +60,11 @@ class LoginFragment : BaseFragment() {
             }
 
         }
-
-        loginWithUserNameAndPassword(
-            edUsername.text.toString().trim(),
-            edPassword.text.toString().trim()
-        )
+        replaceFragment(LoginFragment(), R.id.fragmentContainerView)
+//        loginWithUserNameAndPassword(
+//            edUsername.text.toString().trim(),
+//            edPassword.text.toString().trim()
+//        )
     }
 
     private fun loginWithUserNameAndPassword(username: String, password: String) {

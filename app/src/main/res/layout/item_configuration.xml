@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rllContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:padding="@dimen/dimen_dp4"
+    android:layout_margin="@dimen/dimen_dp2"
+    android:background="@color/white"
+    android:elevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen_dp4"
+        android:paddingRight="@dimen/dimen_dp4">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/dimen_dp2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16sp"
+            tools:text="Username" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSubText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_dp8"
+            android:padding="@dimen/dimen_dp2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_14sp"
+            tools:text="Username" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_dp_dot_5"
+        android:background="@color/gray"
+        android:layout_marginBottom="@dimen/dimen_dp2"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -106,7 +106,7 @@ class MainActivity : BaseActivity() {
             my_drawer_layout.closeDrawer(GravityCompat.START)
             true
         }
-        updateUserDetailsOnSideNav()
+//        updateUserDetailsOnSideNav()
 
     }
 

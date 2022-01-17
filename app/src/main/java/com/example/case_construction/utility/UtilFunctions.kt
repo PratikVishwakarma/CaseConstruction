@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.case_construction.R
+import com.example.case_construction.model.UtilityDTO
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -80,4 +81,19 @@ fun getStringFromDate(date: Date, format: String = "MMM dd, yyyy"): String {
 
 fun isToday(date: Date): Boolean {
     return Date().day == date.day
+}
+
+fun getDummyUtilData(): ArrayList<UtilityDTO> {
+    val data: ArrayList<UtilityDTO> = ArrayList()
+    data.add(UtilityDTO(false, "Heading 0", "Value 0", 8))
+    data.add(UtilityDTO(false, "Heading 1", "Value 1", 8))
+    data.add(UtilityDTO(false, "Heading 2", "Value 2", 8))
+    data.add(UtilityDTO(false, "Heading 3", "Value 3", 8))
+    data.add(UtilityDTO(false, "Heading 4", "Value 4", 8))
+    data.add(UtilityDTO(false, "Heading 5", "Value 5", 8))
+    data.add(UtilityDTO(false, "Heading 6", "Value 6", 8))
+    data.add(UtilityDTO(false, "Heading 7", "Value 7", 8))
+    data.add(UtilityDTO(false, "Heading 8", "Value 8", 8))
+    data.add(UtilityDTO(false, "Heading 9", "Value 9", 8))
+    return data
 }

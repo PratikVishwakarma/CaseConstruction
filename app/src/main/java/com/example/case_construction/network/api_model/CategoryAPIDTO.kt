@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 class CategoryAPIDTO(
 
     @SerializedName("category")
-    val category: List<Category>,
+    val configuration: List<Configuration>,
 
     @SerializedName("offerlist")
     val offers: List<Offer>,

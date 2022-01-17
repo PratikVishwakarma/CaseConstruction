@@ -3,8 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/Android/CaseConstruction/app/src/main/res/layout/dialog_add_remark.xml" value="0.2" />
         <entry key="..\:/Projects/Android/CaseConstruction/app/src/main/res/layout/dialog_error.xml" value="0.23229166666666667" />
+        <entry key="..\:/Projects/Android/CaseConstruction/app/src/main/res/layout/fragment_configuration.xml" value="0.23229166666666667" />
+        <entry key="..\:/Projects/Android/CaseConstruction/app/src/main/res/layout/fragment_home.xml" value="0.23229166666666667" />
         <entry key="..\:/Projects/Android/CaseConstruction/app/src/main/res/layout/fragment_login.xml" value="0.23229166666666667" />
+        <entry key="..\:/Projects/Android/CaseConstruction/app/src/main/res/layout/fragment_okol_home.xml" value="0.23229166666666667" />
+        <entry key="..\:/Projects/Android/CaseConstruction/app/src/main/res/layout/item_configuration_selection.xml" value="0.23229166666666667" />
+        <entry key="..\:/Projects/Android/CaseConstruction/app/src/main/res/layout/item_list_selection.xml" value="0.23229166666666667" />
         <entry key="..\:/Projects/Android/FactoryNavigation/app/src/main/res/layout/dialog_error.xml" value="0.406570841889117" />
         <entry key="..\:/Projects/Android/FactoryNavigation/app/src/main/res/layout/fragment_get_started.xml" value="0.23645833333333333" />
         <entry key="..\:/Projects/Android/FactoryNavigation/app/src/main/res/layout/fragment_home.xml" value="0.23645833333333333" />

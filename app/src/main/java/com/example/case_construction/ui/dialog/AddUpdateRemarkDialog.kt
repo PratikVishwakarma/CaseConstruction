@@ -8,6 +8,7 @@ import android.view.View
 import android.view.Window
 import com.example.case_construction.R
 import com.example.case_construction.model.UtilityDTO
+import com.example.case_construction.network.api_model.Remark
 import com.example.case_construction.utility.pauseClick
 import com.example.case_construction.utility.toast
 import kotlinx.android.synthetic.main.dialog_add_remark.*
@@ -20,10 +21,12 @@ class AddUpdateRemarkDialog(
 
     private var remarkDescription = ""
     private var remarkType = ""
+    private var status = "Not OK"
+    private val remark = Remark()
 
     interface DialogListener {
         fun onUpdateClick(
-            utilityDTO: UtilityDTO,
+            remark: Remark,
             type: String
         )
     }
@@ -63,7 +66,6 @@ class AddUpdateRemarkDialog(
 //    }
 
 
-
     override fun onClick(v: View?) {
         try {
             if (v != null) clickPause(v, this) else return
@@ -73,8 +75,11 @@ class AddUpdateRemarkDialog(
                         activity.toast("Fill all the required data")
                     else {
                         tvUpdate.pauseClick()
+                        remark.description = remarkDescription
+                        remark.type = remarkType
+                        remark.status = status
                         listener.onUpdateClick(
-                           UtilityDTO(),
+                            remark,
                             ""
                         )
                         this.dismiss()

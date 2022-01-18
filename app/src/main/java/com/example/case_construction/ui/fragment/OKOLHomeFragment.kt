@@ -8,17 +8,23 @@ import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.case_construction.R
 import com.example.case_construction.adapter.ConfigurationAdapter
+import com.example.case_construction.adapter.RemarkAdapter
+import com.example.case_construction.model.UtilityDTO
+import com.example.case_construction.network.api_model.Remark
 import com.example.case_construction.ui.MainActivity
+import com.example.case_construction.ui.dialog.AddUpdateRemarkDialog
 import com.example.case_construction.ui.dialog.NoInternetDialog
+import com.example.case_construction.utility.AppOnClick
 import com.example.case_construction.utility.isInternetAvailable
+import com.example.case_construction.utility.pauseClick
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_okol_home.*
 
 @AndroidEntryPoint
 class OKOLHomeFragment : BaseFragment() {
 
-    private lateinit var mAdapter: ConfigurationAdapter
-
+    private lateinit var mAdapter: RemarkAdapter
+    private val remarkList: ArrayList<Remark> = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,14 +41,14 @@ class OKOLHomeFragment : BaseFragment() {
     private fun initView() {
 
         (activity as MainActivity).lockUnlockSideNav(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-//        mAdapter = ConfigurationAdapter()
-//        rvList.adapter = mAdapter
-//        mAdapter.appOnClick = object : AppOnClick {
-//            override fun onClickListener(item: Any, position: Int, view: View?) {
-//
-//            }
-//        }
-//        mAdapter.submitList(getDummyUtilData())
+        mAdapter = RemarkAdapter()
+        rvList.adapter = mAdapter
+        mAdapter.appOnClick = object : AppOnClick {
+            override fun onClickListener(item: Any, position: Int, view: View?) {
+
+            }
+        }
+        mAdapter.submitList(remarkList)
 
         rtvViewConfiguration.setOnClickListener {
             addFragmentWithBack(
@@ -50,6 +56,18 @@ class OKOLHomeFragment : BaseFragment() {
                 R.id.fragmentContainerView,
                 "ViewConfigurationFragment"
             )
+        }
+        rtvAddRemark.setOnClickListener {
+            it.pauseClick()
+            AddUpdateRemarkDialog(
+                requireActivity(),
+                object : AddUpdateRemarkDialog.DialogListener {
+                    override fun onUpdateClick(remark: Remark, type: String) {
+                        remarkList.add(remark)
+                        mAdapter.submitList(remarkList)
+                    }
+                }
+            ).show()
         }
 //        if (!requireContext().isInternetAvailable()) {
 //            (activity as MainActivity).showNoNetworkDialog(object :

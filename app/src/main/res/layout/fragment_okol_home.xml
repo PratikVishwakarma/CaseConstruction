@@ -44,27 +44,85 @@
         android:orientation="vertical"
         android:paddingTop="@dimen/dimen_dp20">
 
-        <com.flyco.roundview.RoundTextView
-            android:id="@+id/rtvViewConfiguration"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_dp45"
-            android:layout_margin="@dimen/dimen_dp20"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="@string/view_configuration"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_18sp"
-            app:rv_backgroundColor="@color/colorPrimary" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/rtvViewConfiguration"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_dp45"
+                android:layout_margin="@dimen/dimen_dp20"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="@string/view_configuration"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_18sp"
+                app:rv_backgroundColor="@color/colorPrimary" />
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/rtvAddRemark"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_dp45"
+                android:layout_margin="@dimen/dimen_dp20"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="@string/add_remark"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_18sp"
+                app:rv_backgroundColor="@color/colorPrimary" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/horizontal_margin_dp16"
+            android:layout_weight="1"
             android:background="@color/white"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/rtvOKOLHold"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_dp45"
+                android:layout_margin="@dimen/dimen_dp20"
+                android:layout_weight="1"
+                app:rv_isRadiusHalfHeight="true"
+                android:paddingStart="@dimen/dimen_dp12"
+                android:paddingEnd="@dimen/dimen_dp12"
+                android:gravity="center"
+                android:text="@string/okol_hold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_18sp"
+                app:rv_backgroundColor="@color/red" />
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/rtvOKOLClear"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_dp45"
+                android:layout_margin="@dimen/dimen_dp20"
+                android:layout_weight="1"
+                app:rv_isRadiusHalfHeight="true"
+                android:paddingStart="@dimen/dimen_dp12"
+                android:paddingEnd="@dimen/dimen_dp12"
+                android:gravity="center"
+                android:text="@string/okol_clear"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_18sp"
+                app:rv_backgroundColor="@color/colorPrimary" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

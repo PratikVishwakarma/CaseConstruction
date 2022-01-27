@@ -9,9 +9,12 @@ import android.view.Window
 import com.example.case_construction.R
 import com.example.case_construction.model.UtilityDTO
 import com.example.case_construction.network.api_model.Remark
+import com.example.case_construction.ui.MainActivity
+import com.example.case_construction.utility.getDummyUtilData
 import com.example.case_construction.utility.pauseClick
 import com.example.case_construction.utility.toast
 import kotlinx.android.synthetic.main.dialog_add_remark.*
+import kotlinx.android.synthetic.main.item_remark.*
 
 @SuppressLint("SetTextI18n")
 class AddUpdateRemarkDialog(
@@ -40,20 +43,20 @@ class AddUpdateRemarkDialog(
 
         edRemarkDescription.setText("")
         tvRemarkType.text = ""
-//        tvRemarkType.setOnClickListener {
-//            it.pauseClick()
-//            SingleItemSelectDialog(
-//                activity,
-//                "Choose City",
-//                object : SingleItemSelectDialog.DialogListener {
-//                    override fun onConfirmClick(utilityDTO: UtilityDTO) {
-//                        tvRemarkType.text = utilityDTO.value
-//
-//                    }
-//                },
-//                getCityList()
-//            ).show()
-//        }
+        tvRemarkType.setOnClickListener {
+            it.pauseClick()
+            SingleItemSelectDialog(
+                activity,
+                "Choose City",
+                object : SingleItemSelectDialog.DialogListener {
+                    override fun onConfirmClick(utilityDTO: UtilityDTO) {
+                        tvRemarkType.text = utilityDTO.value
+                        remarkType = utilityDTO.subValue
+                    }
+                },
+                getDummyUtilData()
+            ).show()
+        }
     }
 
 //
@@ -75,7 +78,7 @@ class AddUpdateRemarkDialog(
                         activity.toast("Fill all the required data")
                     else {
                         tvUpdate.pauseClick()
-                        remark.description = remarkDescription
+                        remark.description = edRemarkDescription.text.toString().trim()
                         remark.type = remarkType
                         remark.status = status
                         listener.onUpdateClick(

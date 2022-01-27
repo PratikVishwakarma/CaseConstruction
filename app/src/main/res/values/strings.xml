@@ -17,4 +17,6 @@
     <string name="add">Add</string>
     <string name="okol_hold">OKOL Hold</string>
     <string name="okol_clear">OKOL Clear</string>
+    <string name="hold">HOLD</string>
+    <string name="enter_machine_no">Enter Machine No.</string>
 </resources>

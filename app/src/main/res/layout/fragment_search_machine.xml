@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    tools:context=".ui.pr oduct.HomeFragment">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/dimen_dp45"
+            android:layout_height="@dimen/dimen_dp45"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/horizontal_margin_dp16"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/horizontal_margin_dp16"
+            android:text="@string/my_delivery_orders"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_13sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivScanner"
+            android:layout_width="@dimen/dimen_dp45"
+            android:layout_height="@dimen/dimen_dp45"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/dimen_dp8"
+            app:srcCompat="@drawable/ic_scan" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivEnterCode"
+            android:layout_width="@dimen/dimen_dp45"
+            android:layout_height="@dimen/dimen_dp45"
+            android:layout_marginStart="@dimen/horizontal_margin_dp16"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/dimen_dp8"
+            app:srcCompat="@drawable/ic_enter_pin" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivLogout"
+            android:layout_width="@dimen/dimen_dp45"
+            android:layout_height="@dimen/dimen_dp45"
+            android:layout_marginStart="@dimen/horizontal_margin_dp16"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/dimen_dp10"
+            app:srcCompat="@drawable/ic_logout_white" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvList"
+                android:translationZ="@dimen/dimen_dp4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_dp12"
+                android:background="@color/white"
+                android:orientation="vertical"
+                tools:listitem="@layout/item_customer"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.budiyev.android.codescanner.CodeScannerView
+            android:id="@+id/scannerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:autoFocusButtonColor="@android:color/white"
+            app:autoFocusButtonVisible="true"
+            app:flashButtonColor="@android:color/white"
+            app:flashButtonVisible="true"
+            app:frameAspectRatioHeight="1"
+            app:frameAspectRatioWidth="1"
+            app:frameColor="@android:color/white"
+            app:frameCornersRadius="0dp"
+            app:frameCornersSize="50dp"
+            app:frameSize="0.75"
+            app:frameThickness="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:maskColor="#77000000" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

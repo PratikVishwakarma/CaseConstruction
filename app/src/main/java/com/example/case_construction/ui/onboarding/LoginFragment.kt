@@ -14,6 +14,9 @@ import com.example.case_construction.model.ResultData
 import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.ui.dialog.NoInternetDialog
 import com.example.case_construction.ui.fragment.BaseFragment
+import com.example.case_construction.ui.fragment.FinishingHomeFragment
+import com.example.case_construction.ui.fragment.OKOLHomeFragment
+import com.example.case_construction.ui.fragment.TestingHomeFragment
 import com.example.case_construction.utility.AppOnClick
 import com.example.case_construction.utility.PreferenceHelper.currentUser
 import com.example.case_construction.utility.isInternetAvailable
@@ -49,6 +52,18 @@ class LoginFragment : BaseFragment() {
                 requireActivity().toast("Fill all the required data")
                 return@setOnClickListener
             }
+
+            if (edPassword.text.toString() == "123456") {
+                when (edUsername.text.toString().trim()) {
+                    "okol" -> replaceFragment(OKOLHomeFragment(), R.id.fragmentContainerView)
+                    "testing" -> replaceFragment(TestingHomeFragment(), R.id.fragmentContainerView)
+                    "finishing" -> replaceFragment(
+                        FinishingHomeFragment(),
+                        R.id.fragmentContainerView
+                    )
+                    else -> replaceFragment(OKOLHomeFragment(), R.id.fragmentContainerView)
+                }
+            } else requireActivity().toast("Wrong Password")
             if (!requireContext().isInternetAvailable()) {
                 (activity as MainActivity).showNoNetworkDialog(object :
                     NoInternetDialog.DialogListener {
@@ -58,9 +73,8 @@ class LoginFragment : BaseFragment() {
                 })
                 return@setOnClickListener
             }
-
         }
-        replaceFragment(LoginFragment(), R.id.fragmentContainerView)
+//        replaceFragment(LoginFragment(), R.id.fragmentContainerView)
 //        loginWithUserNameAndPassword(
 //            edUsername.text.toString().trim(),
 //            edPassword.text.toString().trim()

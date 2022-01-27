@@ -46,7 +46,7 @@ class SplashFragment : BaseFragment() {
         }
 
         Handler().postDelayed({
-            replaceFragment(OKOLHomeFragment(), R.id.fragmentContainerView)
+            replaceFragment(LoginFragment(), R.id.fragmentContainerView)
         }, NetworkConstants.SPLASH_WAIT)
     }
 }

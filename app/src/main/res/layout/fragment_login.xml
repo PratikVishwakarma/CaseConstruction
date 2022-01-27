@@ -26,7 +26,7 @@
         android:textColor="@color/white"
         android:hint="Username">
 
-        <com.flyco.roundview.RoundTextView
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edUsername"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_dp50"
@@ -46,7 +46,7 @@
         android:textColor="@color/white"
         android:hint="Password">
 
-        <com.flyco.roundview.RoundTextView
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edPassword"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_dp50"

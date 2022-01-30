@@ -35,7 +35,7 @@ class EnterMachineNoManuallyDialog(
                     if (!validation())
                         activity.toast("Fill all the required data")
                     else {
-                        listener.onDoneClick(edCustomerNo.text.toString())
+                        listener.onDoneClick(edMachineNo.text.toString())
                         this.dismiss()
                     }
                 }
@@ -47,8 +47,8 @@ class EnterMachineNoManuallyDialog(
 
 
     private fun validation(): Boolean {
-        if (edCustomerNo.text.toString().isBlank()) {
-            edCustomerNo.error = "Required"
+        if (edMachineNo.text.toString().isBlank()) {
+            edMachineNo.error = "Required"
             return false
         }
         return true

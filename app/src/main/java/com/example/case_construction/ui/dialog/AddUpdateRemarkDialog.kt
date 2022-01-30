@@ -57,6 +57,10 @@ class AddUpdateRemarkDialog(
                 getDummyUtilData()
             ).show()
         }
+        swIsOkay.setOnCheckedChangeListener { _, b ->
+            swIsOkay.text =  if(b) "Ok"
+            else "Not Ok"
+        }
     }
 
 //
@@ -80,7 +84,7 @@ class AddUpdateRemarkDialog(
                         tvUpdate.pauseClick()
                         remark.description = edRemarkDescription.text.toString().trim()
                         remark.type = remarkType
-                        remark.status = status
+                        remark.status = swIsOkay.text.toString().trim()
                         listener.onUpdateClick(
                             remark,
                             ""

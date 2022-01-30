@@ -8,7 +8,7 @@
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
-    tools:context=".ui.pr oduct.HomeFragment">
+    tools:context=".ui.fragment.SearchMachineFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/horizontal_margin_dp16"
-            android:text="@string/my_delivery_orders"
+            android:text="@string/machine_list"
             android:textColor="@color/white"
             android:textSize="@dimen/text_13sp" />
 
@@ -85,7 +85,7 @@
                 android:layout_marginTop="@dimen/dimen_dp12"
                 android:background="@color/white"
                 android:orientation="vertical"
-                tools:listitem="@layout/item_customer"
+                tools:listitem="@layout/item_remark"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

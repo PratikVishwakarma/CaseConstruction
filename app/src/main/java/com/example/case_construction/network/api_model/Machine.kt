@@ -6,16 +6,16 @@ import java.io.Serializable
 
 class Machine : Serializable {
     @SerializedName("id")
-    val id = ""
+    var id = ""
 
     @SerializedName("machine_no")
-    val machineNo = ""
+    var machineNo = ""
 
     @SerializedName("okol_status")
-    val okolStatus = ""
+    var okolStatus = ""
 
     @SerializedName("okol_status_date")
-    val okolStatusDate = ""
+    var okolStatusDate = ""
 
     @SerializedName("productname")
     val productName = ""

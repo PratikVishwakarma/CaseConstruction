@@ -22,20 +22,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_dp20"
+        app:boxStrokeWidth="@dimen/dimen_dp1"
+        app:boxStrokeColor="@color/colorPrimary"
         android:labelFor="@id/edUsername"
-        android:textColor="@color/white"
+        android:background="@color/white"
         android:hint="Username">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edUsername"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_dp50"
-            app:rv_backgroundColor="@color/white"
             android:padding="@dimen/dimen_dp8"
             android:gravity="center_vertical"
-            android:textSize="@dimen/text_18sp"
-            android:hint="Username"
-            app:rv_cornerRadius="@dimen/dimen_dp8"/>
+            android:textSize="@dimen/text_16sp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -43,7 +42,7 @@
         android:layout_height="wrap_content"
         android:labelFor="@id/edUsername"
         android:layout_marginTop="@dimen/dimen_dp20"
-        android:textColor="@color/white"
+        android:background="@color/white"
         android:hint="Password">
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -51,12 +50,9 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_dp50"
             android:inputType="textPassword"
-            app:rv_backgroundColor="@color/white"
             android:padding="@dimen/dimen_dp8"
             android:gravity="center_vertical"
-            android:textSize="@dimen/text_18sp"
-            android:hint="Password"
-            app:rv_cornerRadius="@dimen/dimen_dp8"/>
+            android:textSize="@dimen/text_16sp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton

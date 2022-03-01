@@ -14,4 +14,6 @@ object Constants {
     const val CONST_STATUS_COMPLETED = "completed"
     const val CONST_STATUS_PLACED = "Placed"
     const val CONST_STATUS_PENDING = "pending"
+    const val CONST_OK = "Ok"
+    const val CONST_NOT_OK = "Not Ok"
 }

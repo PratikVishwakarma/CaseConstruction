@@ -2,6 +2,7 @@
 
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rllContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -40,13 +41,15 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_14sp"
             tools:text="Username" />
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.flyco.roundview.RoundTextView
             android:id="@+id/tvStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_dp8"
-            android:padding="@dimen/dimen_dp2"
-            android:textColor="@color/black"
+            android:layout_margin="@dimen/dimen_dp2"
+            android:padding="@dimen/dimen_dp8"
+            android:textColor="@color/white"
+            app:rv_cornerRadius="@dimen/dimen_dp4"
+            android:textStyle="bold"
             android:textSize="@dimen/text_14sp"
             tools:text="Username" />
     </LinearLayout>

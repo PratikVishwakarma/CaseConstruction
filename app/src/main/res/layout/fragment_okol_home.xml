@@ -44,37 +44,34 @@
         android:orientation="vertical"
         android:paddingTop="@dimen/dimen_dp20">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/rtvViewConfiguration"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="@dimen/dimen_dp45"
+            android:layout_marginStart="@dimen/dimen_dp20"
+            android:layout_marginEnd="@dimen/dimen_dp20"
+            android:layout_marginBottom="@dimen/dimen_dp20"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="@string/view_configuration"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_18sp"
+            app:rv_backgroundColor="@color/colorPrimary"
+            app:rv_cornerRadius="@dimen/dimen_dp4" />
 
-            <com.flyco.roundview.RoundTextView
-                android:id="@+id/rtvViewConfiguration"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dimen_dp45"
-                android:layout_margin="@dimen/dimen_dp20"
-                android:layout_weight="1"
-                android:background="@color/colorPrimary"
-                android:gravity="center"
-                android:text="@string/view_configuration"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_18sp"
-                app:rv_backgroundColor="@color/colorPrimary" />
-
-            <com.flyco.roundview.RoundTextView
-                android:id="@+id/rtvAddRemark"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dimen_dp45"
-                android:layout_margin="@dimen/dimen_dp20"
-                android:layout_weight="1"
-                android:background="@color/colorPrimary"
-                android:gravity="center"
-                android:text="@string/add_remark"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_18sp"
-                app:rv_backgroundColor="@color/colorPrimary" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/rtvAddRemark"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_dp45"
+            android:layout_marginStart="@dimen/dimen_dp20"
+            android:layout_marginEnd="@dimen/dimen_dp20"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="@string/add_remark"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_18sp"
+            app:rv_backgroundColor="@color/colorPrimary"
+            app:rv_cornerRadius="@dimen/dimen_dp4" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvList"
@@ -98,14 +95,14 @@
                 android:layout_height="@dimen/dimen_dp45"
                 android:layout_margin="@dimen/dimen_dp20"
                 android:layout_weight="1"
-                app:rv_isRadiusHalfHeight="true"
+                android:gravity="center"
                 android:paddingStart="@dimen/dimen_dp12"
                 android:paddingEnd="@dimen/dimen_dp12"
-                android:gravity="center"
                 android:text="@string/okol_hold"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_18sp"
-                app:rv_backgroundColor="@color/red" />
+                app:rv_backgroundColor="@color/red"
+                app:rv_isRadiusHalfHeight="true" />
 
             <com.flyco.roundview.RoundTextView
                 android:id="@+id/rtvOKOLClear"
@@ -113,14 +110,14 @@
                 android:layout_height="@dimen/dimen_dp45"
                 android:layout_margin="@dimen/dimen_dp20"
                 android:layout_weight="1"
-                app:rv_isRadiusHalfHeight="true"
+                android:gravity="center"
                 android:paddingStart="@dimen/dimen_dp12"
                 android:paddingEnd="@dimen/dimen_dp12"
-                android:gravity="center"
                 android:text="@string/okol_clear"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_18sp"
-                app:rv_backgroundColor="@color/colorPrimary" />
+                app:rv_backgroundColor="@color/colorPrimary"
+                app:rv_isRadiusHalfHeight="true" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

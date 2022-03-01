@@ -67,8 +67,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/white">
+
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefresh"
@@ -79,14 +81,14 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvList"
-                android:translationZ="@dimen/dimen_dp4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_dp12"
                 android:background="@color/white"
                 android:orientation="vertical"
-                tools:listitem="@layout/item_remark"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                android:translationZ="@dimen/dimen_dp4"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_remark" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.budiyev.android.codescanner.CodeScannerView
@@ -109,4 +111,11 @@
             app:layout_constraintTop_toTopOf="parent"
             app:maskColor="#77000000" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/btnExport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorSecondary"
+        android:text="Export Data" />
 </androidx.appcompat.widget.LinearLayoutCompat>

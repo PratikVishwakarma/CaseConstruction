@@ -36,7 +36,7 @@ class TestingHomeFragment : BaseFragment() {
 
     private fun initView() {
         (activity as MainActivity).lockUnlockSideNav(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        mAdapter = RemarkAdapter()
+        mAdapter = RemarkAdapter(requireContext())
         rvList.adapter = mAdapter
         mAdapter.appOnClick = object : AppOnClick {
             override fun onClickListener(item: Any, position: Int, view: View?) {

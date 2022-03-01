@@ -1,6 +1,8 @@
 package com.example.case_construction.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +14,12 @@ import com.example.case_construction.model.diffs.DiffUtilRemarkDTO
 import com.example.case_construction.model.diffs.DiffUtilUtilityDTO
 import com.example.case_construction.network.api_model.Remark
 import com.example.case_construction.utility.AppOnClick
+import com.example.case_construction.utility.Constants
 import kotlinx.android.synthetic.main.item_list_selection.view.*
 import kotlinx.android.synthetic.main.item_remark.view.*
 
 @SuppressLint("SetTextI18n")
-class RemarkAdapter :
+class RemarkAdapter(val context: Context) :
     ListAdapter<Remark, RemarkAdapter.MyViewHolder>(DiffUtilRemarkDTO()) {
     var appOnClick: AppOnClick? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -33,6 +36,13 @@ class RemarkAdapter :
         fun bind(record: Remark, position: Int) {
             itemView.tvDescription.text = record.description
             itemView.tvType.text = record.type
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                itemView.tvStatus.delegate.backgroundColor = when (record.status) {
+                    Constants.CONST_NOT_OK -> context.getColor(R.color.red)
+                    Constants.CONST_OK -> context.getColor(R.color.green)
+                    else -> context.getColor(R.color.green)
+                }
+            }
             itemView.tvStatus.text = record.status
             appOnClick?.let { _ ->
                 itemView.setOnClickListener {

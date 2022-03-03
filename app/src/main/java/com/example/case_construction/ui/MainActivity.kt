@@ -31,7 +31,7 @@ import java.util.*
 @SuppressLint("SetTextI18n")
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
-
+		// git update check
     companion object {
         const val CAMERA_PERMISSION_CODE = 100
         const val WRITE_EXTERNAL_STORAGE_PERMISSION_CODE = 101

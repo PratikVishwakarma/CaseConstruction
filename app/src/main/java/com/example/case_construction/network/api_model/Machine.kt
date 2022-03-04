@@ -23,28 +23,5 @@ class Machine : Serializable {
     @SerializedName("qty")
     var qty = ""
 
-    @SerializedName("rate")
-    val rate = ""
-
-    @SerializedName("orderno")
-    val orderNo = ""
-
-    @SerializedName("orderid")
-    val orderId = ""
-
-    @SerializedName("productimage")
-    var productImage = ""
-
-    @SerializedName("totalamount")
-    val totalAmount = ""
-
-    @SerializedName("orderstatus")
-    val orderStatus = ""
-
-    @SerializedName("ispaid")
-    var paidStatus = "unpaid"
-
-    @SerializedName("orderdetails")
-    val orderDetails: List<Product> = ArrayList()
 }
 

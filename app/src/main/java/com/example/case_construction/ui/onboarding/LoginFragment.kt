@@ -76,7 +76,7 @@ class LoginFragment : BaseFragment() {
 //                })
 //                return@setOnClickListener
 //            }
-//        }
+        }
 //        replaceFragment(LoginFragment(), R.id.fragmentContainerView)
         loginWithUserNameAndPassword(
             edUsername.text.toString().trim(),
@@ -95,6 +95,24 @@ class LoginFragment : BaseFragment() {
                         if (it.data == null) return@Observer
                         (requireActivity() as MainActivity).hideLoadingDialog()
                         (activity as MainActivity).defaultPreference.currentUser = it.data.users[0]
+                        when (edUsername.text.toString().trim()) {
+                            "okol" -> replaceFragment(
+                                OKOLHomeFragment(),
+                                R.id.fragmentContainerView
+                            )
+                            "testing" -> replaceFragment(
+                                TestingHomeFragment(),
+                                R.id.fragmentContainerView
+                            )
+                            "finishing" -> replaceFragment(
+                                FinishingHomeFragment(),
+                                R.id.fragmentContainerView
+                            )
+                            else -> replaceFragment(
+                                SearchMachineFragment(),
+                                R.id.fragmentContainerView
+                            )
+                        }
                         removeAllObservable()
                     }
                     is ResultData.Failed -> {

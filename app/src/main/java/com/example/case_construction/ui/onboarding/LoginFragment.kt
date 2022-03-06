@@ -51,37 +51,37 @@ class LoginFragment : BaseFragment() {
                 return@setOnClickListener
             }
 
-            if (edPassword.text.toString() == "123456") {
-//                when (edUsername.text.toString().trim()) {
-//                    "okol" -> replaceFragment(OKOLHomeFragment(), R.id.fragmentContainerView)
-//                    "testing" -> replaceFragment(TestingHomeFragment(), R.id.fragmentContainerView)
-//                    "finishing" -> replaceFragment(
-//                        FinishingHomeFragment(),
-//                        R.id.fragmentContainerView
-//                    )
-//                    else -> replaceFragment(SearchMachineFragment(), R.id.fragmentContainerView)
+//            if (edPassword.text.toString() == "123456") {
+////                when (edUsername.text.toString().trim()) {
+////                    "okol" -> replaceFragment(OKOLHomeFragment(), R.id.fragmentContainerView)
+////                    "testing" -> replaceFragment(TestingHomeFragment(), R.id.fragmentContainerView)
+////                    "finishing" -> replaceFragment(
+////                        FinishingHomeFragment(),
+////                        R.id.fragmentContainerView
+////                    )
+////                    else -> replaceFragment(SearchMachineFragment(), R.id.fragmentContainerView)
+////                }
+//                val apply = UserDTO().apply {
+//                    userType = edUsername.text.toString().trim()
 //                }
-                val apply = UserDTO().apply {
-                    userType = edUsername.text.toString().trim()
-                }
-                (activity as MainActivity).defaultPreference.currentUser = apply
-                replaceFragment(SearchMachineFragment(), R.id.fragmentContainerView)
-            } else requireActivity().toast("Wrong Password")
-            if (!requireContext().isInternetAvailable()) {
-                (activity as MainActivity).showNoNetworkDialog(object :
-                    NoInternetDialog.DialogListener {
-                    override fun onOkClick() {
-
-                    }
-                })
-                return@setOnClickListener
-            }
-        }
+//                (activity as MainActivity).defaultPreference.currentUser = apply
+//                replaceFragment(SearchMachineFragment(), R.id.fragmentContainerView)
+//            } else requireActivity().toast("Wrong Password")
+//            if (!requireContext().isInternetAvailable()) {
+//                (activity as MainActivity).showNoNetworkDialog(object :
+//                    NoInternetDialog.DialogListener {
+//                    override fun onOkClick() {
+//
+//                    }
+//                })
+//                return@setOnClickListener
+//            }
+//        }
 //        replaceFragment(LoginFragment(), R.id.fragmentContainerView)
-//        loginWithUserNameAndPassword(
-//            edUsername.text.toString().trim(),
-//            edPassword.text.toString().trim()
-//        )
+        loginWithUserNameAndPassword(
+            edUsername.text.toString().trim(),
+            edPassword.text.toString().trim()
+        )
     }
 
     private fun loginWithUserNameAndPassword(username: String, password: String) {

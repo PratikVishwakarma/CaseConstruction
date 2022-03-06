@@ -9,12 +9,10 @@ import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.case_construction.R
 import com.example.case_construction.network.NetworkConstants
-import com.example.case_construction.network.api_model.UserDTO
 import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.ui.dialog.NoInternetDialog
 import com.example.case_construction.ui.onboarding.LoginFragment
 import com.example.case_construction.utility.PreferenceHelper
-import com.example.case_construction.utility.PreferenceHelper.currentUser
 import com.example.case_construction.utility.isInternetAvailable
 import dagger.hilt.android.AndroidEntryPoint
 

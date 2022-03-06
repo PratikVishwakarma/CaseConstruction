@@ -96,7 +96,7 @@ class LoginFragment : BaseFragment() {
                         (requireActivity() as MainActivity).hideLoadingDialog()
                         (activity as MainActivity).defaultPreference.currentUser = it.data.users[0]
                         when (edUsername.text.toString().trim()) {
-                            "okol" -> replaceFragment(
+                            "OKOL" -> replaceFragment(
                                 OKOLHomeFragment(),
                                 R.id.fragmentContainerView
                             )

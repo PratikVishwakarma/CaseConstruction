@@ -12,6 +12,7 @@ import com.example.case_construction.network.NetworkConstants
 import com.example.case_construction.network.api_model.UserDTO
 import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.ui.dialog.NoInternetDialog
+import com.example.case_construction.ui.onboarding.LoginFragment
 import com.example.case_construction.utility.PreferenceHelper
 import com.example.case_construction.utility.PreferenceHelper.currentUser
 import com.example.case_construction.utility.isInternetAvailable
@@ -47,12 +48,12 @@ class SplashFragment : BaseFragment() {
         }
 
         Handler().postDelayed({
-            val apply = UserDTO().apply {
-                userType = "okol"
-            }
-            (activity as MainActivity).defaultPreference.currentUser = apply
-            replaceFragment(SearchMachineFragment(), R.id.fragmentContainerView)
-//            replaceFragment(LoginFragment(), R.id.fragmentContainerView)
+//            val apply = UserDTO().apply {
+//                userType = "okol"
+//            }
+//            (activity as MainActivity).defaultPreference.currentUser = apply
+//            replaceFragment(SearchMachineFragment(), R.id.fragmentContainerView)
+            replaceFragment(LoginFragment(), R.id.fragmentContainerView)
         }, NetworkConstants.SPLASH_WAIT)
     }
 }

@@ -2,8 +2,9 @@ package com.example.case_construction.network
 
 object NetworkConstants {
 
-    const val BASE_URL = "https://luckydairy.in/api/entity/"
+    const val BASE_URL = "http://192.168.29.198/"
     const val URL_ALL_REQUIRED_DATA = "Users/commonAPIs.php"
+    const val URL_LOGIN = "/Account/LoginApi"
 
 
 

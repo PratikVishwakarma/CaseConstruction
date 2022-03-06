@@ -8,7 +8,7 @@ interface ApiService {
     @GET(NetworkConstants.URL_ALL_REQUIRED_DATA)
     suspend fun getBaseURLData(): BaseURLAPIDTO
 
-    @GET(NetworkConstants.URL_ALL_REQUIRED_DATA)
+    @GET(NetworkConstants.URL_LOGIN)
     suspend fun loginWithUsernameAndPassword(
         @Field("username") username: String,
         @Field("password") password: String

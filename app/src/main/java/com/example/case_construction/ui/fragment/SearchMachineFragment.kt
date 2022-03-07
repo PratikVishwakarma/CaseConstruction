@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.budiyev.android.codescanner.CodeScanner
@@ -90,6 +91,10 @@ class SearchMachineFragment : BaseFragment() {
                 "ViewConfigurationFragment"
             )
         }
+        rtvAddRemark.setOnClickListener {
+            it.pauseClick()
+            goToHomePageAccordingToUserType()
+        }
     }
 //
 //    private fun addDummyMachineNo(from: String = MANUALLY) {
@@ -131,30 +136,40 @@ class SearchMachineFragment : BaseFragment() {
     }
 
     private fun goToHomePageAccordingToUserType() {
+        bundle = Bundle().apply {
+            putSerializable(Constants.CONST_BUNDLE_DATA_1, machine)
+        }
         when ((activity as MainActivity).defaultPreference.currentUser.userType) {
-            Constants.CONST_USERTYPE_OKOL -> addFragmentWithBack(
-                OKOLHomeFragment(),
-                R.id.fragmentContainerView,
-                "OKOLHomeFragment"
-            )
-            Constants.CONST_USERTYPE_TESTING -> addFragmentWithBack(
-                TestingHomeFragment(),
-                R.id.fragmentContainerView,
-                "TestingHomeFragment"
-            )
-            Constants.CONST_USERTYPE_FINISHING -> addFragmentWithBack(
-                FinishingHomeFragment(),
-                R.id.fragmentContainerView, "FinishingHomeFragment"
-            )
-            Constants.CONST_USERTYPE_PDI -> addFragmentWithBack(
-                FinishingHomeFragment(),
-                R.id.fragmentContainerView, "FinishingHomeFragment"
-            )
-            else -> addFragmentWithBack(
-                OKOLHomeFragment(),
-                R.id.fragmentContainerView,
-                "OKOLHomeFragment"
-            )
+            Constants.CONST_USERTYPE_OKOL -> {
+                val fragment = OKOLHomeFragment()
+                fragment.bundle = bundle
+                fragment.setTargetFragment(this@SearchMachineFragment, 1212)
+                addFragmentWithBack(fragment, R.id.fragmentContainerView, "OKOLHomeFragment")
+            }
+            Constants.CONST_USERTYPE_TESTING -> {
+                val fragment = TestingHomeFragment()
+                fragment.bundle = bundle
+                fragment.setTargetFragment(this@SearchMachineFragment, 1212)
+                addFragmentWithBack(fragment, R.id.fragmentContainerView, "TestingHomeFragment")
+            }
+            Constants.CONST_USERTYPE_FINISHING -> {
+                val fragment = FinishingHomeFragment()
+                fragment.bundle = bundle
+                fragment.setTargetFragment(this@SearchMachineFragment, 1212)
+                addFragmentWithBack(fragment, R.id.fragmentContainerView, "FinishingHomeFragment")
+            }
+            Constants.CONST_USERTYPE_PDI -> {
+                val fragment = FinishingHomeFragment()
+                fragment.bundle = bundle
+                fragment.setTargetFragment(this@SearchMachineFragment, 1212)
+                addFragmentWithBack(fragment, R.id.fragmentContainerView, "FinishingHomeFragment")
+            }
+            else -> {
+                val fragment = OKOLHomeFragment()
+                fragment.bundle = bundle
+                fragment.setTargetFragment(this@SearchMachineFragment, 1212)
+                addFragmentWithBack(fragment, R.id.fragmentContainerView, "OKOLHomeFragment")
+            }
         }
     }
 

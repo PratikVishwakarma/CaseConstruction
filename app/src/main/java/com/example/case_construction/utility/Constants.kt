@@ -16,4 +16,8 @@ object Constants {
     const val CONST_STATUS_PENDING = "pending"
     const val CONST_OK = "Ok"
     const val CONST_NOT_OK = "Not Ok"
+    const val CONST_USERTYPE_OKOL = "OKOL"
+    const val CONST_USERTYPE_TESTING = "Testing"
+    const val CONST_USERTYPE_FINISHING = "Finish"
+    const val CONST_USERTYPE_PDI = "PDI"
 }

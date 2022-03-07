@@ -2,32 +2,28 @@ package com.example.case_construction.ui.fragment
 
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.FileProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.budiyev.android.codescanner.*
+import com.budiyev.android.codescanner.CodeScanner
+import com.budiyev.android.codescanner.DecodeCallback
 import com.example.case_construction.R
 import com.example.case_construction.adapter.MachineAdapter
-import com.example.case_construction.adapter.RemarkAdapter
 import com.example.case_construction.model.ResultData
 import com.example.case_construction.network.api_model.Machine
-import com.example.case_construction.network.api_model.UserDTO
 import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.ui.dialog.EnterMachineNoManuallyDialog
+import com.example.case_construction.ui.machine.MachineViewModel
 import com.example.case_construction.utility.*
 import com.example.case_construction.utility.PreferenceHelper.currentUser
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_okol_home.*
 import kotlinx.android.synthetic.main.fragment_search_machine.*
-import kotlinx.android.synthetic.main.fragment_search_machine.rvList
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import org.apache.poi.ss.usermodel.*
@@ -40,11 +36,10 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class SearchMachineFragment : BaseFragment() {
-    //    private val vendorViewModel by viewModels<VendorViewModel>()
+    private val machineViewModel by viewModels<MachineViewModel>()
     private lateinit var mAdapter: MachineAdapter
     private var codeScanner: CodeScanner? = null
     private var mMachineNo = ""
@@ -54,7 +49,6 @@ class SearchMachineFragment : BaseFragment() {
     companion object {
         const val SCANNER = "scanner"
         const val MANUALLY = "manually"
-        const val UPI_PAYMENT = 10101
     }
 
     override fun onCreateView(
@@ -70,15 +64,16 @@ class SearchMachineFragment : BaseFragment() {
         initView()
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun initView() {
         mMachineNo = ""
         scannerView.visibility = View.GONE
         ivScanner.setOnClickListener {
             it.pauseClick()
-//            if (scannerView.visibility == View.VISIBLE)
-//                scannerView.visibility = View.GONE
-//            else checkForCameraPermission()
-            addDummyMachineNo(SCANNER)
+            if (scannerView.visibility == View.VISIBLE)
+                scannerView.visibility = View.GONE
+            else checkForCameraPermission()
+//            addDummyMachineNo(SCANNER)
         }
         ivLogout.setOnClickListener {
             it.pauseClick()
@@ -86,7 +81,7 @@ class SearchMachineFragment : BaseFragment() {
 //            if (scannerView.visibility == View.VISIBLE)
 //                scannerView.visibility = View.GONE
 //            else checkForCameraPermission()
-            addDummyMachineNo(SCANNER)
+//            addDummyMachineNo(SCANNER)
         }
         ivEnterCode.setOnClickListener {
             it.pauseClick()
@@ -96,47 +91,47 @@ class SearchMachineFragment : BaseFragment() {
                 object : EnterMachineNoManuallyDialog.DialogListener {
                     override fun onDoneClick(machineNo: String) {
                         mMachineNo = machineNo
-                        addDummyMachineNo()
+                        getMachineByNo()
+//                        addDummyMachineNo()
                     }
                 }
             ).show()
         }
         btnExport.setOnClickListener {
-            doPayment()
-//            if (machineList.isEmpty()) return@setOnClickListener
-//            it.pauseClick()
-//            GlobalScope.async {
-//                createExcel(createWorkbook())
-//            }
+            if (machineList.isEmpty()) return@setOnClickListener
+            it.pauseClick()
+            GlobalScope.async {
+                createExcel(createWorkbook())
+            }
         }
         initializeCustomerList()
 //        getCustomerList()
-        swipeRefresh.setOnRefreshListener {
-            getCustomerList()
-        }
+//        swipeRefresh.setOnRefreshListener {
+//            getMachineByNo()
+//        }
     }
-
-    private fun addDummyMachineNo(from: String = MANUALLY) {
-        if (lastSearchFrom != from) {
-            machineList.clear()
-            mAdapter.notifyDataSetChanged()
-        }
-        lastSearchFrom = from
-        machineList.add(Machine().apply {
-            id = "${machineList.size + 1}"
-            machineNo = "XYZ_${machineList.size + 1}"
-            okolStatus = "OKOL Status ${machineList.size + 1}"
-            okolStatusDate = "OKOL Date ${machineList.size + 1}"
-        })
-        mAdapter.notifyItemInserted(machineList.lastIndex)
-    }
+//
+//    private fun addDummyMachineNo(from: String = MANUALLY) {
+//        if (lastSearchFrom != from) {
+//            machineList.clear()
+//            mAdapter.notifyDataSetChanged()
+//        }
+//        lastSearchFrom = from
+//        machineList.add(Machine().apply {
+//            id = "${machineList.size + 1}"
+//            machineNo = "XYZ_${machineList.size + 1}"
+//            okolStatus = "OKOL Status ${machineList.size + 1}"
+//            okolStatusDate = "OKOL Date ${machineList.size + 1}"
+//        })
+//        mAdapter.notifyItemInserted(machineList.lastIndex)
+//    }
 
     private fun initializeCustomerList() {
         mAdapter = MachineAdapter()
         rvList.adapter = mAdapter
         mAdapter.appOnClick = object : AppOnClick {
             override fun onClickListener(item: Any, position: Int, view: View?) {
-                goToSingleCustomerDeliveryList()
+                goToHomePageAccordingToUserType()
             }
         }
         mAdapter.submitList(machineList)
@@ -150,7 +145,7 @@ class SearchMachineFragment : BaseFragment() {
                 requireActivity().toast("Scan result: ${it.text}")
                 log(javaClass.name, "Scan result: ${it.text}")
                 mMachineNo = it.text
-                goToSingleCustomerDeliveryList()
+                goToHomePageAccordingToUserType()
             }
         }
         codeScanner!!.startPreview()
@@ -165,19 +160,23 @@ class SearchMachineFragment : BaseFragment() {
         else requireActivity().toast("Camera Permission Required")
     }
 
-    private fun goToSingleCustomerDeliveryList() {
+    private fun goToHomePageAccordingToUserType() {
         when ((activity as MainActivity).defaultPreference.currentUser.userType) {
-            "okol" -> addFragmentWithBack(
+            Constants.CONST_USERTYPE_OKOL -> addFragmentWithBack(
                 OKOLHomeFragment(),
                 R.id.fragmentContainerView,
                 "OKOLHomeFragment"
             )
-            "testing" -> addFragmentWithBack(
+            Constants.CONST_USERTYPE_TESTING -> addFragmentWithBack(
                 TestingHomeFragment(),
                 R.id.fragmentContainerView,
                 "TestingHomeFragment"
             )
-            "finishing" -> addFragmentWithBack(
+            Constants.CONST_USERTYPE_FINISHING -> addFragmentWithBack(
+                FinishingHomeFragment(),
+                R.id.fragmentContainerView, "FinishingHomeFragment"
+            )
+            Constants.CONST_USERTYPE_PDI -> addFragmentWithBack(
                 FinishingHomeFragment(),
                 R.id.fragmentContainerView, "FinishingHomeFragment"
             )
@@ -191,123 +190,33 @@ class SearchMachineFragment : BaseFragment() {
     }
 
 
-    private fun getCustomerList() {
-        Log.e("Login ", "getOTP()")
-//        vendorViewModel.getCustomerByMobileVM((activity as MainActivity).defaultPreference.currentUser.mobileNo)
-//            .observe(viewLifecycleOwner, Observer {
-//                when (it) {
-//                    is ResultData.Loading -> {
-//                        (requireActivity() as MainActivity).showLoadingDialog()
-//                    }
-//                    is ResultData.Success -> {
-//                        (requireActivity() as MainActivity).hideLoadingDialog()
-//                        swipeRefresh.isRefreshing = false
-//                        if (it.data == null) return@Observer
-//                        customerList.clear()
-//                        customerList.addAll(it.data.customerList)
-//                        initializeCustomerList()
-//                        vendorViewModel.getCustomerByMobileVM("").removeObservers(requireActivity())
-//                    }
-//                    is ResultData.NoContent -> {
-//                        (requireActivity() as MainActivity).hideLoadingDialog()
-//                        vendorViewModel.getCustomerByMobileVM("").removeObservers(requireActivity())
-//                    }
-//                    is ResultData.Failed -> {
-//                        (requireActivity() as MainActivity).hideLoadingDialog()
-//                        vendorViewModel.getCustomerByMobileVM("").removeObservers(requireActivity())
-//                    }
-//                }
-//            })
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            UPI_PAYMENT -> if (Activity.RESULT_OK == resultCode || resultCode == 11) {
-                if (data != null) {
-                    val trxt = data.getStringExtra("response")
-                    Log.d("UPI", "onActivityResult: $trxt")
-                    val dataList = ArrayList<String>()
-                    dataList.add(trxt ?: "Null value")
-                    upiPaymentDataOperation(dataList)
-                } else {
-                    Log.d("UPI", "onActivityResult: " + "Return data is null")
-                    val dataList = ArrayList<String>()
-                    dataList.add("nothing")
-                    upiPaymentDataOperation(dataList)
+    private fun getMachineByNo() {
+        machineViewModel.getMachineByNoVM((activity as MainActivity).defaultPreference.currentUser.id, mMachineNo)
+            .observe(viewLifecycleOwner, Observer {
+                when (it) {
+                    is ResultData.Loading -> {
+                        (requireActivity() as MainActivity).showLoadingDialog()
+                    }
+                    is ResultData.Success -> {
+                        (requireActivity() as MainActivity).hideLoadingDialog()
+                        swipeRefresh.isRefreshing = false
+                        if (it.data == null) return@Observer
+                        machineList.clear()
+                        machineList.addAll(it.data.machine)
+                        initializeCustomerList()
+                        machineViewModel.getMachineByNoVM("", "").removeObservers(requireActivity())
+                    }
+                    is ResultData.NoContent -> {
+                        (requireActivity() as MainActivity).hideLoadingDialog()
+                        machineViewModel.getMachineByNoVM("", "").removeObservers(requireActivity())
+                    }
+                    is ResultData.Failed -> {
+                        (requireActivity() as MainActivity).hideLoadingDialog()
+                        machineViewModel.getMachineByNoVM("", "").removeObservers(requireActivity())
+                    }
+                    else -> {}
                 }
-            } else {
-                Log.d(
-                    "UPI",
-                    "onActivityResult: " + "Return data is null"
-                ) //when user simply back without payment
-                val dataList = ArrayList<String>()
-                dataList.add("nothing")
-                upiPaymentDataOperation(dataList)
-            }
-        }
-    }
-
-    private fun upiPaymentDataOperation(data: ArrayList<String>) {
-
-        var str: String? = data[0]
-        Log.d("UPIPAY", "upiPaymentDataOperation: " + str!!)
-        var paymentCancel = ""
-        if (str == null) str = "discard"
-        var status = ""
-        var approvalRefNo = ""
-        val response = str.split("&".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        for (i in response.indices) {
-            val equalStr =
-                response[i].split("=".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            if (equalStr.size >= 2) {
-                if (equalStr[0].toLowerCase() == "Status".toLowerCase()) {
-                    status = equalStr[1].toLowerCase()
-                } else if (equalStr[0].toLowerCase() == "ApprovalRefNo".toLowerCase() || equalStr[0].toLowerCase() == "txnRef".toLowerCase()) {
-                    approvalRefNo = equalStr[1]
-                }
-            } else {
-                paymentCancel = "Payment cancelled by user."
-            }
-        }
-
-        when {
-            status == "success" -> {
-                //Code to handle successful transaction here.
-                "Transaction successful.".toast(requireContext())
-                Log.d("UPI", "responseStr: $approvalRefNo")
-            }
-            "Payment cancelled by user." == paymentCancel -> {
-                "Payment cancelled by user.".toast(requireContext())
-            }
-            else -> {
-                "Transaction failed.Please try again".toast(requireContext())
-            }
-        }
-    }
-
-    private fun doPayment() {
-        val uri = Uri.parse("upi://pay").buildUpon()
-            .appendQueryParameter("pa", "shivi104@ybl")
-//            .appendQueryParameter("pa", "pratikvishwakarma00@ybl")
-            .appendQueryParameter("pn", "Pratik")
-            .appendQueryParameter("tn", "Note ")
-            .appendQueryParameter("am", "10.0")
-            .appendQueryParameter("cu", "INR")
-            .build()
-        val upiPayIntent = Intent(Intent.ACTION_VIEW)
-        upiPayIntent.data = uri
-
-        // will always show a dialog to user to choose an app
-        val chooser = Intent.createChooser(upiPayIntent, "Pay with")
-
-        // check if intent resolves
-        if (null != chooser.resolveActivity(requireActivity().packageManager)) {
-            startActivityForResult(chooser, UPI_PAYMENT)
-        } else {
-            "No UPI app found, please install one to continue".toast(requireContext())
-        }
-
+            })
     }
 
 
@@ -474,7 +383,7 @@ class SearchMachineFragment : BaseFragment() {
                 "Sharing file from the AppName with some description"
             )
             val fileURI = FileProvider.getUriForFile(
-                context!!, context!!.packageName + ".fileprovider",
+                requireContext(), requireContext().packageName + ".fileprovider",
                 File(filePath)
             )
             putExtra(Intent.EXTRA_STREAM, fileURI)

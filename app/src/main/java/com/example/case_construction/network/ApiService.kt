@@ -14,4 +14,10 @@ interface ApiService {
         @Query("password") password: String
     ): UserListAPIDTO
 
+    @GET(NetworkConstants.URL_GET_MACHINE_BY_NO)
+    suspend fun getMachineByNo(
+        @Query("userid") userId: String,
+        @Query("machineNo") machineNo: String
+    ): MachineListAPIDTO
+
 }

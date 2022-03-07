@@ -34,8 +34,8 @@ class MachineAdapter :
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(record: Machine, position: Int) {
             itemView.tvDescription.text = record.machineNo
-            itemView.tvType.text = record.okolStatus
-            itemView.tvStatus.text = record.okolStatusDate
+            itemView.tvType.text = record.oKOLStatus
+            itemView.tvStatus.text = record.oKOLDate
             appOnClick?.let { _ ->
                 itemView.setOnClickListener {
                     appOnClick?.onClickListener(record, position)

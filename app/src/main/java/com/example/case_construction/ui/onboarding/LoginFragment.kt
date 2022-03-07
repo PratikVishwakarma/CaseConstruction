@@ -18,6 +18,7 @@ import com.example.case_construction.ui.fragment.*
 import com.example.case_construction.utility.AppOnClick
 import com.example.case_construction.utility.PreferenceHelper.currentUser
 import com.example.case_construction.utility.isInternetAvailable
+import com.example.case_construction.utility.printLog
 import com.example.case_construction.utility.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -95,6 +96,7 @@ class LoginFragment : BaseFragment() {
                         if (it.data == null) return@Observer
                         (requireActivity() as MainActivity).hideLoadingDialog()
                         (activity as MainActivity).defaultPreference.currentUser = it.data.users[0]
+                        "Logged in userType is: ${it.data.users[0].userType}".printLog(javaClass.name)
 //                        when (edUsername.text.toString().trim()) {
 //                            "OKOL" -> replaceFragment(
 //                                OKOLHomeFragment(),

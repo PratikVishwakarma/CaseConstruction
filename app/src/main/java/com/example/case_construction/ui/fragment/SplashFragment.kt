@@ -47,8 +47,8 @@ class SplashFragment : BaseFragment() {
         }
 
         Handler().postDelayed({
-            val currentUser = (activity as MainActivity).defaultPreference.currentUser
-            if(currentUser.id == "") replaceFragment(SearchMachineFragment(), R.id.fragmentContainerView)
+            val currentUser = defaultPreference.currentUser
+            if(currentUser != null && currentUser.id != "") replaceFragment(SearchMachineFragment(), R.id.fragmentContainerView)
             else replaceFragment(LoginFragment(), R.id.fragmentContainerView)
         }, NetworkConstants.SPLASH_WAIT)
     }

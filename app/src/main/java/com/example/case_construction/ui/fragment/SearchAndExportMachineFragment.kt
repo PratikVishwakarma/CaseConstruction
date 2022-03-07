@@ -320,8 +320,8 @@ class SearchAndExportMachineFragment : BaseFragment() {
         //Add data to each cell
         createCell(row, 0, machine.id) //Column 1
         createCell(row, 1, machine.machineNo) //Column 2
-        createCell(row, 2, machine.okolStatus) //Column 3
-        createCell(row, 3, machine.okolStatusDate) //Column 3
+        createCell(row, 2, machine.oKOLStatus) //Column 3
+        createCell(row, 3, machine.oKOLDate) //Column 3
 
     }
 

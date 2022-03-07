@@ -10,8 +10,8 @@ interface ApiService {
 
     @GET(NetworkConstants.URL_LOGIN)
     suspend fun loginWithUsernameAndPassword(
-        @Field("username") username: String,
-        @Field("password") password: String
+        @Query("username") username: String,
+        @Query("password") password: String
     ): UserListAPIDTO
 
 }

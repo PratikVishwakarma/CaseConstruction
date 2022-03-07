@@ -4,55 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical"
+    android:background="@drawable/cnhbg"
     android:clickable="true"
     android:focusable="true"
     android:gravity="center"
+    android:orientation="vertical"
     android:padding="@dimen/dimen_dp20"
     tools:context=".ui.fragment.SplashFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="@dimen/dimen_dp150"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/app_logo"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/cnh_logo" />
+
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_dp20"
-        app:boxStrokeWidth="@dimen/dimen_dp1"
-        app:boxStrokeColor="@color/colorPrimary"
-        android:labelFor="@id/edUsername"
         android:background="@color/white"
-        android:hint="Username">
+        android:hint="Username"
+        android:labelFor="@id/edUsername"
+        app:boxStrokeColor="@color/colorPrimary"
+        app:boxStrokeWidth="@dimen/dimen_dp1">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edUsername"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_dp50"
-            android:padding="@dimen/dimen_dp8"
             android:gravity="center_vertical"
-            android:textSize="@dimen/text_16sp"/>
+            android:padding="@dimen/dimen_dp8"
+            android:textSize="@dimen/text_16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:labelFor="@id/edUsername"
         android:layout_marginTop="@dimen/dimen_dp20"
         android:background="@color/white"
-        android:hint="Password">
+        android:hint="Password"
+        android:labelFor="@id/edUsername">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edPassword"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_dp50"
+            android:gravity="center_vertical"
             android:inputType="textPassword"
             android:padding="@dimen/dimen_dp8"
-            android:gravity="center_vertical"
-            android:textSize="@dimen/text_16sp"/>
+            android:textSize="@dimen/text_16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -60,9 +63,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_dp45"
         android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dimen_dp20"
         android:background="@color/colorPrimaryDark"
         android:gravity="center"
-        android:layout_marginTop="@dimen/dimen_dp20"
         android:padding="@dimen/dimen_dp12"
         android:text="@string/login"
         android:textAllCaps="true"

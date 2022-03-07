@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/cnhbg"
     android:orientation="vertical"
     android:clickable="true"
     android:focusable="true"
@@ -12,18 +12,19 @@
     tools:context=".ui.fragment.SplashFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="@dimen/dimen_dp150"
+        android:layout_width="@dimen/dimen_dp250"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/app_logo"
+        app:srcCompat="@drawable/cnh_logo"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"/>
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:lottie_autoPlay="true"
-        app:lottie_speed="1.5"
-        app:lottie_cacheComposition="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/splash_loading" />
+
+<!--    <com.airbnb.lottie.LottieAnimationView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:lottie_autoPlay="true"-->
+<!--        app:lottie_speed="1.5"-->
+<!--        app:lottie_cacheComposition="true"-->
+<!--        app:lottie_loop="true"-->
+<!--        app:lottie_rawRes="@raw/splash_loading" />-->
 
 </androidx.appcompat.widget.LinearLayoutCompat>

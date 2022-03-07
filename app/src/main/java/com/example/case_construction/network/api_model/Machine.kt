@@ -8,7 +8,7 @@ class Machine : Serializable {
     @SerializedName("id")
     var id = ""
 
-    @SerializedName("machine_no")
+    @SerializedName("machineNo")
     var machineNo = ""
 
     @SerializedName("okol_status")

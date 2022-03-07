@@ -44,7 +44,16 @@
         android:orientation="vertical"
         android:paddingTop="@dimen/dimen_dp20">
 
-
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMachineNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/dimen_dp8"
+            android:text="@string/app_name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_18sp"
+            app:srcCompat="@drawable/ic_menu" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvList"
             android:layout_width="match_parent"

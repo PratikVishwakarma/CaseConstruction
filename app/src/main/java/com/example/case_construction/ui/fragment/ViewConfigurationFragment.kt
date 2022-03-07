@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.case_construction.R
 import com.example.case_construction.adapter.ConfigurationAdapter
+import com.example.case_construction.network.api_model.Machine
 import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.ui.dialog.NoInternetDialog
 import com.example.case_construction.utility.AppOnClick
+import com.example.case_construction.utility.Constants
 import com.example.case_construction.utility.getDummyUtilData
 import com.example.case_construction.utility.isInternetAvailable
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_configuration.*
 class ViewConfigurationFragment : BaseFragment() {
 
     private lateinit var mAdapter: ConfigurationAdapter
+    private var machine = Machine()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,14 +32,19 @@ class ViewConfigurationFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_configuration, container, false)
     }
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        machine = bundle?.getSerializable(Constants.CONST_BUNDLE_DATA_1) as Machine
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
     }
 
     private fun initView() {
-
-        (activity as MainActivity).lockUnlockSideNav(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        tvMachineNo.text = machine.machineNo
         mAdapter = ConfigurationAdapter()
         rvList.adapter = mAdapter
         mAdapter.appOnClick = object : AppOnClick {

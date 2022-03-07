@@ -77,8 +77,15 @@ class SearchMachineFragment : BaseFragment() {
         }
         rtvViewConfiguration.setOnClickListener {
             it.pauseClick()
+
+            val fragment = ViewConfigurationFragment()
+            bundle = Bundle().apply {
+                putSerializable(Constants.CONST_BUNDLE_DATA_1, machine)
+            }
+            fragment.bundle = bundle
+            fragment.setTargetFragment(this@SearchMachineFragment, 1212)
             addFragmentWithBack(
-                ViewConfigurationFragment(),
+                fragment,
                 R.id.fragmentContainerView,
                 "ViewConfigurationFragment"
             )
@@ -153,7 +160,11 @@ class SearchMachineFragment : BaseFragment() {
 
 
     private fun getMachineByNo() {
-        machineViewModel.getMachineByNoVM((activity as MainActivity).defaultPreference.currentUser.id, mMachineNo, (activity as MainActivity).defaultPreference.currentUser.userType)
+        machineViewModel.getMachineByNoVM(
+            (activity as MainActivity).defaultPreference.currentUser.id,
+            mMachineNo,
+            (activity as MainActivity).defaultPreference.currentUser.userType
+        )
             .observe(viewLifecycleOwner, Observer {
                 when (it) {
                     is ResultData.Loading -> {
@@ -164,15 +175,18 @@ class SearchMachineFragment : BaseFragment() {
                         if (it.data == null) return@Observer
                         machine = it.data.machine[0]
                         llMiddleButtons.visibility = View.VISIBLE
-                        machineViewModel.getMachineByNoVM("", "", "").removeObservers(requireActivity())
+                        machineViewModel.getMachineByNoVM("", "", "")
+                            .removeObservers(requireActivity())
                     }
                     is ResultData.NoContent -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
-                        machineViewModel.getMachineByNoVM("", "", "").removeObservers(requireActivity())
+                        machineViewModel.getMachineByNoVM("", "", "")
+                            .removeObservers(requireActivity())
                     }
                     is ResultData.Failed -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
-                        machineViewModel.getMachineByNoVM("", "", "").removeObservers(requireActivity())
+                        machineViewModel.getMachineByNoVM("", "", "")
+                            .removeObservers(requireActivity())
                     }
                     else -> {}
                 }

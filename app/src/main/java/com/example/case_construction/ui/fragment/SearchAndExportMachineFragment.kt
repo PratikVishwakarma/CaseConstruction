@@ -191,7 +191,7 @@ class SearchAndExportMachineFragment : BaseFragment() {
 
 
     private fun getMachineByNo() {
-        machineViewModel.getMachineByNoVM((activity as MainActivity).defaultPreference.currentUser.id, mMachineNo)
+        machineViewModel.getMachineByNoVM((activity as MainActivity).defaultPreference.currentUser.id, mMachineNo, (activity as MainActivity).defaultPreference.currentUser.userType)
             .observe(viewLifecycleOwner, Observer {
                 when (it) {
                     is ResultData.Loading -> {
@@ -204,15 +204,15 @@ class SearchAndExportMachineFragment : BaseFragment() {
                         machineList.clear()
                         machineList.addAll(it.data.machine)
                         initializeCustomerList()
-                        machineViewModel.getMachineByNoVM("", "").removeObservers(requireActivity())
+                        machineViewModel.getMachineByNoVM("", "", "").removeObservers(requireActivity())
                     }
                     is ResultData.NoContent -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
-                        machineViewModel.getMachineByNoVM("", "").removeObservers(requireActivity())
+                        machineViewModel.getMachineByNoVM("", "", "").removeObservers(requireActivity())
                     }
                     is ResultData.Failed -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
-                        machineViewModel.getMachineByNoVM("", "").removeObservers(requireActivity())
+                        machineViewModel.getMachineByNoVM("", "", "").removeObservers(requireActivity())
                     }
                     else -> {}
                 }

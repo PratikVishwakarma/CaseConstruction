@@ -72,58 +72,24 @@
         android:background="@color/white">
 
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/llMiddleButtons"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:gravity="center">
-            <com.flyco.roundview.RoundTextView
-                android:id="@+id/rtvViewConfiguration"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_dp45"
-                android:layout_marginStart="@dimen/dimen_dp20"
-                android:layout_marginEnd="@dimen/dimen_dp20"
-                android:layout_marginBottom="@dimen/dimen_dp20"
-                android:background="@color/colorPrimary"
-                android:gravity="center"
-                android:text="@string/view_configuration"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_18sp"
-                app:rv_backgroundColor="@color/colorPrimary"
-                app:rv_cornerRadius="@dimen/dimen_dp4" />
+            app:layout_constraintTop_toTopOf="parent">
 
-            <com.flyco.roundview.RoundTextView
-                android:id="@+id/rtvAddRemark"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvList"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_dp45"
-                android:layout_marginStart="@dimen/dimen_dp20"
-                android:layout_marginEnd="@dimen/dimen_dp20"
-                android:layout_marginBottom="@dimen/dimen_dp20"
-                android:background="@color/colorPrimary"
-                android:gravity="center"
-                android:text="@string/add_remark"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_18sp"
-                app:rv_backgroundColor="@color/colorPrimary"
-                app:rv_cornerRadius="@dimen/dimen_dp4" />
-            <com.flyco.roundview.RoundTextView
-                android:id="@+id/rtvExportData"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_dp45"
-                android:layout_marginStart="@dimen/dimen_dp20"
-                android:layout_marginEnd="@dimen/dimen_dp20"
-                android:background="@color/colorPrimary"
-                android:gravity="center"
-                android:text="@string/export_data"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_18sp"
-                app:rv_backgroundColor="@color/colorPrimary"
-                app:rv_cornerRadius="@dimen/dimen_dp4" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_dp12"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:translationZ="@dimen/dimen_dp4"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_remark" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.budiyev.android.codescanner.CodeScannerView
             android:id="@+id/scannerView"
@@ -145,4 +111,11 @@
             app:layout_constraintTop_toTopOf="parent"
             app:maskColor="#77000000" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/btnExport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorSecondary"
+        android:text="Export Data" />
 </androidx.appcompat.widget.LinearLayoutCompat>

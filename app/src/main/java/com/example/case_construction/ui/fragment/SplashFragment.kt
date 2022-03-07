@@ -13,6 +13,7 @@ import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.ui.dialog.NoInternetDialog
 import com.example.case_construction.ui.onboarding.LoginFragment
 import com.example.case_construction.utility.PreferenceHelper
+import com.example.case_construction.utility.PreferenceHelper.currentUser
 import com.example.case_construction.utility.isInternetAvailable
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,12 +47,9 @@ class SplashFragment : BaseFragment() {
         }
 
         Handler().postDelayed({
-//            val apply = UserDTO().apply {
-//                userType = "okol"
-//            }
-//            (activity as MainActivity).defaultPreference.currentUser = apply
-//            replaceFragment(SearchMachineFragment(), R.id.fragmentContainerView)
-            replaceFragment(LoginFragment(), R.id.fragmentContainerView)
+            val currentUser = (activity as MainActivity).defaultPreference.currentUser
+            if(currentUser.id == "") replaceFragment(SearchMachineFragment(), R.id.fragmentContainerView)
+            else replaceFragment(LoginFragment(), R.id.fragmentContainerView)
         }, NetworkConstants.SPLASH_WAIT)
     }
 }

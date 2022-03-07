@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.case_construction.R
 import com.example.case_construction.model.UtilityDTO
+import com.example.case_construction.network.api_model.Machine
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -95,5 +96,35 @@ fun getDummyUtilData(): ArrayList<UtilityDTO> {
     data.add(UtilityDTO(false, "Heading 7", "Value 7", 8))
     data.add(UtilityDTO(false, "Heading 8", "Value 8", 8))
     data.add(UtilityDTO(false, "Heading 9", "Value 9", 8))
+    return data
+}
+
+fun getConfigurationData(machine: Machine): ArrayList<UtilityDTO> {
+    val data: ArrayList<UtilityDTO> = ArrayList()
+    data.add(UtilityDTO(false, "Days Plan", machine.daysPlan, 8))
+    data.add(UtilityDTO(false, "Machine No", machine.machineNo, 8))
+    data.add(UtilityDTO(false, "Line-Up Date", machine.lineUpDate, 8))
+    data.add(UtilityDTO(false, "Model No", machine.modelNo, 8))
+    data.add(UtilityDTO(false, "Chassis", machine.chassis, 8))
+    data.add(UtilityDTO(false, "Drive", machine.drive, 8))
+    data.add(UtilityDTO(false, "LDR Valve", machine.ldrValve, 8))
+    data.add(UtilityDTO(false, "RTD", machine.rtd, 8))
+    data.add(UtilityDTO(false, "Hammer", machine.hammer, 8))
+    data.add(UtilityDTO(false, "Telematics", machine.telematics, 8))
+    data.add(UtilityDTO(false, "BH Valve", machine.bhValve, 8))
+    data.add(UtilityDTO(false, "BH Pattern", machine.bhPattern, 8))
+    data.add(UtilityDTO(false, "Engine", machine.engine, 8))
+    data.add(UtilityDTO(false, "Counter Weight", machine.counterWeight, 8))
+    data.add(UtilityDTO(false, "Loader Arm", machine.loaderArm, 8))
+    data.add(UtilityDTO(false, "Cabin", machine.cabin, 8))
+    data.add(UtilityDTO(false, "Beacon", machine.beacon, 8))
+    data.add(UtilityDTO(false, "Fender", machine.fender, 8))
+    data.add(UtilityDTO(false, "Dipper", machine.dipper, 8))
+    data.add(UtilityDTO(false, "BH Bucket", machine.bhBucket, 8))
+    data.add(UtilityDTO(false, "LDR Bucket", machine.ldrBucket, 8))
+    data.add(UtilityDTO(false, "Tyre Front", machine.tyreFront, 8))
+    data.add(UtilityDTO(false, "Tyre Rear", machine.tyreRear, 8))
+    data.add(UtilityDTO(false, "Lenguage", machine.lenguage, 8))
+    data.add(UtilityDTO(false, "Market", machine.market, 8))
     return data
 }

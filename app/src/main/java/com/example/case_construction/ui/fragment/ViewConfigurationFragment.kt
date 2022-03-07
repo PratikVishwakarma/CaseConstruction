@@ -11,10 +11,7 @@ import com.example.case_construction.adapter.ConfigurationAdapter
 import com.example.case_construction.network.api_model.Machine
 import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.ui.dialog.NoInternetDialog
-import com.example.case_construction.utility.AppOnClick
-import com.example.case_construction.utility.Constants
-import com.example.case_construction.utility.getDummyUtilData
-import com.example.case_construction.utility.isInternetAvailable
+import com.example.case_construction.utility.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_configuration.*
 
@@ -52,7 +49,7 @@ class ViewConfigurationFragment : BaseFragment() {
 
             }
         }
-        mAdapter.submitList(getDummyUtilData())
+        mAdapter.submitList(getConfigurationData(machine))
 
         if (!requireContext().isInternetAvailable()) {
             (activity as MainActivity).showNoNetworkDialog(object :

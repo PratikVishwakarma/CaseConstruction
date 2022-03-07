@@ -14,10 +14,10 @@ class MachineViewModel @Inject constructor(private val dataUseCase: DataUseCase)
     ViewModel() {
 
 
-    fun getMachineByNoVM(userId: String, machineNo: String): LiveData<ResultData<MachineListAPIDTO>> {
+    fun getMachineByNoVM(userId: String, machineNo: String, userType: String): LiveData<ResultData<MachineListAPIDTO>> {
         return liveData<ResultData<MachineListAPIDTO>> {
             emit(ResultData.Loading())
-            emit(dataUseCase.getMachineByNoRepo(userId, machineNo))
+            emit(dataUseCase.getMachineByNoRepo(userId, machineNo, userType))
         }
     }
 }

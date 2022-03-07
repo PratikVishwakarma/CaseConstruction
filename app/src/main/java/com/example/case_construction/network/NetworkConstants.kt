@@ -5,7 +5,7 @@ object NetworkConstants {
     const val BASE_URL = "http://192.168.29.198/otpm"
     const val URL_ALL_REQUIRED_DATA = "Users/commonAPIs.php"
     const val URL_LOGIN = "/Account/LoginApi"
-    const val URL_GET_MACHINE_BY_NO = "/Account/LoginApi"
+    const val URL_GET_MACHINE_BY_NO = "Machine/GetMachineNo"
 
 
 

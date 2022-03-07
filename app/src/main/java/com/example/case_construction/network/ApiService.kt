@@ -1,6 +1,7 @@
 package com.example.case_construction.network
 
 import com.example.case_construction.network.api_model.*
+import org.apache.xmlbeans.UserType
 import retrofit2.http.*
 
 interface ApiService {
@@ -17,7 +18,8 @@ interface ApiService {
     @GET(NetworkConstants.URL_GET_MACHINE_BY_NO)
     suspend fun getMachineByNo(
         @Query("userid") userId: String,
-        @Query("machineNo") machineNo: String
+        @Query("machineNo") machineNo: String,
+        @Query("userType") userType: String
     ): MachineListAPIDTO
 
 }

@@ -20,9 +20,10 @@ class DataRepositories @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getMachineByNoRepo(
         username: String,
-        password: String
+        password: String,
+        userType: String
     ): MachineListAPIDTO {
-        return apiService.getMachineByNo(username, password)
+        return apiService.getMachineByNo(username, password, userType)
     }
 
 }

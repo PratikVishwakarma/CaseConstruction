@@ -20,6 +20,7 @@ import com.example.case_construction.utility.AppOnClick
 import com.example.case_construction.utility.Constants
 import com.example.case_construction.utility.PreferenceHelper.currentUser
 import com.example.case_construction.utility.pauseClick
+import com.example.case_construction.utility.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_okol_home.*
 import kotlinx.android.synthetic.main.fragment_okol_home.rtvAddRemark
@@ -80,6 +81,7 @@ class OKOLHomeFragment : BaseFragment() {
         }
         rtvOKOLHold.setOnClickListener {
             it.pauseClick()
+            createReworkJson("HOLD")
         }
 
 //        if (!requireContext().isInternetAvailable()) {
@@ -118,6 +120,8 @@ class OKOLHomeFragment : BaseFragment() {
 
 
     private fun updateAndAddMachineStatusByNo(reworkJSON: String, status: String) {
+        "Rework array: $reworkJSON ".printLog(javaClass.name)
+        "Rework Status: $status ".printLog(javaClass.name)
         machineViewModel.updateAndAddMachineStatusByNoVM(
             (activity as MainActivity).defaultPreference.currentUser.id,
             mMachineNo,

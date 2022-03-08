@@ -158,7 +158,6 @@ class OKOLHomeFragment : BaseFragment() {
                 }
                 is ResultData.Success -> {
                     (requireActivity() as MainActivity).hideLoadingDialog()
-                    if (it.data == null) return@Observer
                     getMachineByNo()
                     removeAllObservable()
                 }

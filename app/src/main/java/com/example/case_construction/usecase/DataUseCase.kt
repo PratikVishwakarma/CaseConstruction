@@ -60,9 +60,9 @@ class DataUseCase @Inject constructor(private val dataRepositories: DataReposito
     }
 
 
-    suspend fun updateAndAddMachineStatusByNoRepo(userId: String, machineNo: String, userType: String): ResultData<SuccessAPIDTO> {
+    suspend fun updateAndAddMachineStatusByNoUseCase(userId: String, machineNo: String, userType: String): ResultData<SuccessAPIDTO> {
         return try {
-            val data = dataRepositories.getMachineByNoRepo(userId, machineNo, userType)
+            val data = dataRepositories.updateAndAddMachineStatusByNoRepo(userId, machineNo, userType)
             when (data.status) {
                 NetworkConstants.INT_STATUS_SUCCESS -> ResultData.Success(data)
                 NetworkConstants.INT_STATUS_NO_DATA_AVAILABLE -> {

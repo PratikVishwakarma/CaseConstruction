@@ -22,4 +22,11 @@ interface ApiService {
         @Query("userType") userType: String
     ): MachineListAPIDTO
 
+    @GET(NetworkConstants.URL_GET_MACHINE_BY_NO)
+    suspend fun updateAndAddMachineStatusByNo(
+        @Query("userid") userId: String,
+        @Query("machineNo") machineNo: String,
+        @Query("userType") userType: String
+    ): SuccessAPIDTO
+
 }

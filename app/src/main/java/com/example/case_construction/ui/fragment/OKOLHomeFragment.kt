@@ -58,6 +58,7 @@ class OKOLHomeFragment : BaseFragment() {
     private fun initView() {
         (activity as MainActivity).lockUnlockSideNav(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         mAdapter = RemarkAdapter(requireContext())
+        reworkList.clear()
         reworkList.addAll(machine.rework)
         rvList.adapter = mAdapter
         mAdapter.appOnClick = object : AppOnClick {
@@ -89,17 +90,22 @@ class OKOLHomeFragment : BaseFragment() {
     private fun createReworkJson(status: String) {
         val jsonArray = JSONArray()
         reworkList.forEach {
-            val jsonObject = JSONObject()
-            jsonObject.put("userid", (activity as MainActivity).defaultPreference.currentUser.id)
-            jsonObject.put(
-                "reworkfrom",
-                (activity as MainActivity).defaultPreference.currentUser.userType
-            )
-            jsonObject.put("machineNo", machine.machineNo)
-            jsonObject.put("reason", it.type)
-            jsonObject.put("rework", it.description)
-            jsonObject.put("status", it.status)
-            jsonArray.put(jsonObject)
+            if (it.id == "") {
+                val jsonObject = JSONObject()
+                jsonObject.put(
+                    "userid",
+                    (activity as MainActivity).defaultPreference.currentUser.id
+                )
+                jsonObject.put(
+                    "reworkfrom",
+                    (activity as MainActivity).defaultPreference.currentUser.userType
+                )
+                jsonObject.put("machineNo", machine.machineNo)
+                jsonObject.put("reason", it.type)
+                jsonObject.put("rework", it.description)
+                jsonObject.put("status", it.status)
+                jsonArray.put(jsonObject)
+            }
         }
         updateAndAddMachineStatusByNo(jsonArray.toString(), status)
     }

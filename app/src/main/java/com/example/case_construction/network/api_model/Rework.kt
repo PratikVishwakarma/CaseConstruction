@@ -3,7 +3,7 @@ package com.example.case_construction.network.api_model
 
 import com.google.gson.annotations.SerializedName
 
-class Remark{
+class Rework{
     @SerializedName("description")
     var description = ""
 

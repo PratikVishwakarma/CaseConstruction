@@ -9,18 +9,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.case_construction.R
-import com.example.case_construction.model.UtilityDTO
 import com.example.case_construction.model.diffs.DiffUtilRemarkDTO
-import com.example.case_construction.model.diffs.DiffUtilUtilityDTO
-import com.example.case_construction.network.api_model.Remark
+import com.example.case_construction.network.api_model.Rework
 import com.example.case_construction.utility.AppOnClick
 import com.example.case_construction.utility.Constants
-import kotlinx.android.synthetic.main.item_list_selection.view.*
 import kotlinx.android.synthetic.main.item_remark.view.*
 
 @SuppressLint("SetTextI18n")
 class RemarkAdapter(val context: Context) :
-    ListAdapter<Remark, RemarkAdapter.MyViewHolder>(DiffUtilRemarkDTO()) {
+    ListAdapter<Rework, RemarkAdapter.MyViewHolder>(DiffUtilRemarkDTO()) {
     var appOnClick: AppOnClick? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflate =
@@ -33,7 +30,7 @@ class RemarkAdapter(val context: Context) :
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(record: Remark, position: Int) {
+        fun bind(record: Rework, position: Int) {
             itemView.tvDescription.text = record.description
             itemView.tvType.text = record.type
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

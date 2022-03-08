@@ -9,20 +9,16 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.case_construction.R
-import com.example.case_construction.adapter.ConfigurationAdapter
 import com.example.case_construction.adapter.RemarkAdapter
 import com.example.case_construction.model.ResultData
-import com.example.case_construction.model.UtilityDTO
 import com.example.case_construction.network.api_model.Machine
-import com.example.case_construction.network.api_model.Remark
+import com.example.case_construction.network.api_model.Rework
 import com.example.case_construction.ui.MainActivity
-import com.example.case_construction.ui.dialog.AddUpdateRemarkDialog
-import com.example.case_construction.ui.dialog.NoInternetDialog
+import com.example.case_construction.ui.dialog.AddUpdateReworkDialog
 import com.example.case_construction.ui.machine.MachineViewModel
 import com.example.case_construction.utility.AppOnClick
 import com.example.case_construction.utility.Constants
 import com.example.case_construction.utility.PreferenceHelper.currentUser
-import com.example.case_construction.utility.isInternetAvailable
 import com.example.case_construction.utility.pauseClick
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_okol_home.*
@@ -33,7 +29,7 @@ import kotlinx.android.synthetic.main.fragment_search_machine.*
 class OKOLHomeFragment : BaseFragment() {
 
     private lateinit var mAdapter: RemarkAdapter
-    private val remarkList: ArrayList<Remark> = ArrayList()
+    private val reworkList: ArrayList<Rework> = ArrayList()
     private val machineViewModel by viewModels<MachineViewModel>()
     private var mMachineNo = ""
     private var machine = Machine()
@@ -64,17 +60,17 @@ class OKOLHomeFragment : BaseFragment() {
 
             }
         }
-        mAdapter.submitList(remarkList)
+        mAdapter.submitList(reworkList)
 
         rtvAddRemark.setOnClickListener {
             it.pauseClick()
-            AddUpdateRemarkDialog(
+            AddUpdateReworkDialog(
                 requireActivity(),
-                object : AddUpdateRemarkDialog.DialogListener {
-                    override fun onUpdateClick(remark: Remark, type: String) {
-                        remarkList.add(remark)
-                        mAdapter.submitList(remarkList)
-                        mAdapter.notifyItemInserted(remarkList.lastIndex)
+                object : AddUpdateReworkDialog.DialogListener {
+                    override fun onUpdateClick(rework: Rework, type: String) {
+                        reworkList.add(rework)
+                        mAdapter.submitList(reworkList)
+                        mAdapter.notifyItemInserted(reworkList.lastIndex)
                     }
                 }
             ).show()

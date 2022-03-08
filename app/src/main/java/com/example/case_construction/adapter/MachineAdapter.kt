@@ -7,14 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.case_construction.R
-import com.example.case_construction.model.UtilityDTO
 import com.example.case_construction.model.diffs.DiffUtilMachine
-import com.example.case_construction.model.diffs.DiffUtilRemarkDTO
-import com.example.case_construction.model.diffs.DiffUtilUtilityDTO
 import com.example.case_construction.network.api_model.Machine
-import com.example.case_construction.network.api_model.Remark
 import com.example.case_construction.utility.AppOnClick
-import kotlinx.android.synthetic.main.item_list_selection.view.*
 import kotlinx.android.synthetic.main.item_remark.view.*
 
 @SuppressLint("SetTextI18n")

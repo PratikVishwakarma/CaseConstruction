@@ -2,23 +2,20 @@ package com.example.case_construction.ui.dialog
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.view.Window
 import com.example.case_construction.R
 import com.example.case_construction.model.UtilityDTO
-import com.example.case_construction.network.api_model.Remark
-import com.example.case_construction.ui.MainActivity
+import com.example.case_construction.network.api_model.Rework
 import com.example.case_construction.utility.Constants
 import com.example.case_construction.utility.getDummyUtilData
 import com.example.case_construction.utility.pauseClick
 import com.example.case_construction.utility.toast
 import kotlinx.android.synthetic.main.dialog_add_remark.*
-import kotlinx.android.synthetic.main.item_remark.*
 
 @SuppressLint("SetTextI18n")
-class AddUpdateRemarkDialog(
+class AddUpdateReworkDialog(
     val activity: Activity,
     private val listener: DialogListener,
 ) : BaseDialog(activity, R.style.MyThemeDialogSelect), View.OnClickListener {
@@ -26,11 +23,11 @@ class AddUpdateRemarkDialog(
     private var remarkDescription = ""
     private var remarkType = ""
     private var status = Constants.CONST_NOT_OK
-    private val remark = Remark()
+    private val remark = Rework()
 
     interface DialogListener {
         fun onUpdateClick(
-            remark: Remark,
+            rework: Rework,
             type: String
         )
     }

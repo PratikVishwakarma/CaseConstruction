@@ -8,11 +8,9 @@ import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.case_construction.R
 import com.example.case_construction.adapter.RemarkAdapter
-import com.example.case_construction.network.api_model.Remark
+import com.example.case_construction.network.api_model.Rework
 import com.example.case_construction.ui.MainActivity
-import com.example.case_construction.ui.dialog.AddUpdateRemarkDialog
 import com.example.case_construction.utility.AppOnClick
-import com.example.case_construction.utility.pauseClick
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_finishing_home.*
 
@@ -20,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_finishing_home.*
 class FinishingHomeFragment : BaseFragment() {
 
     private lateinit var mAdapter: RemarkAdapter
-    private val remarkList: ArrayList<Remark> = ArrayList()
+    private val reworkList: ArrayList<Rework> = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,7 +41,7 @@ class FinishingHomeFragment : BaseFragment() {
 
             }
         }
-        mAdapter.submitList(remarkList)
+        mAdapter.submitList(reworkList)
 
 
 

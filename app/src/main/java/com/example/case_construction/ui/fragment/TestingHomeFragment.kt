@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.case_construction.R
 import com.example.case_construction.adapter.RemarkAdapter
-import com.example.case_construction.network.api_model.Remark
+import com.example.case_construction.network.api_model.Rework
 import com.example.case_construction.ui.MainActivity
-import com.example.case_construction.ui.dialog.AddUpdateRemarkDialog
+import com.example.case_construction.ui.dialog.AddUpdateReworkDialog
 import com.example.case_construction.utility.AppOnClick
 import com.example.case_construction.utility.pauseClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_testing_home.*
 class TestingHomeFragment : BaseFragment() {
 
     private lateinit var mAdapter: RemarkAdapter
-    private val remarkList: ArrayList<Remark> = ArrayList()
+    private val reworkList: ArrayList<Rework> = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,18 +43,18 @@ class TestingHomeFragment : BaseFragment() {
 
             }
         }
-        mAdapter.submitList(remarkList)
+        mAdapter.submitList(reworkList)
 
 
         rtvAddRemark.setOnClickListener {
             it.pauseClick()
-            AddUpdateRemarkDialog(
+            AddUpdateReworkDialog(
                 requireActivity(),
-                object : AddUpdateRemarkDialog.DialogListener {
-                    override fun onUpdateClick(remark: Remark, type: String) {
-                        remarkList.add(remark)
-                        mAdapter.submitList(remarkList)
-                        mAdapter.notifyItemInserted(remarkList.lastIndex)
+                object : AddUpdateReworkDialog.DialogListener {
+                    override fun onUpdateClick(rework: Rework, type: String) {
+                        reworkList.add(rework)
+                        mAdapter.submitList(reworkList)
+                        mAdapter.notifyItemInserted(reworkList.lastIndex)
                     }
                 }
             ).show()

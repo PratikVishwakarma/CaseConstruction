@@ -34,7 +34,6 @@ class OKOLHomeFragment : BaseFragment() {
     private lateinit var mAdapter: RemarkAdapter
     private val reworkList: ArrayList<Rework> = ArrayList()
     private val machineViewModel by viewModels<MachineViewModel>()
-    private var mMachineNo = ""
     private var machine = Machine()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,6 +87,7 @@ class OKOLHomeFragment : BaseFragment() {
     }
 
     private fun createReworkJson(status: String) {
+        var jsonString = "[]"
         val jsonArray = JSONArray()
         reworkList.forEach {
             if (it.id == "") {
@@ -107,13 +107,14 @@ class OKOLHomeFragment : BaseFragment() {
                 jsonArray.put(jsonObject)
             }
         }
-        updateAndAddMachineStatusByNo(jsonArray.toString(), status)
+        if (jsonArray.length() != 0) jsonString = jsonArray.toString()
+        updateAndAddMachineStatusByNo(jsonString, status)
     }
 
     private fun getMachineByNo() {
         machineViewModel.getMachineByNoVM(
             (activity as MainActivity).defaultPreference.currentUser.id,
-            mMachineNo,
+            machine.machineNo,
             (activity as MainActivity).defaultPreference.currentUser.userType
         )
             .observe(viewLifecycleOwner, Observer {
@@ -147,7 +148,7 @@ class OKOLHomeFragment : BaseFragment() {
         "Rework Status: $status ".printLog(javaClass.name)
         machineViewModel.updateAndAddMachineStatusByNoVM(
             (activity as MainActivity).defaultPreference.currentUser.id,
-            mMachineNo,
+            machine.machineNo,
             (activity as MainActivity).defaultPreference.currentUser.userType,
             status,
             reworkJSON

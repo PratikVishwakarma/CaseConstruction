@@ -27,11 +27,9 @@ class DataRepositories @Inject constructor(private val apiService: ApiService) {
     }
 
     suspend fun updateAndAddMachineStatusByNoRepo(
-        username: String,
-        password: String,
-        userType: String
+        userId: String, machineNo: String, userType: String, status: String, reworkArray: String
     ): SuccessAPIDTO {
-        return apiService.updateAndAddMachineStatusByNo(username, password, userType)
+        return apiService.updateAndAddMachineStatusByNo(userId, machineNo, userType, status, reworkArray)
     }
 
 }

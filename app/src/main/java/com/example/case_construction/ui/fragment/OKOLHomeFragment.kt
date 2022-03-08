@@ -24,6 +24,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_okol_home.*
 import kotlinx.android.synthetic.main.fragment_okol_home.rtvAddRemark
 import kotlinx.android.synthetic.main.fragment_search_machine.*
+import org.json.JSONArray
+import org.json.JSONObject
 
 @AndroidEntryPoint
 class OKOLHomeFragment : BaseFragment() {
@@ -38,6 +40,7 @@ class OKOLHomeFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         machine = bundle?.getSerializable(Constants.CONST_BUNDLE_DATA_1) as Machine
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -75,6 +78,10 @@ class OKOLHomeFragment : BaseFragment() {
                 }
             ).show()
         }
+        rtvOKOLHold.setOnClickListener {
+            it.pauseClick()
+        }
+
 //        if (!requireContext().isInternetAvailable()) {
 //            (activity as MainActivity).showNoNetworkDialog(object :
 //                NoInternetDialog.DialogListener {
@@ -87,48 +94,61 @@ class OKOLHomeFragment : BaseFragment() {
         getData()
     }
 
+    private fun createReworkJson(status: String) {
+        val jsonArray = JSONArray()
+        reworkList.forEach {
+            val jsonObject = JSONObject()
+            jsonObject.put("userid", (activity as MainActivity).defaultPreference.currentUser.id)
+            jsonObject.put(
+                "reworkfrom",
+                (activity as MainActivity).defaultPreference.currentUser.userType
+            )
+            jsonObject.put("machineNo", machine.machineNo)
+            jsonObject.put("reason", it.type)
+            jsonObject.put("rework", it.description)
+            jsonObject.put("status", it.status)
+            jsonArray.put(jsonObject)
+        }
+        updateAndAddMachineStatusByNo(jsonArray.toString(), status)
+    }
+
     private fun getData() {
 
     }
 
 
-
-    private fun getMachineByNo() {
-        machineViewModel.getMachineByNoVM(
+    private fun updateAndAddMachineStatusByNo(reworkJSON: String, status: String) {
+        machineViewModel.updateAndAddMachineStatusByNoVM(
             (activity as MainActivity).defaultPreference.currentUser.id,
             mMachineNo,
-            (activity as MainActivity).defaultPreference.currentUser.userType
-        )
-            .observe(viewLifecycleOwner, Observer {
-                when (it) {
-                    is ResultData.Loading -> {
-                        (requireActivity() as MainActivity).showLoadingDialog()
-                    }
-                    is ResultData.Success -> {
-                        (requireActivity() as MainActivity).hideLoadingDialog()
-                        if (it.data == null) return@Observer
-                        machine = it.data.machine[0]
-                        llMiddleButtons.visibility = View.VISIBLE
-                        machineViewModel.getMachineByNoVM("", "", "")
-                            .removeObservers(requireActivity())
-                    }
-                    is ResultData.NoContent -> {
-                        (requireActivity() as MainActivity).hideLoadingDialog()
-                        machineViewModel.getMachineByNoVM("", "", "")
-                            .removeObservers(requireActivity())
-                    }
-                    is ResultData.Failed -> {
-                        (requireActivity() as MainActivity).hideLoadingDialog()
-                        machineViewModel.getMachineByNoVM("", "", "")
-                            .removeObservers(requireActivity())
-                    }
-                    else -> {}
+            (activity as MainActivity).defaultPreference.currentUser.userType,
+            status,
+            reworkJSON
+        ).observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is ResultData.Loading -> {
+                    (requireActivity() as MainActivity).showLoadingDialog()
                 }
-            })
+                is ResultData.Success -> {
+                    (requireActivity() as MainActivity).hideLoadingDialog()
+                    if (it.data == null) return@Observer
+                    removeAllObservable()
+                }
+                is ResultData.NoContent -> {
+                    (requireActivity() as MainActivity).hideLoadingDialog()
+                    removeAllObservable()
+                }
+                is ResultData.Failed -> {
+                    (requireActivity() as MainActivity).hideLoadingDialog()
+                    removeAllObservable()
+                }
+                else -> {}
+            }
+        })
     }
 
     private fun removeAllObservable() {
-//        viewModel.getCategoryListVM().removeObservers(requireActivity())
+        machineViewModel.updateAndAddMachineStatusByNoVM("","","","","").removeObservers(requireActivity())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

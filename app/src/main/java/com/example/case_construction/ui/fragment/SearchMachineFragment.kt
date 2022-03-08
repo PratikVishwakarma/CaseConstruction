@@ -53,7 +53,6 @@ class SearchMachineFragment : BaseFragment() {
             if (scannerView.visibility == View.VISIBLE)
                 scannerView.visibility = View.GONE
             else checkForCameraPermission()
-//            addDummyMachineNo(SCANNER)
         }
         ivLogout.setOnClickListener {
             it.pauseClick()
@@ -96,21 +95,6 @@ class SearchMachineFragment : BaseFragment() {
             goToHomePageAccordingToUserType()
         }
     }
-//
-//    private fun addDummyMachineNo(from: String = MANUALLY) {
-//        if (lastSearchFrom != from) {
-//            machineList.clear()
-//            mAdapter.notifyDataSetChanged()
-//        }
-//        lastSearchFrom = from
-//        machineList.add(Machine().apply {
-//            id = "${machineList.size + 1}"
-//            machineNo = "XYZ_${machineList.size + 1}"
-//            okolStatus = "OKOL Status ${machineList.size + 1}"
-//            okolStatusDate = "OKOL Date ${machineList.size + 1}"
-//        })
-//        mAdapter.notifyItemInserted(machineList.lastIndex)
-//    }
 
     private fun initializeScanner() {
         scannerView.visibility = View.VISIBLE
@@ -121,6 +105,7 @@ class SearchMachineFragment : BaseFragment() {
                 log(javaClass.name, "Scan result: ${it.text}")
                 mMachineNo = it.text
                 getMachineByNo()
+                scannerView.visibility = View.GONE
             }
         }
         codeScanner!!.startPreview()

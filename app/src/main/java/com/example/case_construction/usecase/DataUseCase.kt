@@ -4,6 +4,7 @@ import com.example.case_construction.model.ResultData
 import com.example.case_construction.network.NetworkConstants
 import com.example.case_construction.network.api_model.BaseURLAPIDTO
 import com.example.case_construction.network.api_model.MachineListAPIDTO
+import com.example.case_construction.network.api_model.SuccessAPIDTO
 import com.example.case_construction.network.api_model.UserListAPIDTO
 import com.example.case_construction.repositories.DataRepositories
 import javax.inject.Inject
@@ -43,6 +44,23 @@ class DataUseCase @Inject constructor(private val dataRepositories: DataReposito
     }
 
     suspend fun getMachineByNoRepo(userId: String, machineNo: String, userType: String): ResultData<MachineListAPIDTO> {
+        return try {
+            val data = dataRepositories.getMachineByNoRepo(userId, machineNo, userType)
+            when (data.status) {
+                NetworkConstants.INT_STATUS_SUCCESS -> ResultData.Success(data)
+                NetworkConstants.INT_STATUS_NO_DATA_AVAILABLE -> {
+                    ResultData.NoContent(data.message)
+                }
+                else -> ResultData.Failed("Something went wrong. Please try again!")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ResultData.Failed("Something went wrong. Please try again!")
+        }
+    }
+
+
+    suspend fun updateAndAddMachineStatusByNoRepo(userId: String, machineNo: String, userType: String): ResultData<SuccessAPIDTO> {
         return try {
             val data = dataRepositories.getMachineByNoRepo(userId, machineNo, userType)
             when (data.status) {

@@ -20,4 +20,13 @@ class MachineViewModel @Inject constructor(private val dataUseCase: DataUseCase)
             emit(dataUseCase.getMachineByNoRepo(userId, machineNo, userType))
         }
     }
+
+
+    fun updateAndAddMachineStatusByNoVM(userId: String, machineNo: String, userType: String): LiveData<ResultData<MachineListAPIDTO>> {
+        return liveData<ResultData<MachineListAPIDTO>> {
+            emit(ResultData.Loading())
+            emit(dataUseCase.getMachineByNoRepo(userId, machineNo, userType))
+        }
+    }
+
 }

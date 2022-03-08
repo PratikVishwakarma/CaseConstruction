@@ -6,25 +6,42 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.case_construction.R
 import com.example.case_construction.adapter.ConfigurationAdapter
 import com.example.case_construction.adapter.RemarkAdapter
+import com.example.case_construction.model.ResultData
 import com.example.case_construction.model.UtilityDTO
+import com.example.case_construction.network.api_model.Machine
 import com.example.case_construction.network.api_model.Remark
 import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.ui.dialog.AddUpdateRemarkDialog
 import com.example.case_construction.ui.dialog.NoInternetDialog
+import com.example.case_construction.ui.machine.MachineViewModel
 import com.example.case_construction.utility.AppOnClick
+import com.example.case_construction.utility.Constants
+import com.example.case_construction.utility.PreferenceHelper.currentUser
 import com.example.case_construction.utility.isInternetAvailable
 import com.example.case_construction.utility.pauseClick
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_okol_home.*
+import kotlinx.android.synthetic.main.fragment_okol_home.rtvAddRemark
+import kotlinx.android.synthetic.main.fragment_search_machine.*
 
 @AndroidEntryPoint
 class OKOLHomeFragment : BaseFragment() {
 
     private lateinit var mAdapter: RemarkAdapter
     private val remarkList: ArrayList<Remark> = ArrayList()
+    private val machineViewModel by viewModels<MachineViewModel>()
+    private var mMachineNo = ""
+    private var machine = Machine()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        machine = bundle?.getSerializable(Constants.CONST_BUNDLE_DATA_1) as Machine
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,13 +66,6 @@ class OKOLHomeFragment : BaseFragment() {
         }
         mAdapter.submitList(remarkList)
 
-        rtvViewConfiguration.setOnClickListener {
-            addFragmentWithBack(
-                ViewConfigurationFragment(),
-                R.id.fragmentContainerView,
-                "ViewConfigurationFragment"
-            )
-        }
         rtvAddRemark.setOnClickListener {
             it.pauseClick()
             AddUpdateRemarkDialog(
@@ -83,6 +93,42 @@ class OKOLHomeFragment : BaseFragment() {
 
     private fun getData() {
 
+    }
+
+
+
+    private fun getMachineByNo() {
+        machineViewModel.getMachineByNoVM(
+            (activity as MainActivity).defaultPreference.currentUser.id,
+            mMachineNo,
+            (activity as MainActivity).defaultPreference.currentUser.userType
+        )
+            .observe(viewLifecycleOwner, Observer {
+                when (it) {
+                    is ResultData.Loading -> {
+                        (requireActivity() as MainActivity).showLoadingDialog()
+                    }
+                    is ResultData.Success -> {
+                        (requireActivity() as MainActivity).hideLoadingDialog()
+                        if (it.data == null) return@Observer
+                        machine = it.data.machine[0]
+                        llMiddleButtons.visibility = View.VISIBLE
+                        machineViewModel.getMachineByNoVM("", "", "")
+                            .removeObservers(requireActivity())
+                    }
+                    is ResultData.NoContent -> {
+                        (requireActivity() as MainActivity).hideLoadingDialog()
+                        machineViewModel.getMachineByNoVM("", "", "")
+                            .removeObservers(requireActivity())
+                    }
+                    is ResultData.Failed -> {
+                        (requireActivity() as MainActivity).hideLoadingDialog()
+                        machineViewModel.getMachineByNoVM("", "", "")
+                            .removeObservers(requireActivity())
+                    }
+                    else -> {}
+                }
+            })
     }
 
     private fun removeAllObservable() {

@@ -1,6 +1,7 @@
 package com.example.case_construction.ui.onboarding
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.print.PrintHelper
 import com.example.case_construction.R
 import com.example.case_construction.adapter.SelectionAdapter
 import com.example.case_construction.model.ResultData
@@ -82,7 +84,6 @@ class LoginFragment : BaseFragment() {
                 edPassword.text.toString().trim()
             )
         }
-//        replaceFragment(LoginFragment(), R.id.fragmentContainerView)
     }
 
     private fun loginWithUserNameAndPassword(username: String, password: String) {
@@ -97,24 +98,6 @@ class LoginFragment : BaseFragment() {
                         (requireActivity() as MainActivity).hideLoadingDialog()
                         (activity as MainActivity).defaultPreference.currentUser = it.data.users[0]
                         "Logged in userType is: ${it.data.users[0].userType}".printLog(javaClass.name)
-//                        when (edUsername.text.toString().trim()) {
-//                            "OKOL" -> replaceFragment(
-//                                OKOLHomeFragment(),
-//                                R.id.fragmentContainerView
-//                            )
-//                            "testing" -> replaceFragment(
-//                                TestingHomeFragment(),
-//                                R.id.fragmentContainerView
-//                            )
-//                            "finishing" -> replaceFragment(
-//                                FinishingHomeFragment(),
-//                                R.id.fragmentContainerView
-//                            )
-//                            else -> replaceFragment(
-//                                SearchMachineFragment(),
-//                                R.id.fragmentContainerView
-//                            )
-//                        }
                         replaceFragment(SearchMachineFragment(), R.id.fragmentContainerView)
                         removeAllObservable()
                     }

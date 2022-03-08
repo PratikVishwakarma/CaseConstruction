@@ -2,6 +2,7 @@ package com.example.case_construction.ui.fragment
 
 
 import android.Manifest
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.print.PrintHelper
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
 import com.example.case_construction.R
@@ -93,6 +95,16 @@ class SearchMachineFragment : BaseFragment() {
         rtvAddRemark.setOnClickListener {
             it.pauseClick()
             goToHomePageAccordingToUserType()
+        }
+        rtvExportData.setOnClickListener {
+            activity?.also { context ->
+                PrintHelper(context).apply {
+                    scaleMode = PrintHelper.SCALE_MODE_FIT
+                }.also { printHelper ->
+                    val bitmap = BitmapFactory.decodeResource(resources, R.drawable.app_logo)
+                    printHelper.printBitmap("droids.jpg - test print", bitmap)
+                }
+            }
         }
     }
 

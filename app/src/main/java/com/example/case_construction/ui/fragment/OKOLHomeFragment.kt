@@ -58,6 +58,7 @@ class OKOLHomeFragment : BaseFragment() {
     private fun initView() {
         (activity as MainActivity).lockUnlockSideNav(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         mAdapter = RemarkAdapter(requireContext())
+        reworkList.addAll(machine.rework)
         rvList.adapter = mAdapter
         mAdapter.appOnClick = object : AppOnClick {
             override fun onClickListener(item: Any, position: Int, view: View?) {
@@ -83,17 +84,6 @@ class OKOLHomeFragment : BaseFragment() {
             it.pauseClick()
             createReworkJson("HOLD")
         }
-
-//        if (!requireContext().isInternetAvailable()) {
-//            (activity as MainActivity).showNoNetworkDialog(object :
-//                NoInternetDialog.DialogListener {
-//                override fun onOkClick() {
-//                    requireActivity().onBackPressed()
-//                }
-//            })
-//            return
-//        }
-        getData()
     }
 
     private fun createReworkJson(status: String) {
@@ -114,8 +104,35 @@ class OKOLHomeFragment : BaseFragment() {
         updateAndAddMachineStatusByNo(jsonArray.toString(), status)
     }
 
-    private fun getData() {
-
+    private fun getMachineByNo() {
+        machineViewModel.getMachineByNoVM(
+            (activity as MainActivity).defaultPreference.currentUser.id,
+            mMachineNo,
+            (activity as MainActivity).defaultPreference.currentUser.userType
+        )
+            .observe(viewLifecycleOwner, Observer {
+                when (it) {
+                    is ResultData.Loading -> {
+                        (requireActivity() as MainActivity).showLoadingDialog()
+                    }
+                    is ResultData.Success -> {
+                        (requireActivity() as MainActivity).hideLoadingDialog()
+                        if (it.data == null) return@Observer
+                        machine = it.data.machine[0]
+                    }
+                    is ResultData.NoContent -> {
+                        (requireActivity() as MainActivity).hideLoadingDialog()
+                        machineViewModel.getMachineByNoVM("", "", "")
+                            .removeObservers(requireActivity())
+                    }
+                    is ResultData.Failed -> {
+                        (requireActivity() as MainActivity).hideLoadingDialog()
+                        machineViewModel.getMachineByNoVM("", "", "")
+                            .removeObservers(requireActivity())
+                    }
+                    else -> {}
+                }
+            })
     }
 
 
@@ -136,6 +153,7 @@ class OKOLHomeFragment : BaseFragment() {
                 is ResultData.Success -> {
                     (requireActivity() as MainActivity).hideLoadingDialog()
                     if (it.data == null) return@Observer
+                    getMachineByNo()
                     removeAllObservable()
                 }
                 is ResultData.NoContent -> {
@@ -152,7 +170,8 @@ class OKOLHomeFragment : BaseFragment() {
     }
 
     private fun removeAllObservable() {
-        machineViewModel.updateAndAddMachineStatusByNoVM("","","","","").removeObservers(requireActivity())
+        machineViewModel.updateAndAddMachineStatusByNoVM("", "", "", "", "")
+            .removeObservers(requireActivity())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

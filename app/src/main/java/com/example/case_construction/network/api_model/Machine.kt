@@ -121,5 +121,8 @@ class Machine : Serializable {
 
     @SerializedName("telematics")
     var telematics = ""
+
+    @SerializedName("rework")
+    var rework : ArrayList<Rework> = ArrayList()
 }
 

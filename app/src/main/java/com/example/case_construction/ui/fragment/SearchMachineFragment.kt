@@ -58,11 +58,7 @@ class SearchMachineFragment : BaseFragment() {
         }
         ivLogout.setOnClickListener {
             it.pauseClick()
-            (activity as MainActivity).finish()
-//            if (scannerView.visibility == View.VISIBLE)
-//                scannerView.visibility = View.GONE
-//            else checkForCameraPermission()
-//            addDummyMachineNo(SCANNER)
+            (activity as MainActivity).logoutUser()
         }
         ivEnterCode.setOnClickListener {
             it.pauseClick()

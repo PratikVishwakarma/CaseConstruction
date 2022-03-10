@@ -15,10 +15,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
 import com.example.case_construction.R
+import com.example.case_construction.network.api_model.UserDTO
 import com.example.case_construction.ui.dialog.ErrorDialog
 import com.example.case_construction.ui.dialog.LoadingDialog
 import com.example.case_construction.ui.dialog.NoInternetDialog
 import com.example.case_construction.ui.fragment.SplashFragment
+import com.example.case_construction.ui.onboarding.LoginFragment
 import com.example.case_construction.ui.onboarding.OnboardViewModel
 import com.example.case_construction.utility.PreferenceHelper
 import com.example.case_construction.utility.PreferenceHelper.currentUser
@@ -124,8 +126,8 @@ class MainActivity : BaseActivity() {
     }
 
     fun logoutUser() {
-
-
+        defaultPreference.currentUser = UserDTO()
+        replaceFragment(LoginFragment(), R.id.fragmentContainerView)
     }
 
     fun updateUserDetailsOnSideNav() {

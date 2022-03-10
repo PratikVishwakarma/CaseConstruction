@@ -34,7 +34,7 @@ interface ApiService {
     @GET(NetworkConstants.URL_UPDATE_REWORK_BY_ID)
     suspend fun updateReworkStatusById(
         @Query("userid") userId: String,
-        @Query("reworkId") reworkId: String,
+        @Query("id") reworkId: String,
         @Query("status") status: String
     ): SuccessAPIDTO
 

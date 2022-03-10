@@ -7,7 +7,7 @@ object NetworkConstants {
     const val URL_LOGIN = "Account/LoginApi"
     const val URL_GET_MACHINE_BY_NO = "Machine/GetMachineNo"
     const val URL_UPDATE_REWORK_AND_STATUS_MACHINE_BY_NO = "Machine/CreateRework"
-    const val URL_UPDATE_REWORK_BY_ID = "Machine/CreateRework"
+    const val URL_UPDATE_REWORK_BY_ID = "Machine/reworkStatusUpdate"
 
 
 

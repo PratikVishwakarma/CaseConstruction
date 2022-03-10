@@ -85,6 +85,10 @@ class OKOLHomeFragment : BaseFragment() {
             it.pauseClick()
             createReworkJson("HOLD")
         }
+        rtvOKOLClear.setOnClickListener {
+            it.pauseClick()
+            createReworkJson("OK")
+        }
     }
 
     private fun createReworkJson(status: String) {

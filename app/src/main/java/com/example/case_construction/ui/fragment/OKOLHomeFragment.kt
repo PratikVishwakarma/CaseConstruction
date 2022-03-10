@@ -52,13 +52,14 @@ class OKOLHomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        getMachineByNo()
     }
 
     private fun initView() {
         (activity as MainActivity).lockUnlockSideNav(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        mAdapter = RemarkAdapter(requireContext())
         reworkList.clear()
         reworkList.addAll(machine.rework)
+        mAdapter = RemarkAdapter(requireContext())
         rvList.adapter = mAdapter
         mAdapter.appOnClick = object : AppOnClick {
             override fun onClickListener(item: Any, position: Int, view: View?) {
@@ -126,6 +127,7 @@ class OKOLHomeFragment : BaseFragment() {
                         (requireActivity() as MainActivity).hideLoadingDialog()
                         if (it.data == null) return@Observer
                         machine = it.data.machine[0]
+                        initView()
                     }
                     is ResultData.NoContent -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()

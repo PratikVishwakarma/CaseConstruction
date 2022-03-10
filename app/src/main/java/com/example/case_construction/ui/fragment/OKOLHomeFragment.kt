@@ -102,7 +102,9 @@ class OKOLHomeFragment : BaseFragment() {
             llBottomButton.visibility = View.VISIBLE
             rtvAddRemark.visibility = View.VISIBLE
             reworkList.clear()
-            reworkList.addAll(machine.rework)
+            reworkList.addAll(
+                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType}
+            )
             mAdapter.submitList(reworkList)
         }
     }

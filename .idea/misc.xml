@@ -4,7 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/activity_main.xml" value="0.16847826086956522" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/dialog_add_remark.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/dialog_enter_machine_no_manually.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/dialog_error.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/dialog_loading.xml" value="0.20416666666666666" />
         <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_login.xml" value="0.16847826086956522" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_okol_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_search_machine.xml" value="0.20416666666666666" />
         <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_splash.xml" value="0.16847826086956522" />
         <entry key="..\:/Projects/Android/CaseConstruction/app/src/main/res/layout/dialog_add_remark.xml" value="0.2" />
         <entry key="..\:/Projects/Android/CaseConstruction/app/src/main/res/layout/dialog_enter_machine_no_manually.xml" value="0.33642261353104724" />

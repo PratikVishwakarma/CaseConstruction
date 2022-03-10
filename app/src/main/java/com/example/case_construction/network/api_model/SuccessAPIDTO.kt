@@ -11,6 +11,6 @@ class SuccessAPIDTO(
     @SerializedName("userid")
     val userId: String,
 
-    @SerializedName("status")
+    @SerializedName("success")
     val status: Int
 )

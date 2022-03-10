@@ -63,9 +63,10 @@ class TestingHomeFragment : BaseFragment() {
         rvList.adapter = mAdapter
         mAdapter.appOnClick = object : AppOnClick {
             override fun onClickListener(item: Any, position: Int, view: View?) {
+                "click 1".printLog(javaClass.name)
                 when (view) {
                     tvStatus -> {
-                        "click 1".printLog(javaClass.name)
+                        "click 2".printLog(javaClass.name)
                         val rework = item as Rework
                         if (rework.status == Constants.CONST_NOT_OK) rework.status =
                             Constants.CONST_OK

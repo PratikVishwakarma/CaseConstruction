@@ -45,7 +45,7 @@ class AddUpdateReworkDialog(
             it.pauseClick()
             SingleItemSelectDialog(
                 activity,
-                "Choose City",
+                "Choose type",
                 object : SingleItemSelectDialog.DialogListener {
                     override fun onConfirmClick(utilityDTO: UtilityDTO) {
                         tvRemarkType.text = utilityDTO.value

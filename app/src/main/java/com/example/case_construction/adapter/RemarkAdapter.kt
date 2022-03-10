@@ -45,6 +45,9 @@ class RemarkAdapter(val context: Context) :
                 itemView.setOnClickListener {
                     appOnClick?.onClickListener(record, position)
                 }
+                itemView.tvStatus.setOnClickListener {
+                    appOnClick?.onClickListener(record, position)
+                }
             }
         }
     }

@@ -25,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_okol_home.*
 import kotlinx.android.synthetic.main.fragment_okol_home.rtvAddRemark
 import kotlinx.android.synthetic.main.fragment_search_machine.*
+import kotlinx.android.synthetic.main.item_remark.*
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -62,7 +63,19 @@ class OKOLHomeFragment : BaseFragment() {
         rvList.adapter = mAdapter
         mAdapter.appOnClick = object : AppOnClick {
             override fun onClickListener(item: Any, position: Int, view: View?) {
-
+                when (view) {
+                    tvStatus -> {
+                        val rework = item as Rework
+                        if (rework.status == Constants.CONST_NOT_OK) rework.status =
+                            Constants.CONST_OK
+                        else rework.status = Constants.CONST_NOT_OK
+                        reworkList[position] = rework
+                        if (rework.id == "0") mAdapter.notifyItemChanged(position)
+                        else {
+                            updateRework(rework.id, rework.status)
+                        }
+                    }
+                }
             }
         }
         rtvAddRemark.setOnClickListener {
@@ -103,7 +116,7 @@ class OKOLHomeFragment : BaseFragment() {
             rtvAddRemark.visibility = View.VISIBLE
             reworkList.clear()
             reworkList.addAll(
-                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType}
+                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType }
             )
             mAdapter.submitList(reworkList)
         }
@@ -180,6 +193,35 @@ class OKOLHomeFragment : BaseFragment() {
             when (it) {
                 is ResultData.Loading -> {
                     (requireActivity() as MainActivity).showLoadingDialog()
+                }
+                is ResultData.Success -> {
+                    (requireActivity() as MainActivity).hideLoadingDialog()
+                    getMachineByNo()
+                    removeAllObservable()
+                }
+                is ResultData.NoContent -> {
+                    (requireActivity() as MainActivity).hideLoadingDialog()
+                    removeAllObservable()
+                }
+                is ResultData.Failed -> {
+                    (requireActivity() as MainActivity).hideLoadingDialog()
+                    removeAllObservable()
+                }
+                else -> {}
+            }
+        })
+    }
+
+    private fun updateRework(reworkId: String, status: String) {
+        "Rework Status: $status ".printLog(javaClass.name)
+        machineViewModel.updateReworkStatusByIdVM(
+            (activity as MainActivity).defaultPreference.currentUser.id,
+            reworkId,
+            status
+        ).observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is ResultData.Loading -> {
+                    (requireActivity() as MainActivity).showLoadingDialog("Updating Rework...")
                 }
                 is ResultData.Success -> {
                     (requireActivity() as MainActivity).hideLoadingDialog()

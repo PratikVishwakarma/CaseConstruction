@@ -45,7 +45,7 @@ class RemarkAdapter(val context: Context) :
             appOnClick?.let { _ ->
                 itemView.tvStatus.setOnClickListener {
                     "click 0".printLog(javaClass.name)
-                    appOnClick?.onClickListener(record, position)
+                    appOnClick?.onClickListener(item= record, position = position, view = it)
                 }
             }
         }

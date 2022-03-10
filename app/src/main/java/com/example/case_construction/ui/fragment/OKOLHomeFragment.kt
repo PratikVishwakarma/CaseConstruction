@@ -64,17 +64,18 @@ class OKOLHomeFragment : BaseFragment() {
         mAdapter.appOnClick = object : AppOnClick {
             override fun onClickListener(item: Any, position: Int, view: View?) {
                 "click 1".printLog(javaClass.name)
-                when (view) {
-                    tvStatus -> {
-                        "click 2".printLog(javaClass.name)
-                        val rework = item as Rework
-                        if (rework.status == Constants.CONST_NOT_OK) rework.status =
-                            Constants.CONST_OK
-                        else rework.status = Constants.CONST_NOT_OK
-                        reworkList[position] = rework
-                        if (rework.id == "0") mAdapter.notifyItemChanged(position)
-                        else {
-                            updateRework(rework.id, rework.status)
+                when (view!!.id) {
+                    R.id.tvStatus -> {
+                        if (machine.stage != (activity as MainActivity).defaultPreference.currentUser.userType) {
+                            val rework = item as Rework
+                            if (rework.status == Constants.CONST_NOT_OK) rework.status =
+                                Constants.CONST_OK
+                            else rework.status = Constants.CONST_NOT_OK
+                            reworkList[position] = rework
+                            if (rework.id == "") mAdapter.notifyItemChanged(position)
+                            else {
+                                updateRework(rework.id, rework.status)
+                            }
                         }
                     }
                 }

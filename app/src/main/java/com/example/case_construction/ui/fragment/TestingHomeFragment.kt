@@ -65,6 +65,7 @@ class TestingHomeFragment : BaseFragment() {
             override fun onClickListener(item: Any, position: Int, view: View?) {
                 when (view) {
                     tvStatus -> {
+                        "click 1".printLog(javaClass.name)
                         val rework = item as Rework
                         if (rework.status == Constants.CONST_NOT_OK) rework.status =
                             Constants.CONST_OK

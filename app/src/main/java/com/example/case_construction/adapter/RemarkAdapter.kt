@@ -13,6 +13,7 @@ import com.example.case_construction.model.diffs.DiffUtilRemarkDTO
 import com.example.case_construction.network.api_model.Rework
 import com.example.case_construction.utility.AppOnClick
 import com.example.case_construction.utility.Constants
+import com.example.case_construction.utility.printLog
 import kotlinx.android.synthetic.main.item_remark.view.*
 
 @SuppressLint("SetTextI18n")
@@ -42,10 +43,8 @@ class RemarkAdapter(val context: Context) :
             }
             itemView.tvStatus.text = record.status
             appOnClick?.let { _ ->
-                itemView.setOnClickListener {
-                    appOnClick?.onClickListener(record, position)
-                }
                 itemView.tvStatus.setOnClickListener {
+                    "click 0".printLog(javaClass.name)
                     appOnClick?.onClickListener(record, position)
                 }
             }

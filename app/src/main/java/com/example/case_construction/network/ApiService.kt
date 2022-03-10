@@ -26,7 +26,7 @@ interface ApiService {
     suspend fun updateAndAddMachineStatusByNo(
         @Query("userid") userId: String,
         @Query("machineNo") machineNo: String,
-        @Query("userType") userType: String,
+        @Query("stage") userType: String,
         @Query("status") status: String,
         @Query("reworkArray") reworkArray: String
     ): SuccessAPIDTO

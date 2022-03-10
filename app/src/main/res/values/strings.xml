@@ -6,9 +6,10 @@
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
     <string name="ok">Ok</string>
+    <string name="OK">OK</string>
     <string name="login">Login</string>
     <string name="view_configuration">View Configuration</string>
-    <string name="add_remark">Add Remark</string>
+    <string name="add_rework">Add Rework</string>
     <string name="description">Description</string>
     <string name="enter_description">Enter Description</string>
     <string name="remark_type">Rework Type</string>

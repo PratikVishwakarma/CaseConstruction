@@ -48,7 +48,9 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edMachineNo"
                     style="@style/addMachineNoEditText"
-                    android:hint="@string/enter_machine_no"/>
+                    android:focusedByDefault="true"
+                    android:focusable="true"
+                    android:hint="@string/enter_machine_no" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 

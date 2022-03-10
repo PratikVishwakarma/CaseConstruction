@@ -12,7 +12,7 @@ import com.example.case_construction.utility.Constants
 import com.example.case_construction.utility.getDummyUtilData
 import com.example.case_construction.utility.pauseClick
 import com.example.case_construction.utility.toast
-import kotlinx.android.synthetic.main.dialog_add_remark.*
+import kotlinx.android.synthetic.main.dialog_add_rework.*
 
 @SuppressLint("SetTextI18n")
 class AddUpdateReworkDialog(
@@ -35,7 +35,7 @@ class AddUpdateReworkDialog(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        setContentView(R.layout.dialog_add_remark)
+        setContentView(R.layout.dialog_add_rework)
         initializeDialog()
         tvUpdate.setOnClickListener(this)
 

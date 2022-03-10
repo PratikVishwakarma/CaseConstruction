@@ -105,7 +105,7 @@
                 android:layout_marginBottom="@dimen/dimen_dp20"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
-                android:text="@string/add_remark"
+                android:text="@string/add_rework"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_18sp"
                 app:rv_backgroundColor="@color/colorPrimary"

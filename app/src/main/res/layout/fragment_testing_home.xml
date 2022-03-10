@@ -44,6 +44,16 @@
         android:orientation="vertical"
         android:paddingTop="@dimen/dimen_dp20">
 
+        <com.flyco.roundview.RoundTextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_dp45"
+            android:layout_marginStart="@dimen/dimen_dp20"
+            android:layout_marginEnd="@dimen/dimen_dp20"
+            android:gravity="center"
+            app:rv_strokeColor="@color/colorPrimary"
+            android:text="OKOL Date"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_18sp" />
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,7 +63,8 @@
                 android:id="@+id/rtvOKOLDate"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dimen_dp45"
-                android:layout_margin="@dimen/dimen_dp20"
+                android:layout_marginStart="@dimen/dimen_dp20"
+                android:layout_marginEnd="@dimen/dimen_dp20"
                 android:layout_weight="1"
                 android:gravity="center"
                 app:rv_strokeColor="@color/colorPrimary"
@@ -66,11 +77,12 @@
                 android:id="@+id/rtvAddRemark"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dimen_dp45"
-                android:layout_margin="@dimen/dimen_dp20"
+                android:layout_marginStart="@dimen/dimen_dp20"
+                android:layout_marginEnd="@dimen/dimen_dp20"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
-                android:text="@string/add_remark"
+                android:text="@string/add_rework"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_18sp"
                 app:rv_backgroundColor="@color/colorPrimary" />
@@ -88,8 +100,11 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llBottomButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:orientation="horizontal">
 
             <com.flyco.roundview.RoundTextView
@@ -117,7 +132,7 @@
                 android:paddingStart="@dimen/dimen_dp12"
                 android:paddingEnd="@dimen/dimen_dp12"
                 android:gravity="center"
-                android:text="@string/okol_clear"
+                android:text="@string/OK"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_18sp"
                 app:rv_backgroundColor="@color/colorPrimary" />

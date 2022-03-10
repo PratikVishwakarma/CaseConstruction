@@ -52,18 +52,19 @@
             android:layout_marginEnd="@dimen/dimen_dp20"
             android:background="@color/colorPrimary"
             android:gravity="center"
-            android:text="@string/add_remark"
+            android:text="@string/add_rework"
             android:visibility="gone"
+            tools:visibility="visible"
             android:textColor="@color/white"
             android:textSize="@dimen/text_18sp"
             app:rv_backgroundColor="@color/colorPrimary"
             app:rv_cornerRadius="@dimen/dimen_dp4" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvList"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
             android:layout_marginTop="@dimen/horizontal_margin_dp16"
             android:layout_weight="1"
             android:background="@color/white"

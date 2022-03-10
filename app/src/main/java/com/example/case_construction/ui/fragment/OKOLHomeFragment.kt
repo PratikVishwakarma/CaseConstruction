@@ -58,7 +58,6 @@ class OKOLHomeFragment : BaseFragment() {
     private fun initView() {
         (activity as MainActivity).lockUnlockSideNav(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         reworkList.clear()
-        reworkList.addAll(machine.rework)
         mAdapter = RemarkAdapter(requireContext())
         rvList.adapter = mAdapter
         mAdapter.appOnClick = object : AppOnClick {
@@ -66,8 +65,6 @@ class OKOLHomeFragment : BaseFragment() {
 
             }
         }
-        mAdapter.submitList(reworkList)
-
         rtvAddRemark.setOnClickListener {
             it.pauseClick()
             AddUpdateReworkDialog(
@@ -88,6 +85,25 @@ class OKOLHomeFragment : BaseFragment() {
         rtvOKOLClear.setOnClickListener {
             it.pauseClick()
             createReworkJson("OK")
+        }
+        setMachineView()
+    }
+
+    private fun setMachineView() {
+        if (machine.stage != (activity as MainActivity).defaultPreference.currentUser.userType) {
+            reworkList.clear()
+            reworkList.addAll(
+                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType && it.status == Constants.CONST_NOT_OK }
+            )
+            mAdapter.submitList(reworkList)
+            llBottomButton.visibility = View.GONE
+            rtvAddRemark.visibility = View.GONE
+        } else {
+            llBottomButton.visibility = View.VISIBLE
+            rtvAddRemark.visibility = View.VISIBLE
+            reworkList.clear()
+            reworkList.addAll(machine.rework)
+            mAdapter.submitList(reworkList)
         }
     }
 

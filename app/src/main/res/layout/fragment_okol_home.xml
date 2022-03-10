@@ -53,6 +53,7 @@
             android:background="@color/colorPrimary"
             android:gravity="center"
             android:text="@string/add_remark"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:textSize="@dimen/text_18sp"
             app:rv_backgroundColor="@color/colorPrimary"
@@ -70,8 +71,11 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llBottomButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:orientation="horizontal">
 
             <com.flyco.roundview.RoundTextView

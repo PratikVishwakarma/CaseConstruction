@@ -167,16 +167,15 @@ class TestingHomeFragment : BaseFragment() {
                         if (it.data == null) return@Observer
                         machine = it.data.machine[0]
                         initView()
+                        removeAllObservable()
                     }
                     is ResultData.NoContent -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
-                        machineViewModel.getMachineByNoVM("", "", "")
-                            .removeObservers(requireActivity())
+                        removeAllObservable()
                     }
                     is ResultData.Failed -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
-                        machineViewModel.getMachineByNoVM("", "", "")
-                            .removeObservers(requireActivity())
+                        removeAllObservable()
                     }
                     else -> {}
                 }
@@ -248,6 +247,8 @@ class TestingHomeFragment : BaseFragment() {
     private fun removeAllObservable() {
         machineViewModel.updateAndAddMachineStatusByNoVM("", "", "", "", "")
             .removeObservers(requireActivity())
+        machineViewModel.getMachineByNoVM("", "", "").removeObservers(requireActivity())
+        machineViewModel.updateReworkStatusByIdVM("", "", "").removeObservers(requireActivity())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

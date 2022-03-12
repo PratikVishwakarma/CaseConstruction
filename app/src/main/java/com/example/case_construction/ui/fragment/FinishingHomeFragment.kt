@@ -103,6 +103,10 @@ class FinishingHomeFragment : BaseFragment() {
             it.pauseClick()
             createReworkJson("HOLD")
         }
+        rtvCPA.setOnClickListener {
+            it.pauseClick()
+            createReworkJson("CPA")
+        }
         rtvClear.setOnClickListener {
             it.pauseClick()
             createReworkJson("OK")

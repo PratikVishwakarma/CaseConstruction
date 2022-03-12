@@ -13,6 +13,7 @@
     tools:context=".ui.fragment.SplashFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appLogo"
         android:layout_width="@dimen/dimen_dp150"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"

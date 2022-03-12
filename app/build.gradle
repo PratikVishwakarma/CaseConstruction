@@ -90,6 +90,9 @@ dependencies {
     // QR Scanner
     implementation 'com.shreyaspatil:EasyUpiPayment:2.0'
 
+    // QR Scanner
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
+
     // View pager indicator
     implementation 'com.tbuonomo:dotsindicator:4.2'
 

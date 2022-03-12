@@ -22,10 +22,7 @@ import com.example.case_construction.utility.PreferenceHelper.currentUser
 import com.example.case_construction.utility.pauseClick
 import com.example.case_construction.utility.printLog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_okol_home.*
-import kotlinx.android.synthetic.main.fragment_okol_home.rtvAddRemark
-import kotlinx.android.synthetic.main.fragment_search_machine.*
-import kotlinx.android.synthetic.main.item_remark.*
+import kotlinx.android.synthetic.main.fragment_pdi_home.*
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -47,7 +44,7 @@ class PDIHomeFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_okol_home, container, false)
+        return inflater.inflate(R.layout.fragment_pdi_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

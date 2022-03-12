@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.print.PrintHelper
@@ -25,7 +24,6 @@ import com.example.case_construction.utility.pauseClick
 import com.example.case_construction.utility.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search_machine.*
-import kotlinx.coroutines.DelicateCoroutinesApi
 
 @AndroidEntryPoint
 class SearchMachineFragment : BaseFragment() {
@@ -93,14 +91,19 @@ class SearchMachineFragment : BaseFragment() {
             goToHomePageAccordingToUserType()
         }
         rtvExportData.setOnClickListener {
-            activity?.also { context ->
-                PrintHelper(context).apply {
-                    scaleMode = PrintHelper.SCALE_MODE_FIT
-                }.also { printHelper ->
-                    val bitmap = BitmapFactory.decodeResource(resources, R.drawable.app_logo)
-                    printHelper.printBitmap("droids.jpg - test print", bitmap)
-                }
-            }
+            addFragmentWithBack(
+                SearchAndExportMachineFragment(),
+                R.id.fragmentContainerView,
+                "SearchAndExportMachineFragment"
+            )
+//            activity?.also { context ->
+//                PrintHelper(context).apply {
+//                    scaleMode = PrintHelper.SCALE_MODE_FIT
+//                }.also { printHelper ->
+//                    val bitmap = BitmapFactory.decodeResource(resources, R.drawable.app_logo)
+//                    printHelper.printBitmap("droids.jpg - test print", bitmap)
+//                }
+//            }
         }
     }
 
@@ -151,11 +154,11 @@ class SearchMachineFragment : BaseFragment() {
                 fragment.setTargetFragment(this@SearchMachineFragment, 1212)
                 addFragmentWithBack(fragment, R.id.fragmentContainerView, "FinishingHomeFragment")
             }
-            Constants.CONST_USERTYPE_PDI -> {
-                val fragment = FinishingHomeFragment()
+            Constants.CONST_USERTYPE_PDI_EXPORT, Constants.CONST_USERTYPE_PDI_DOMESTIC  -> {
+                val fragment = PDIHomeFragment()
                 fragment.bundle = bundle
                 fragment.setTargetFragment(this@SearchMachineFragment, 1212)
-                addFragmentWithBack(fragment, R.id.fragmentContainerView, "FinishingHomeFragment")
+                addFragmentWithBack(fragment, R.id.fragmentContainerView, "PDIHomeFragment")
             }
             else -> {
                 val fragment = OKOLHomeFragment()
@@ -166,8 +169,29 @@ class SearchMachineFragment : BaseFragment() {
         }
     }
 
+    private fun checkPDIType(_machine: Machine, usertype: String){
+        if(_machine.market.toUpperCase() == "INDIA" && usertype == Constants.CONST_USERTYPE_PDI_DOMESTIC){
+            machine = _machine
+            llMiddleButtons.visibility = View.VISIBLE
+            removeObserver()
+        } else if(_machine.market.toUpperCase() == "INDIA" && usertype == Constants.CONST_USERTYPE_PDI_EXPORT){
+            "No machine found".toast(requireContext())
+        } else if(_machine.market.toUpperCase() != "INDIA" && usertype == Constants.CONST_USERTYPE_PDI_EXPORT){
+            machine = _machine
+            llMiddleButtons.visibility = View.VISIBLE
+            removeObserver()
+        } else if(_machine.market.toUpperCase() != "INDIA" && usertype == Constants.CONST_USERTYPE_PDI_DOMESTIC){
+            "No machine found".toast(requireContext())
+        }
+    }
+
+    private  fun removeObserver(){
+        machineViewModel.getMachineByNoVM("", "", "")
+            .removeObservers(requireActivity())
+    }
 
     private fun getMachineByNo() {
+        llMiddleButtons.visibility = View.GONE
         machineViewModel.getMachineByNoVM(
             (activity as MainActivity).defaultPreference.currentUser.id,
             mMachineNo,
@@ -181,20 +205,23 @@ class SearchMachineFragment : BaseFragment() {
                     is ResultData.Success -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
                         if (it.data == null) return@Observer
-                        machine = it.data.machine[0]
-                        llMiddleButtons.visibility = View.VISIBLE
-                        machineViewModel.getMachineByNoVM("", "", "")
-                            .removeObservers(requireActivity())
+                        val userType =
+                            (activity as MainActivity).defaultPreference.currentUser.userType
+                        if(userType == Constants.CONST_USERTYPE_PDI_EXPORT|| userType == Constants.CONST_USERTYPE_PDI_DOMESTIC ){
+                            checkPDIType(it.data.machine[0], userType)
+                        } else {
+                            machine = it.data.machine[0]
+                            llMiddleButtons.visibility = View.VISIBLE
+                           removeObserver()
+                        }
                     }
                     is ResultData.NoContent -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
-                        machineViewModel.getMachineByNoVM("", "", "")
-                            .removeObservers(requireActivity())
+                        removeObserver()
                     }
                     is ResultData.Failed -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
-                        machineViewModel.getMachineByNoVM("", "", "")
-                            .removeObservers(requireActivity())
+                        removeObserver()
                     }
                     else -> {}
                 }

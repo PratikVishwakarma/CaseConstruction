@@ -97,13 +97,24 @@ class PDIHomeFragment : BaseFragment() {
         }
         rtvOKOLClear.setOnClickListener {
             it.pauseClick()
-            createReworkJson("OK")
+
         }
         setMachineView()
     }
 
+    private fun checkPreGTCondition(){
+
+        createReworkJson("GT")
+    }
+
     private fun setMachineView() {
-        if (machine.stage != (activity as MainActivity).defaultPreference.currentUser.userType) {
+        "machine stage: ${machine.stage}".printLog(javaClass.name)
+        "user stage: ${(activity as MainActivity).defaultPreference.currentUser.userType}".printLog(javaClass.name)
+        var userType = (activity as MainActivity).defaultPreference.currentUser.userType
+        if(userType == Constants.CONST_USERTYPE_PDI_EXPORT|| userType == Constants.CONST_USERTYPE_PDI_DOMESTIC )
+            userType = "PDI"
+
+        if (machine.stage != userType) {
             reworkList.clear()
             reworkList.addAll(
                 machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType && it.status == Constants.CONST_NOT_OK }
@@ -115,9 +126,10 @@ class PDIHomeFragment : BaseFragment() {
             llBottomButton.visibility = View.VISIBLE
             rtvAddRemark.visibility = View.VISIBLE
             reworkList.clear()
-            reworkList.addAll(
-                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType }
-            )
+//            reworkList.addAll(
+//                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType }
+//            )
+            reworkList.addAll(machine.rework)
             mAdapter.submitList(reworkList)
         }
     }
@@ -148,10 +160,13 @@ class PDIHomeFragment : BaseFragment() {
     }
 
     private fun getMachineByNo() {
+        var userType = (activity as MainActivity).defaultPreference.currentUser.userType
+        if(userType == Constants.CONST_USERTYPE_PDI_EXPORT|| userType == Constants.CONST_USERTYPE_PDI_DOMESTIC )
+            userType = "PDI"
         machineViewModel.getMachineByNoVM(
             (activity as MainActivity).defaultPreference.currentUser.id,
             machine.machineNo,
-            (activity as MainActivity).defaultPreference.currentUser.userType
+            userType
         )
             .observe(viewLifecycleOwner, Observer {
                 when (it) {

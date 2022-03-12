@@ -176,7 +176,7 @@ class SearchAndExportMachineFragment : BaseFragment() {
                 FinishingHomeFragment(),
                 R.id.fragmentContainerView, "FinishingHomeFragment"
             )
-            Constants.CONST_USERTYPE_PDI -> addFragmentWithBack(
+            Constants.CONST_USERTYPE_PDI_EXPORT, Constants.CONST_USERTYPE_PDI_DOMESTIC -> addFragmentWithBack(
                 FinishingHomeFragment(),
                 R.id.fragmentContainerView, "FinishingHomeFragment"
             )

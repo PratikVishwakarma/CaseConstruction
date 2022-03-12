@@ -127,7 +127,7 @@ class SearchAndExportMachineFragment : BaseFragment() {
 //    }
 
     private fun initializeCustomerList() {
-        mAdapter = MachineAdapter()
+        mAdapter = MachineAdapter(requireContext(), (activity as MainActivity).defaultPreference.currentUser.userType)
         rvList.adapter = mAdapter
         mAdapter.appOnClick = object : AppOnClick {
             override fun onClickListener(item: Any, position: Int, view: View?) {

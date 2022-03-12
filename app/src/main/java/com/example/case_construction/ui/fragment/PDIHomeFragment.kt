@@ -22,12 +22,15 @@ import com.example.case_construction.utility.PreferenceHelper.currentUser
 import com.example.case_construction.utility.pauseClick
 import com.example.case_construction.utility.printLog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_finishing_home.*
+import kotlinx.android.synthetic.main.fragment_okol_home.*
+import kotlinx.android.synthetic.main.fragment_okol_home.rtvAddRemark
+import kotlinx.android.synthetic.main.fragment_search_machine.*
+import kotlinx.android.synthetic.main.item_remark.*
 import org.json.JSONArray
 import org.json.JSONObject
 
 @AndroidEntryPoint
-class FinishingHomeFragment : BaseFragment() {
+class PDIHomeFragment : BaseFragment() {
 
     private lateinit var mAdapter: RemarkAdapter
     private val reworkList: ArrayList<Rework> = ArrayList()
@@ -39,13 +42,12 @@ class FinishingHomeFragment : BaseFragment() {
         machine = bundle?.getSerializable(Constants.CONST_BUNDLE_DATA_1) as Machine
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_finishing_home, container, false)
+        return inflater.inflate(R.layout.fragment_okol_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,53 +55,50 @@ class FinishingHomeFragment : BaseFragment() {
         initView()
         getMachineByNo()
     }
+
     private fun initView() {
         (activity as MainActivity).lockUnlockSideNav(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         reworkList.clear()
-//        mAdapter = RemarkAdapter(requireContext())
-//        rvList.adapter = mAdapter
-//        mAdapter.appOnClick = object : AppOnClick {
-//            override fun onClickListener(item: Any, position: Int, view: View?) {
-//                "click 1".printLog(javaClass.name)
-//                when (view!!.id) {
-//                    R.id.tvStatus -> {
-//                        if (machine.stage != (activity as MainActivity).defaultPreference.currentUser.userType) {
-//                            val rework = item as Rework
-//                            if (rework.status == Constants.CONST_NOT_OK) rework.status =
-//                                Constants.CONST_OK
-//                            else rework.status = Constants.CONST_NOT_OK
-//                            reworkList[position] = rework
-//                            if (rework.id == "") mAdapter.notifyItemChanged(position)
-//                            else {
-//                                updateRework(rework.id, rework.status)
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        rtvAddRemark.setOnClickListener {
-//            it.pauseClick()
-//            AddUpdateReworkDialog(
-//                requireActivity(),
-//                object : AddUpdateReworkDialog.DialogListener {
-//                    override fun onUpdateClick(rework: Rework, type: String) {
-//                        reworkList.add(rework)
-//                        mAdapter.submitList(reworkList)
-//                        mAdapter.notifyItemInserted(reworkList.lastIndex)
-//                    }
-//                }
-//            ).show()
-//        }
-        rtvHold.setOnClickListener {
+        mAdapter = RemarkAdapter(requireContext())
+        rvList.adapter = mAdapter
+        mAdapter.appOnClick = object : AppOnClick {
+            override fun onClickListener(item: Any, position: Int, view: View?) {
+                "click 1".printLog(javaClass.name)
+                when (view!!.id) {
+                    R.id.tvStatus -> {
+                        if (machine.stage != (activity as MainActivity).defaultPreference.currentUser.userType) {
+                            val rework = item as Rework
+                            if (rework.status == Constants.CONST_NOT_OK) rework.status =
+                                Constants.CONST_OK
+                            else rework.status = Constants.CONST_NOT_OK
+                            reworkList[position] = rework
+                            if (rework.id == "") mAdapter.notifyItemChanged(position)
+                            else {
+                                updateRework(rework.id, rework.status)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        rtvAddRemark.setOnClickListener {
+            it.pauseClick()
+            AddUpdateReworkDialog(
+                requireActivity(),
+                object : AddUpdateReworkDialog.DialogListener {
+                    override fun onUpdateClick(rework: Rework, type: String) {
+                        reworkList.add(rework)
+                        mAdapter.submitList(reworkList)
+                        mAdapter.notifyItemInserted(reworkList.lastIndex)
+                    }
+                }
+            ).show()
+        }
+        rtvOKOLHold.setOnClickListener {
             it.pauseClick()
             createReworkJson("HOLD")
         }
-        rtvCPA.setOnClickListener {
-            it.pauseClick()
-            createReworkJson("CPA")
-        }
-        rtvClear.setOnClickListener {
+        rtvOKOLClear.setOnClickListener {
             it.pauseClick()
             createReworkJson("OK")
         }
@@ -107,23 +106,22 @@ class FinishingHomeFragment : BaseFragment() {
     }
 
     private fun setMachineView() {
-        "machine stage: ${machine.stage}".printLog(javaClass.name)
-        "user stage: ${(activity as MainActivity).defaultPreference.currentUser.userType}".printLog(javaClass.name)
-        rtvOKOLDate.text = "OKOL Date: ${machine.oKOLDate}"
         if (machine.stage != (activity as MainActivity).defaultPreference.currentUser.userType) {
             reworkList.clear()
             reworkList.addAll(
                 machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType && it.status == Constants.CONST_NOT_OK }
             )
-//            mAdapter.submitList(reworkList)
+            mAdapter.submitList(reworkList)
             llBottomButton.visibility = View.GONE
+            rtvAddRemark.visibility = View.GONE
         } else {
             llBottomButton.visibility = View.VISIBLE
+            rtvAddRemark.visibility = View.VISIBLE
             reworkList.clear()
             reworkList.addAll(
-                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType}
+                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType }
             )
-//            mAdapter.submitList(reworkList)
+            mAdapter.submitList(reworkList)
         }
     }
 
@@ -168,15 +166,16 @@ class FinishingHomeFragment : BaseFragment() {
                         if (it.data == null) return@Observer
                         machine = it.data.machine[0]
                         initView()
-                        removeAllObservable()
                     }
                     is ResultData.NoContent -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
-                        removeAllObservable()
+                        machineViewModel.getMachineByNoVM("", "", "")
+                            .removeObservers(requireActivity())
                     }
                     is ResultData.Failed -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
-                        removeAllObservable()
+                        machineViewModel.getMachineByNoVM("", "", "")
+                            .removeObservers(requireActivity())
                     }
                     else -> {}
                 }
@@ -216,44 +215,43 @@ class FinishingHomeFragment : BaseFragment() {
         })
     }
 
-//    private fun updateRework(reworkId: String, status: String) {
-//        "Rework Status: $status ".printLog(javaClass.name)
-//        machineViewModel.updateReworkStatusByIdVM(
-//            (activity as MainActivity).defaultPreference.currentUser.id,
-//            reworkId,
-//            status
-//        ).observe(viewLifecycleOwner, Observer {
-//            when (it) {
-//                is ResultData.Loading -> {
-//                    (requireActivity() as MainActivity).showLoadingDialog("Updating Rework...")
-//                }
-//                is ResultData.Success -> {
-//                    (requireActivity() as MainActivity).hideLoadingDialog()
-//                    getMachineByNo()
-//                    removeAllObservable()
-//                }
-//                is ResultData.NoContent -> {
-//                    (requireActivity() as MainActivity).hideLoadingDialog()
-//                    removeAllObservable()
-//                }
-//                is ResultData.Failed -> {
-//                    (requireActivity() as MainActivity).hideLoadingDialog()
-//                    removeAllObservable()
-//                }
-//                else -> {}
-//            }
-//        })
-//    }
+    private fun updateRework(reworkId: String, status: String) {
+        "Rework Status: $status ".printLog(javaClass.name)
+        machineViewModel.updateReworkStatusByIdVM(
+            (activity as MainActivity).defaultPreference.currentUser.id,
+            reworkId,
+            status
+        ).observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is ResultData.Loading -> {
+                    (requireActivity() as MainActivity).showLoadingDialog("Updating Rework...")
+                }
+                is ResultData.Success -> {
+                    (requireActivity() as MainActivity).hideLoadingDialog()
+                    getMachineByNo()
+                    removeAllObservable()
+                }
+                is ResultData.NoContent -> {
+                    (requireActivity() as MainActivity).hideLoadingDialog()
+                    removeAllObservable()
+                }
+                is ResultData.Failed -> {
+                    (requireActivity() as MainActivity).hideLoadingDialog()
+                    removeAllObservable()
+                }
+                else -> {}
+            }
+        })
+    }
 
     private fun removeAllObservable() {
         machineViewModel.updateAndAddMachineStatusByNoVM("", "", "", "", "")
             .removeObservers(requireActivity())
-        machineViewModel.getMachineByNoVM("", "", "").removeObservers(requireActivity())
-        machineViewModel.updateReworkStatusByIdVM("", "", "").removeObservers(requireActivity())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         initView()
     }
+
 }

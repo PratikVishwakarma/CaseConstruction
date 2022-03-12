@@ -18,6 +18,8 @@
     <string name="add">Add</string>
     <string name="okol_hold">OKOL Hold</string>
     <string name="okol_clear">OKOL Clear</string>
+    <string name="pdi_hold">PDI Hold</string>
+    <string name="gt">GT</string>
     <string name="hold">HOLD</string>
     <string name="enter_machine_no">Enter Machine No.</string>
     <string name="machine_list">Machine List</string>

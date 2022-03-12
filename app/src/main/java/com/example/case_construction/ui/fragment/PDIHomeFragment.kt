@@ -16,11 +16,8 @@ import com.example.case_construction.network.api_model.Rework
 import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.ui.dialog.AddUpdateReworkDialog
 import com.example.case_construction.ui.machine.MachineViewModel
-import com.example.case_construction.utility.AppOnClick
-import com.example.case_construction.utility.Constants
+import com.example.case_construction.utility.*
 import com.example.case_construction.utility.PreferenceHelper.currentUser
-import com.example.case_construction.utility.pauseClick
-import com.example.case_construction.utility.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_pdi_home.*
 import org.json.JSONArray
@@ -97,21 +94,30 @@ class PDIHomeFragment : BaseFragment() {
         }
         rtvOKOLClear.setOnClickListener {
             it.pauseClick()
-
+            checkPreGTCondition()
         }
         setMachineView()
     }
 
-    private fun checkPreGTCondition(){
-
-        createReworkJson("GT")
+    private fun checkPreGTCondition() {
+        var isOk = true
+        machine.rework.forEach {
+            if (it.status == Constants.CONST_NOT_OK) {
+                isOk = false
+                return@forEach
+            }
+        }
+        if(isOk) createReworkJson("GT")
+        else "All the rework are not ok".toast(requireContext())
     }
 
     private fun setMachineView() {
         "machine stage: ${machine.stage}".printLog(javaClass.name)
-        "user stage: ${(activity as MainActivity).defaultPreference.currentUser.userType}".printLog(javaClass.name)
+        "user stage: ${(activity as MainActivity).defaultPreference.currentUser.userType}".printLog(
+            javaClass.name
+        )
         var userType = (activity as MainActivity).defaultPreference.currentUser.userType
-        if(userType == Constants.CONST_USERTYPE_PDI_EXPORT|| userType == Constants.CONST_USERTYPE_PDI_DOMESTIC )
+        if (userType == Constants.CONST_USERTYPE_PDI_EXPORT || userType == Constants.CONST_USERTYPE_PDI_DOMESTIC)
             userType = "PDI"
 
         if (machine.stage != userType) {
@@ -126,10 +132,9 @@ class PDIHomeFragment : BaseFragment() {
             llBottomButton.visibility = View.VISIBLE
             rtvAddRemark.visibility = View.VISIBLE
             reworkList.clear()
-//            reworkList.addAll(
-//                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType }
-//            )
-            reworkList.addAll(machine.rework)
+            reworkList.addAll(
+                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType }
+            )
             mAdapter.submitList(reworkList)
         }
     }
@@ -161,7 +166,7 @@ class PDIHomeFragment : BaseFragment() {
 
     private fun getMachineByNo() {
         var userType = (activity as MainActivity).defaultPreference.currentUser.userType
-        if(userType == Constants.CONST_USERTYPE_PDI_EXPORT|| userType == Constants.CONST_USERTYPE_PDI_DOMESTIC )
+        if (userType == Constants.CONST_USERTYPE_PDI_EXPORT || userType == Constants.CONST_USERTYPE_PDI_DOMESTIC)
             userType = "PDI"
         machineViewModel.getMachineByNoVM(
             (activity as MainActivity).defaultPreference.currentUser.id,

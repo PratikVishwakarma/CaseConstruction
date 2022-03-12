@@ -45,6 +45,7 @@
         android:paddingTop="@dimen/dimen_dp20">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llBottomButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

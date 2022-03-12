@@ -23,14 +23,6 @@ import com.example.case_construction.utility.pauseClick
 import com.example.case_construction.utility.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_finishing_home.*
-import kotlinx.android.synthetic.main.fragment_finishing_home.rtvClear
-import kotlinx.android.synthetic.main.fragment_finishing_home.rtvHold
-import kotlinx.android.synthetic.main.fragment_finishing_home.rtvOKOLDate
-import kotlinx.android.synthetic.main.fragment_finishing_home.rvList
-import kotlinx.android.synthetic.main.fragment_okol_home.*
-import kotlinx.android.synthetic.main.fragment_okol_home.llBottomButton
-import kotlinx.android.synthetic.main.fragment_okol_home.rtvAddRemark
-import kotlinx.android.synthetic.main.fragment_testing_home.*
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -115,23 +107,21 @@ class FinishingHomeFragment : BaseFragment() {
     }
 
     private fun setMachineView() {
-        rtvOKOLDate.text = machine.oKOLDate
+        rtvOKOLDate.text = "OKOL Date: ${machine.oKOLDate}"
         if (machine.stage != (activity as MainActivity).defaultPreference.currentUser.userType) {
             reworkList.clear()
             reworkList.addAll(
                 machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType && it.status == Constants.CONST_NOT_OK }
             )
-            mAdapter.submitList(reworkList)
+//            mAdapter.submitList(reworkList)
             llBottomButton.visibility = View.GONE
-            rtvAddRemark.visibility = View.GONE
         } else {
             llBottomButton.visibility = View.VISIBLE
-//            rtvAddRemark.visibility = View.VISIBLE
             reworkList.clear()
             reworkList.addAll(
                 machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType}
             )
-            mAdapter.submitList(reworkList)
+//            mAdapter.submitList(reworkList)
         }
     }
 

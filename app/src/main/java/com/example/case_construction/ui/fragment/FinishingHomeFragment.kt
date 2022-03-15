@@ -15,6 +15,7 @@ import com.example.case_construction.network.api_model.Machine
 import com.example.case_construction.network.api_model.Rework
 import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.ui.dialog.AddUpdateReworkDialog
+import com.example.case_construction.ui.dialog.ErrorDialog
 import com.example.case_construction.ui.machine.MachineViewModel
 import com.example.case_construction.utility.AppOnClick
 import com.example.case_construction.utility.Constants
@@ -103,27 +104,40 @@ class FinishingHomeFragment : BaseFragment() {
             it.pauseClick()
             createReworkJson("OK")
         }
-        setMachineView()
     }
 
     private fun setMachineView() {
         "machine stage: ${machine.stage}".printLog(javaClass.name)
         "user stage: ${(activity as MainActivity).defaultPreference.currentUser.userType}".printLog(javaClass.name)
         rtvOKOLDate.text = "OKOL Date: ${machine.oKOLDate}"
-        if (machine.stage != (activity as MainActivity).defaultPreference.currentUser.userType) {
-            reworkList.clear()
-            reworkList.addAll(
-                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType && it.status == Constants.CONST_NOT_OK }
-            )
-//            mAdapter.submitList(reworkList)
-            llBottomButton.visibility = View.GONE
-        } else {
-            llBottomButton.visibility = View.VISIBLE
-            reworkList.clear()
-            reworkList.addAll(
-                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType}
-            )
-//            mAdapter.submitList(reworkList)
+        when {
+            machine.stage == Constants.CONST_USERTYPE_PDI_GT -> {
+                ErrorDialog(
+                    requireActivity(), object : ErrorDialog.DialogListener {
+                        override fun onOkClick() {
+                            requireActivity().onBackPressed()
+                        }
+
+                    },
+                    "The Machine already get Gate Ticket"
+                ).show()
+            }
+            machine.stage != (activity as MainActivity).defaultPreference.currentUser.userType -> {
+                reworkList.clear()
+                reworkList.addAll(
+                    machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType && it.status == Constants.CONST_NOT_OK }
+                )
+    //            mAdapter.submitList(reworkList)
+                llBottomButton.visibility = View.GONE
+            }
+            else -> {
+                llBottomButton.visibility = View.VISIBLE
+                reworkList.clear()
+                reworkList.addAll(
+                    machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType}
+                )
+    //            mAdapter.submitList(reworkList)
+            }
         }
     }
 
@@ -168,6 +182,7 @@ class FinishingHomeFragment : BaseFragment() {
                         if (it.data == null) return@Observer
                         machine = it.data.machine[0]
                         initView()
+                        setMachineView()
                         removeAllObservable()
                     }
                     is ResultData.NoContent -> {

@@ -201,7 +201,7 @@ class SearchAndExportMachineFragment : BaseFragment() {
                         (requireActivity() as MainActivity).hideLoadingDialog()
                         swipeRefresh.isRefreshing = false
                         if (it.data == null) return@Observer
-                        machineList.clear()
+//                        machineList.clear()
                         machineList.addAll(it.data.machine)
                         initializeCustomerList()
                         machineViewModel.getMachineByNoVM("", "", "").removeObservers(requireActivity())

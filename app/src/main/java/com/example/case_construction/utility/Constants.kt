@@ -13,4 +13,5 @@ object Constants {
     const val CONST_USERTYPE_FINISHING = "FINISH"
     const val CONST_USERTYPE_PDI_EXPORT = "PDI-EXPORT"
     const val CONST_USERTYPE_PDI_DOMESTIC = "PDI-DOMESTIC"
+    const val CONST_USERTYPE_PDI_GT = "PDI-GT"
 }

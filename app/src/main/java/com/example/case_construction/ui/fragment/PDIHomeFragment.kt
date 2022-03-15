@@ -15,6 +15,7 @@ import com.example.case_construction.network.api_model.Machine
 import com.example.case_construction.network.api_model.Rework
 import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.ui.dialog.AddUpdateReworkDialog
+import com.example.case_construction.ui.dialog.ErrorDialog
 import com.example.case_construction.ui.machine.MachineViewModel
 import com.example.case_construction.utility.*
 import com.example.case_construction.utility.PreferenceHelper.currentUser
@@ -96,7 +97,6 @@ class PDIHomeFragment : BaseFragment() {
             it.pauseClick()
             checkPreGTCondition()
         }
-        setMachineView()
     }
 
     private fun checkPreGTCondition() {
@@ -120,22 +120,35 @@ class PDIHomeFragment : BaseFragment() {
         if (userType == Constants.CONST_USERTYPE_PDI_EXPORT || userType == Constants.CONST_USERTYPE_PDI_DOMESTIC)
             userType = "PDI"
 
-        if (machine.stage != userType) {
-            reworkList.clear()
-            reworkList.addAll(
-                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType && it.status == Constants.CONST_NOT_OK }
-            )
-            mAdapter.submitList(reworkList)
-            llBottomButton.visibility = View.GONE
-            rtvAddRemark.visibility = View.GONE
-        } else {
-            llBottomButton.visibility = View.VISIBLE
-            rtvAddRemark.visibility = View.VISIBLE
-            reworkList.clear()
-            reworkList.addAll(
-                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType }
-            )
-            mAdapter.submitList(reworkList)
+        when {
+            machine.stage == Constants.CONST_USERTYPE_PDI_GT -> {
+                ErrorDialog(requireActivity(), object: ErrorDialog.DialogListener{
+                    override fun onOkClick() {
+                        requireActivity().onBackPressed()
+                    }
+
+                },
+                "The Machine already get Gate Ticket").show()
+                return
+            }
+            machine.stage != userType -> {
+                reworkList.clear()
+                reworkList.addAll(
+                    machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType && it.status == Constants.CONST_NOT_OK }
+                )
+                mAdapter.submitList(reworkList)
+                llBottomButton.visibility = View.GONE
+                rtvAddRemark.visibility = View.GONE
+            }
+            else -> {
+                llBottomButton.visibility = View.VISIBLE
+                rtvAddRemark.visibility = View.VISIBLE
+                reworkList.clear()
+                reworkList.addAll(
+                    machine.rework.filter { it.reworkFrom == userType }
+                )
+                mAdapter.submitList(reworkList)
+            }
         }
     }
 
@@ -183,6 +196,7 @@ class PDIHomeFragment : BaseFragment() {
                         if (it.data == null) return@Observer
                         machine = it.data.machine[0]
                         initView()
+                        setMachineView()
                     }
                     is ResultData.NoContent -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
@@ -203,10 +217,13 @@ class PDIHomeFragment : BaseFragment() {
     private fun updateAndAddMachineStatusByNo(reworkJSON: String, status: String) {
         "Rework array: $reworkJSON ".printLog(javaClass.name)
         "Rework Status: $status ".printLog(javaClass.name)
+        var userType = (activity as MainActivity).defaultPreference.currentUser.userType
+        if (userType == Constants.CONST_USERTYPE_PDI_EXPORT || userType == Constants.CONST_USERTYPE_PDI_DOMESTIC)
+            userType = "PDI"
         machineViewModel.updateAndAddMachineStatusByNoVM(
             (activity as MainActivity).defaultPreference.currentUser.id,
             machine.machineNo,
-            (activity as MainActivity).defaultPreference.currentUser.userType,
+            userType,
             status,
             reworkJSON
         ).observe(viewLifecycleOwner, Observer {

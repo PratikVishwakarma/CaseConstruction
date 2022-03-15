@@ -15,6 +15,7 @@ import com.example.case_construction.network.api_model.Machine
 import com.example.case_construction.network.api_model.Rework
 import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.ui.dialog.AddUpdateReworkDialog
+import com.example.case_construction.ui.dialog.ErrorDialog
 import com.example.case_construction.ui.machine.MachineViewModel
 import com.example.case_construction.utility.AppOnClick
 import com.example.case_construction.utility.Constants
@@ -102,26 +103,37 @@ class OKOLHomeFragment : BaseFragment() {
             it.pauseClick()
             createReworkJson("OK")
         }
-        setMachineView()
     }
 
     private fun setMachineView() {
-        if (machine.stage != (activity as MainActivity).defaultPreference.currentUser.userType) {
-            reworkList.clear()
-            reworkList.addAll(
-                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType && it.status == Constants.CONST_NOT_OK }
-            )
-            mAdapter.submitList(reworkList)
-            llBottomButton.visibility = View.GONE
-            rtvAddRemark.visibility = View.GONE
-        } else {
-            llBottomButton.visibility = View.VISIBLE
-            rtvAddRemark.visibility = View.VISIBLE
-            reworkList.clear()
-            reworkList.addAll(
-                machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType }
-            )
-            mAdapter.submitList(reworkList)
+        when {
+            machine.stage == Constants.CONST_USERTYPE_PDI_GT -> {
+                ErrorDialog(requireActivity(), object: ErrorDialog.DialogListener{
+                    override fun onOkClick() {
+                        requireActivity().onBackPressed()
+                    }
+
+                },
+                    "The Machine already get Gate Ticket").show()
+            }
+            machine.stage != (activity as MainActivity).defaultPreference.currentUser.userType -> {
+                reworkList.clear()
+                reworkList.addAll(
+                    machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType && it.status == Constants.CONST_NOT_OK }
+                )
+                mAdapter.submitList(reworkList)
+                llBottomButton.visibility = View.GONE
+                rtvAddRemark.visibility = View.GONE
+            }
+            else -> {
+                llBottomButton.visibility = View.VISIBLE
+                rtvAddRemark.visibility = View.VISIBLE
+                reworkList.clear()
+                reworkList.addAll(
+                    machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType }
+                )
+                mAdapter.submitList(reworkList)
+            }
         }
     }
 
@@ -166,6 +178,7 @@ class OKOLHomeFragment : BaseFragment() {
                         if (it.data == null) return@Observer
                         machine = it.data.machine[0]
                         initView()
+                        setMachineView()
                     }
                     is ResultData.NoContent -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()

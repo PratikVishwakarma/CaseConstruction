@@ -16,8 +16,10 @@ import androidx.lifecycle.Observer
 import com.example.case_construction.R
 import com.example.case_construction.model.ResultData
 import com.example.case_construction.ui.MainActivity
+import com.example.case_construction.ui.dialog.NoInternetDialog
 import com.example.case_construction.ui.fragment.*
 import com.example.case_construction.utility.PreferenceHelper.currentUser
+import com.example.case_construction.utility.isInternetAvailable
 import com.example.case_construction.utility.printLog
 import com.example.case_construction.utility.toast
 import com.google.zxing.WriterException
@@ -55,31 +57,15 @@ class LoginFragment : BaseFragment() {
                 return@setOnClickListener
             }
 
-//            if (edPassword.text.toString() == "123456") {
-////                when (edUsername.text.toString().trim()) {
-////                    "okol" -> replaceFragment(OKOLHomeFragment(), R.id.fragmentContainerView)
-////                    "testing" -> replaceFragment(TestingHomeFragment(), R.id.fragmentContainerView)
-////                    "finishing" -> replaceFragment(
-////                        FinishingHomeFragment(),
-////                        R.id.fragmentContainerView
-////                    )
-////                    else -> replaceFragment(SearchMachineFragment(), R.id.fragmentContainerView)
-////                }
-//                val apply = UserDTO().apply {
-//                    userType = edUsername.text.toString().trim()
-//                }
-//                (activity as MainActivity).defaultPreference.currentUser = apply
-//                replaceFragment(SearchMachineFragment(), R.id.fragmentContainerView)
-//            } else requireActivity().toast("Wrong Password")
-//            if (!requireContext().isInternetAvailable()) {
-//                (activity as MainActivity).showNoNetworkDialog(object :
-//                    NoInternetDialog.DialogListener {
-//                    override fun onOkClick() {
-//
-//                    }
-//                })
-//                return@setOnClickListener
-//            }
+            if (!requireContext().isInternetAvailable()) {
+                (activity as MainActivity).showNoNetworkDialog(object :
+                    NoInternetDialog.DialogListener {
+                    override fun onOkClick() {
+
+                    }
+                })
+                return@setOnClickListener
+            }
             loginWithUserNameAndPassword(
                 edUsername.text.toString().trim(),
                 edPassword.text.toString().trim()

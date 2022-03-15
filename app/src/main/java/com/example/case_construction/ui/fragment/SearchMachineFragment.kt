@@ -154,7 +154,7 @@ class SearchMachineFragment : BaseFragment() {
                 fragment.setTargetFragment(this@SearchMachineFragment, 1212)
                 addFragmentWithBack(fragment, R.id.fragmentContainerView, "FinishingHomeFragment")
             }
-            Constants.CONST_USERTYPE_PDI_EXPORT, Constants.CONST_USERTYPE_PDI_DOMESTIC  -> {
+            Constants.CONST_USERTYPE_PDI_EXPORT, Constants.CONST_USERTYPE_PDI_DOMESTIC -> {
                 val fragment = PDIHomeFragment()
                 fragment.bundle = bundle
                 fragment.setTargetFragment(this@SearchMachineFragment, 1212)
@@ -169,23 +169,23 @@ class SearchMachineFragment : BaseFragment() {
         }
     }
 
-    private fun checkPDIType(_machine: Machine, usertype: String){
-        if(_machine.market.toUpperCase() == "INDIA" && usertype == Constants.CONST_USERTYPE_PDI_DOMESTIC){
+    private fun checkPDIType(_machine: Machine, usertype: String) {
+        if (_machine.market.toUpperCase() == "INDIA" && usertype == Constants.CONST_USERTYPE_PDI_DOMESTIC) {
             machine = _machine
             llMiddleButtons.visibility = View.VISIBLE
             removeObserver()
-        } else if(_machine.market.toUpperCase() == "INDIA" && usertype == Constants.CONST_USERTYPE_PDI_EXPORT){
+        } else if (_machine.market.toUpperCase() == "INDIA" && usertype == Constants.CONST_USERTYPE_PDI_EXPORT) {
             "No machine found".toast(requireContext())
-        } else if(_machine.market.toUpperCase() != "INDIA" && usertype == Constants.CONST_USERTYPE_PDI_EXPORT){
+        } else if (_machine.market.toUpperCase() != "INDIA" && usertype == Constants.CONST_USERTYPE_PDI_EXPORT) {
             machine = _machine
             llMiddleButtons.visibility = View.VISIBLE
             removeObserver()
-        } else if(_machine.market.toUpperCase() != "INDIA" && usertype == Constants.CONST_USERTYPE_PDI_DOMESTIC){
+        } else if (_machine.market.toUpperCase() != "INDIA" && usertype == Constants.CONST_USERTYPE_PDI_DOMESTIC) {
             "No machine found".toast(requireContext())
         }
     }
 
-    private  fun removeObserver(){
+    private fun removeObserver() {
         machineViewModel.getMachineByNoVM("", "", "")
             .removeObservers(requireActivity())
     }
@@ -207,12 +207,12 @@ class SearchMachineFragment : BaseFragment() {
                         if (it.data == null) return@Observer
                         val userType =
                             (activity as MainActivity).defaultPreference.currentUser.userType
-                        if(userType == Constants.CONST_USERTYPE_PDI_EXPORT|| userType == Constants.CONST_USERTYPE_PDI_DOMESTIC ){
+                        if (userType == Constants.CONST_USERTYPE_PDI_EXPORT || userType == Constants.CONST_USERTYPE_PDI_DOMESTIC) {
                             checkPDIType(it.data.machine[0], userType)
                         } else {
                             machine = it.data.machine[0]
                             llMiddleButtons.visibility = View.VISIBLE
-                           removeObserver()
+                            removeObserver()
                         }
                     }
                     is ResultData.NoContent -> {

@@ -1,7 +1,9 @@
 package com.example.case_construction.utility
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
@@ -11,9 +13,22 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import com.example.case_construction.R
 import com.example.case_construction.model.UtilityDTO
 import com.example.case_construction.network.api_model.Machine
+import com.example.case_construction.network.api_model.Rework
+import com.example.case_construction.ui.MainActivity
+import com.example.case_construction.utility.PreferenceHelper.currentUser
+import org.apache.poi.ss.usermodel.*
+import org.apache.poi.xssf.usermodel.IndexedColorMap
+import org.apache.poi.xssf.usermodel.XSSFColor
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.apache.xmlbeans.UserType
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -99,6 +114,71 @@ fun getDummyUtilData(): ArrayList<UtilityDTO> {
     return data
 }
 
+
+fun getDummyMachineData(): ArrayList<Machine> {
+    val data: ArrayList<Machine> = ArrayList()
+    val machine = Machine()
+    machine.machineNo = "123"
+    machine.oKOLStatus = "OK"
+    machine.oKOLDate = "10-03-2022"
+    machine.testingStatus = "OK"
+    machine.testingDate = "10-03-2022"
+    machine.finishStatus = "OK"
+    machine.finishDate = "10-03-2022"
+    machine.pdiStatus = "GT"
+    machine.rework.add(Rework().apply {
+        this.type = "Value 1"
+        this.description = "${Constants.CONST_USERTYPE_OKOL} 1st rework"
+        this.reworkFrom = Constants.CONST_USERTYPE_OKOL
+        this.status = "Ok"
+    })
+    machine.rework.add(Rework().apply {
+        this.type = "Value 1"
+        this.description = "${Constants.CONST_USERTYPE_OKOL} 2nd rework"
+        this.reworkFrom = Constants.CONST_USERTYPE_OKOL
+        this.status = "Not Ok"
+    })
+    machine.rework.add(Rework().apply {
+        this.type = "Value 1"
+        this.description = "${Constants.CONST_USERTYPE_TESTING}  1st rework"
+        this.reworkFrom = Constants.CONST_USERTYPE_TESTING
+        this.status = "Ok"
+    })
+    machine.rework.add(Rework().apply {
+        this.type = "Value 1"
+        this.description = "${Constants.CONST_USERTYPE_TESTING} 2nd rework"
+        this.reworkFrom = Constants.CONST_USERTYPE_TESTING
+        this.status = "Not Ok"
+    })
+    machine.rework.add(Rework().apply {
+        this.type = "Value 1"
+        this.description = "${Constants.CONST_USERTYPE_FINISHING} 1st rework"
+        this.reworkFrom = Constants.CONST_USERTYPE_FINISHING
+        this.status = "Ok"
+    })
+    machine.rework.add(Rework().apply {
+        this.type = "Value 1"
+        this.description = "${Constants.CONST_USERTYPE_FINISHING} 2nd rework"
+        this.reworkFrom = Constants.CONST_USERTYPE_FINISHING
+        this.status = "Not Ok"
+    })
+    machine.rework.add(Rework().apply {
+        this.type = "Value 1"
+        this.description = "$Constants.CONST_USERTYPE_PDI_DOMESTIC 1st rework"
+        this.reworkFrom = Constants.CONST_USERTYPE_PDI_DOMESTIC
+        this.status = "Ok"
+    })
+    machine.rework.add(Rework().apply {
+        this.type = "Value 1"
+        this.description = "$Constants.CONST_USERTYPE_PDI_DOMESTIC 2nd rework"
+        this.reworkFrom = Constants.CONST_USERTYPE_PDI_DOMESTIC
+        this.status = "Not Ok"
+    })
+    data.add(machine)
+    data.add(machine)
+    return data
+}
+
 fun getConfigurationData(machine: Machine): ArrayList<UtilityDTO> {
     val data: ArrayList<UtilityDTO> = ArrayList()
     data.add(UtilityDTO(false, "Days Plan", machine.daysPlan, 8))
@@ -128,3 +208,256 @@ fun getConfigurationData(machine: Machine): ArrayList<UtilityDTO> {
     data.add(UtilityDTO(false, "Market", machine.market, 8))
     return data
 }
+
+
+fun createWorkbook(machineList: ArrayList<Machine>, userType: String): Workbook {
+    // Creating excel workbook
+    val workbook = XSSFWorkbook()
+
+    //Creating first sheet inside workbook
+    //Constants.SHEET_NAME is a string value of sheet name
+    val sheet: Sheet = workbook.createSheet("FactorySheet")
+
+    //Create Header Cell Style
+    val cellStyle = getHeaderStyle(workbook)
+
+    if (machineList.isNotEmpty()) {
+        var index = 0
+        //Creating sheet header row
+        createSheetHeader(cellStyle, sheet)
+        //Adding data to the sheet
+//        addData(index, sheet, userType)
+        index++
+        machineList.forEach {
+            addData(index, sheet, userType, it, workbook)
+            index++
+            index = addBlankReworkData(index, sheet, userType, it, workbook)
+        }
+    }
+
+    return workbook
+}
+
+
+private fun createSheetHeader(cellStyle: CellStyle, sheet: Sheet) {
+    //setHeaderStyle is a custom function written below to add header style
+
+    //Create sheet first row
+    val row = sheet.createRow(0)
+
+    //Header list
+    val HEADER_LIST = listOf("Machine No.", "Status", "Date", "Rework")
+
+    //Loop to populate each column of header row
+    for ((index, value) in HEADER_LIST.withIndex()) {
+
+        val columnWidth = (15 * 500)
+
+        //index represents the column number
+        sheet.setColumnWidth(index, columnWidth)
+
+        //Create cell
+        val cell = row.createCell(index)
+
+        //value represents the header value from HEADER_LIST
+        cell?.setCellValue(value)
+
+        //Apply style to cell
+        cell.cellStyle = cellStyle
+    }
+}
+
+private fun getHeaderStyle(workbook: Workbook): CellStyle {
+
+    //Cell style for header row
+    val cellStyle: CellStyle = workbook.createCellStyle()
+
+    //Apply cell color
+    val colorMap: IndexedColorMap = (workbook as XSSFWorkbook).stylesSource.indexedColors
+    var color = XSSFColor(IndexedColors.RED, colorMap).indexed
+    cellStyle.fillForegroundColor = color
+    cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND)
+
+    //Apply font style on cell text
+    val whiteFont = workbook.createFont()
+    color = XSSFColor(IndexedColors.WHITE, colorMap).indexed
+    whiteFont.color = color
+    whiteFont.bold = true
+    cellStyle.setFont(whiteFont)
+
+
+    return cellStyle
+}
+
+private fun getOkRemarkStyle(workbook: Workbook, statusColor: IndexedColors): CellStyle {
+    //Cell style for header row
+    val cellStyle: CellStyle = workbook.createCellStyle()
+
+    //Apply cell color
+    val colorMap: IndexedColorMap = (workbook as XSSFWorkbook).stylesSource.indexedColors
+    var color = XSSFColor(IndexedColors.RED, colorMap).indexed
+//    cellStyle.fillForegroundColor = color
+//    cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND)
+
+    //Apply font style on cell text
+    val whiteFont = workbook.createFont()
+    color = XSSFColor(statusColor, colorMap).indexed
+    whiteFont.color = color
+    if(statusColor != IndexedColors.BLACK) whiteFont.bold = true
+    cellStyle.setFont(whiteFont)
+    return cellStyle
+}
+
+private fun addData(
+    rowIndex: Int,
+    sheet: Sheet,
+    userType: String,
+    machine: Machine,
+    workbook: Workbook
+) {
+
+    //Create row based on row index
+    val row = sheet.createRow(rowIndex)
+
+    var value1 = ""
+    var value2 = ""
+    when (userType) {
+        Constants.CONST_USERTYPE_OKOL -> {
+            value1 = machine.oKOLStatus
+            value2 = machine.oKOLDate
+        }
+        Constants.CONST_USERTYPE_TESTING -> {
+            value1 = machine.testingStatus
+            value2 = machine.testingDate
+        }
+        Constants.CONST_USERTYPE_FINISHING -> {
+            value1 = machine.finishStatus
+            value2 = machine.finishDate
+        }
+        Constants.CONST_USERTYPE_PDI_DOMESTIC, Constants.CONST_USERTYPE_PDI_EXPORT -> {
+            value1 = machine.pdiStatus
+            value2 = machine.lineUpDate
+        }
+    }
+    //Add data to each cell
+    createCell(row, 0, machine.machineNo, workbook = workbook) //Column 2
+    createCell(row, 2, value2, workbook = workbook) //Column 3
+    createCell(row, 3, "", workbook = workbook) //Column 3
+    if (value1 == Constants.CONST_NOT_OK)
+        createCell(row, 1, value1, IndexedColors.RED, workbook)
+    else
+        createCell(row, 1, value1, IndexedColors.GREEN, workbook)
+}
+
+private fun addBlankReworkData(
+    rowIndex: Int,
+    sheet: Sheet,
+    userType: String,
+    machine: Machine,
+    workbook: Workbook
+): Int {
+    var index = rowIndex
+    var userTypePDI = userType
+    if (userType == Constants.CONST_USERTYPE_PDI_EXPORT || userType == Constants.CONST_USERTYPE_PDI_DOMESTIC)
+        userTypePDI = "PDI"
+    machine.rework.filter { it.reworkFrom == userTypePDI }.forEach {
+        //Create row based on row index
+        val row = sheet.createRow(index)
+//Add data to each cell
+        if (it.status == Constants.CONST_NOT_OK) createCell(
+            row,
+            3,
+            "${it.description} - ${it.status}",
+            IndexedColors.RED,
+            workbook
+        )
+        else createCell(
+            row,
+            3,
+            "${it.description} - ${it.status}",
+            IndexedColors.GREEN,
+            workbook
+        ) //Column 3
+        index++
+    }
+    return index
+}
+
+private fun createCell(
+    row: Row,
+    columnIndex: Int,
+    value: String?,
+    status: IndexedColors = IndexedColors.BLACK,
+    workbook: Workbook
+) {
+    val cell = row.createCell(columnIndex)
+    cell?.setCellValue(value)
+    cell.cellStyle = getOkRemarkStyle(workbook, status)
+}
+
+
+fun createExcel(workbook: Workbook, activity: Activity) {
+    val TAG = "Util.Function"
+    //Get App Director, APP_DIRECTORY_NAME is a string
+    val appDirectory = activity.getExternalFilesDir("case_construction_sheet")
+    appDirectory.toString().printLog(TAG)
+    if (appDirectory == null) {
+        "0 Make dir ".printLog(TAG)
+    }
+    //Check App Directory whether it exists or not, create if not.
+    if (appDirectory != null && !appDirectory.exists()) {
+        appDirectory.mkdirs()
+        "1 Make dir ".printLog(TAG)
+    }
+
+    try {
+        "2 Make dir ".printLog(TAG)
+        //Create excel file with extension .xlsx
+        val excelFile =
+            File(appDirectory, SimpleDateFormat("yyyyMMdd_HHmmss").format(Date()) + ".xlsx")
+        excelFile.absolutePath.printLog(TAG)
+
+        //Write workbook to file using FileOutputStream
+
+        val fileOut = FileOutputStream(excelFile)
+        workbook.write(fileOut)
+        fileOut.flush()
+        fileOut.close()
+        startFileShareIntent(excelFile.absolutePath, activity)
+    } catch (e: FileNotFoundException) {
+        e.printStackTrace()
+    } catch (e: Exception) {
+        e.printStackTrace()
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+}
+
+private fun startFileShareIntent(
+    filePath: String,
+    activity: Activity
+) { // pass the file path where the actual file is located.
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type =
+            "*/*"  // "*/*" will accepts all types of files, if you want specific then change it on your need.
+//            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+//            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        putExtra(
+            Intent.EXTRA_SUBJECT,
+            "Sharing file from the AppName"
+        )
+        putExtra(
+            Intent.EXTRA_TEXT,
+            "Sharing file from the AppName with some description"
+        )
+        val fileURI = FileProvider.getUriForFile(
+            activity, activity.packageName + ".fileprovider",
+            File(filePath)
+        )
+        putExtra(Intent.EXTRA_STREAM, fileURI)
+    }
+
+    activity.startActivity(Intent.createChooser(shareIntent, null))
+}
+    

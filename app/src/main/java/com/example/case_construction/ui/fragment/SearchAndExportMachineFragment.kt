@@ -2,12 +2,10 @@ package com.example.case_construction.ui.fragment
 
 
 import android.Manifest
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.budiyev.android.codescanner.CodeScanner
@@ -23,18 +21,13 @@ import com.example.case_construction.utility.*
 import com.example.case_construction.utility.PreferenceHelper.currentUser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search_and_export_machine.*
+import kotlinx.android.synthetic.main.fragment_search_and_export_machine.ivEnterCode
+import kotlinx.android.synthetic.main.fragment_search_and_export_machine.ivLogout
+import kotlinx.android.synthetic.main.fragment_search_and_export_machine.ivScanner
+import kotlinx.android.synthetic.main.fragment_search_and_export_machine.scannerView
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import org.apache.poi.ss.usermodel.*
-import org.apache.poi.xssf.usermodel.IndexedColorMap
-import org.apache.poi.xssf.usermodel.XSSFColor
-import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.IOException
-import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
@@ -92,7 +85,6 @@ class SearchAndExportMachineFragment : BaseFragment() {
                     override fun onDoneClick(machineNo: String) {
                         mMachineNo = machineNo
                         getMachineByNo()
-//                        addDummyMachineNo()
                     }
                 }
             ).show()
@@ -103,17 +95,16 @@ class SearchAndExportMachineFragment : BaseFragment() {
             GlobalScope.async {
                 createExcel(
                     createWorkbook(
-                        getDummyMachineData(),
+                        machineList,
                         (activity as MainActivity).defaultPreference.currentUser.userType
                     ), requireActivity()
                 )
             }
         }
-        initializeCustomerList()
-//        getCustomerList()
-//        swipeRefresh.setOnRefreshListener {
-//            getMachineByNo()
-//        }
+        initializeMachineList()
+        swipeRefresh.setOnRefreshListener {
+            swipeRefresh.isRefreshing=false
+        }
     }
 //
 //    private fun addDummyMachineNo(from: String = MANUALLY) {
@@ -131,7 +122,7 @@ class SearchAndExportMachineFragment : BaseFragment() {
 //        mAdapter.notifyItemInserted(machineList.lastIndex)
 //    }
 
-    private fun initializeCustomerList() {
+    private fun initializeMachineList() {
         mAdapter = MachineAdapter(
             requireContext(),
             (activity as MainActivity).defaultPreference.currentUser.userType
@@ -150,10 +141,10 @@ class SearchAndExportMachineFragment : BaseFragment() {
         if (codeScanner == null) codeScanner = CodeScanner(requireContext(), scannerView)
         codeScanner!!.decodeCallback = DecodeCallback {
             requireActivity().runOnUiThread {
-                requireActivity().toast("Scan result: ${it.text}")
                 log(javaClass.name, "Scan result: ${it.text}")
                 mMachineNo = it.text
-                goToHomePageAccordingToUserType()
+                getMachineByNo()
+                scannerView.visibility = View.GONE
             }
         }
         codeScanner!!.startPreview()
@@ -199,6 +190,7 @@ class SearchAndExportMachineFragment : BaseFragment() {
 
 
     private fun getMachineByNo() {
+        if(!checkIfMachineExist()) return
         machineViewModel.getMachineByNoVM(
             (activity as MainActivity).defaultPreference.currentUser.id,
             mMachineNo,
@@ -213,9 +205,7 @@ class SearchAndExportMachineFragment : BaseFragment() {
                         (requireActivity() as MainActivity).hideLoadingDialog()
                         swipeRefresh.isRefreshing = false
                         if (it.data == null) return@Observer
-//                        machineList.clear()
-                        machineList.addAll(it.data.machine)
-                        initializeCustomerList()
+                        checkPreInsertCondition(it.data.machine[0])
                         machineViewModel.getMachineByNoVM("", "", "")
                             .removeObservers(requireActivity())
                     }
@@ -232,6 +222,29 @@ class SearchAndExportMachineFragment : BaseFragment() {
                     else -> {}
                 }
             })
+    }
+
+    private fun checkIfMachineExist() : Boolean {
+        val filter = machineList.filter { it.machineNo == mMachineNo }
+        return filter.isEmpty()
+    }
+
+    private fun checkPreInsertCondition(machine:Machine){
+        val preSize = machineList.size
+        when ((activity as MainActivity).defaultPreference.currentUser.userType) {
+            Constants.CONST_USERTYPE_OKOL -> machineList.add(machine)
+            Constants.CONST_USERTYPE_TESTING ->
+                if(machine.testingStatus.isNotBlank()) machineList.add(machine)
+            Constants.CONST_USERTYPE_FINISHING ->
+                if(machine.finishStatus.isNotBlank()) machineList.add(machine)
+            Constants.CONST_USERTYPE_PDI_EXPORT,
+            Constants.CONST_USERTYPE_PDI_DOMESTIC,
+            Constants.CONST_USERTYPE_PDI_GT -> if(machine.pdiStatus.isNotBlank()) machineList.add(machine)
+        }
+        if(preSize == machineList.size)
+            "Machine is not yet on your line".toast(requireContext())
+        else initializeMachineList()
+
     }
 
 }

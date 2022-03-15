@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.case_construction.R
 import com.example.case_construction.model.diffs.DiffUtilMachine
 import com.example.case_construction.network.api_model.Machine
+import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.utility.AppOnClick
+import com.example.case_construction.utility.Constants
+import com.example.case_construction.utility.PreferenceHelper.currentUser
 import com.example.case_construction.utility.printLog
 import kotlinx.android.synthetic.main.item_machine.view.*
 
@@ -29,23 +32,50 @@ class MachineAdapter(val context: Context, val userType: String) :
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(record: Machine, position: Int) {
-            itemView.tvDescription.text = record.machineNo
-            itemView.tvType.text = record.oKOLStatus
-            itemView.tvStatus.text = record.oKOLDate
-            val filter = record.rework.filter {
-                it.reworkFrom == userType
+        fun bind(machine: Machine, position: Int) {
+            itemView.tvMachineNo.text = machine.machineNo
+            var userTypePDI = userType
+            if (userType == Constants.CONST_USERTYPE_PDI_EXPORT || userType == Constants.CONST_USERTYPE_PDI_DOMESTIC)
+                userTypePDI = "PDI"
+            var value1 = ""
+            var value2 = ""
+            when (userType) {
+                Constants.CONST_USERTYPE_OKOL -> {
+                    value1 = machine.oKOLStatus
+                    value2 = machine.oKOLDate
+                }
+                Constants.CONST_USERTYPE_TESTING -> {
+                    value1 = machine.testingStatus
+                    value2 = machine.testingDate
+                }
+                Constants.CONST_USERTYPE_FINISHING -> {
+                    value1 = machine.finishStatus
+                    value2 = machine.finishDate
+                }
+                Constants.CONST_USERTYPE_PDI_DOMESTIC, Constants.CONST_USERTYPE_PDI_EXPORT -> {
+                    value1 = machine.pdiStatus
+                    value2 = machine.pdiDate
+                }
+            }
+            itemView.tvStage.text = value1
+            itemView.tvDate.text = value2
+            val filter = machine.rework.filter {
+                it.reworkFrom == userTypePDI
             }
             "filtered list size: ${filter.size}".printLog(javaClass.name)
-            val mAdapter = RemarkAdapter(context)
-            mAdapter.submitList(filter)
-            itemView.rvListRework.adapter = mAdapter
-//            appOnClick?.let { _ ->
-//                itemView.setOnClickListener {
-//                    appOnClick?.onClickListener(record, position)
-//                }
-//            }
-            mAdapter.notifyItemRangeInserted(0, filter.lastIndex)
+            "filtered list size usertype: $value2".printLog(javaClass.name)
+            "filtered list size usertype: $userType".printLog(javaClass.name)
+            if(filter.isEmpty()){
+                itemView.tvNoRecord.visibility = View.VISIBLE
+                itemView.rvListRework.visibility = View.GONE
+            }
+            else {
+                itemView.tvNoRecord.visibility = View.GONE
+                itemView.rvListRework.visibility = View.VISIBLE
+                val mAdapter = RemarkAdapter(context)
+                mAdapter.submitList(filter)
+                itemView.rvListRework.adapter = mAdapter
+            }
         }
     }
 

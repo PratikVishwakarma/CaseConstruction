@@ -119,6 +119,9 @@ class Machine : Serializable {
     @SerializedName("pdiStatus")
     var pdiStatus = ""
 
+    @SerializedName("pdiDate")
+    var pdiDate = ""
+
     @SerializedName("telematics")
     var telematics = ""
 

@@ -334,9 +334,9 @@ private fun addData(
             value1 = machine.finishStatus
             value2 = machine.finishDate
         }
-        Constants.CONST_USERTYPE_PDI_DOMESTIC, Constants.CONST_USERTYPE_PDI_EXPORT -> {
+        Constants.CONST_USERTYPE_PDI_DOMESTIC, Constants.CONST_USERTYPE_PDI_EXPORT, Constants.CONST_USERTYPE_PDI_GT -> {
             value1 = machine.pdiStatus
-            value2 = machine.lineUpDate
+            value2 = machine.pdiDate
         }
     }
     //Add data to each cell

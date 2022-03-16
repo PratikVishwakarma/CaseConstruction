@@ -16,6 +16,7 @@ import com.example.case_construction.model.ResultData
 import com.example.case_construction.network.api_model.Machine
 import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.ui.dialog.EnterMachineNoManuallyDialog
+import com.example.case_construction.ui.dialog.SelectDateDialog
 import com.example.case_construction.ui.machine.MachineViewModel
 import com.example.case_construction.utility.*
 import com.example.case_construction.utility.PreferenceHelper.currentUser
@@ -70,11 +71,15 @@ class SearchAndExportMachineFragment : BaseFragment() {
         }
         ivLogout.setOnClickListener {
             it.pauseClick()
-            (activity as MainActivity).finish()
-//            if (scannerView.visibility == View.VISIBLE)
-//                scannerView.visibility = View.GONE
-//            else checkForCameraPermission()
-//            addDummyMachineNo(SCANNER)
+            SelectDateDialog(
+                requireActivity(),
+                object : SelectDateDialog.DialogListener{
+                    override fun onDoneClick(date: String) {
+                        "selected date $date".toast(requireContext())
+                    }
+
+                }
+            ).show()
         }
         ivEnterCode.setOnClickListener {
             it.pauseClick()

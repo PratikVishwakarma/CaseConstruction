@@ -24,4 +24,6 @@
     <string name="enter_machine_no">Enter Machine No.</string>
     <string name="machine_list">Machine List</string>
     <string name="export_data">Export Data</string>
+    <string name="shortage_reason">Shortage Reason</string>
+    <string name="enter_reason">Enter Reason</string>
 </resources>

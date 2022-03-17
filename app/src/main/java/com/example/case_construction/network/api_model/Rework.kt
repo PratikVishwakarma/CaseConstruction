@@ -19,6 +19,9 @@ class Rework {
     @SerializedName("reworkFrom")
     var reworkFrom = ""
 
+    @SerializedName("shortageReason")
+    var shortageReason = ""
+
     @SerializedName("status")
     var status = ""
 }

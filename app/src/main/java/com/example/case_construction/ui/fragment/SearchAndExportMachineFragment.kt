@@ -67,7 +67,6 @@ class SearchAndExportMachineFragment : BaseFragment() {
             if (scannerView.visibility == View.VISIBLE)
                 scannerView.visibility = View.GONE
             else checkForCameraPermission()
-//            addDummyMachineNo(SCANNER)
         }
         ivLogout.setOnClickListener {
             it.pauseClick()
@@ -76,6 +75,7 @@ class SearchAndExportMachineFragment : BaseFragment() {
                 object : SelectDateDialog.DialogListener{
                     override fun onDoneClick(date: String) {
                         "selected date $date".toast(requireContext())
+                        getMachineData(date)
                     }
 
                 }
@@ -89,7 +89,8 @@ class SearchAndExportMachineFragment : BaseFragment() {
                 object : EnterMachineNoManuallyDialog.DialogListener {
                     override fun onDoneClick(machineNo: String) {
                         mMachineNo = machineNo
-                        getMachineByNo()
+                        if(!checkIfMachineExist()) return
+                        getMachineData()
                     }
                 }
             ).show()
@@ -111,21 +112,6 @@ class SearchAndExportMachineFragment : BaseFragment() {
             swipeRefresh.isRefreshing=false
         }
     }
-//
-//    private fun addDummyMachineNo(from: String = MANUALLY) {
-//        if (lastSearchFrom != from) {
-//            machineList.clear()
-//            mAdapter.notifyDataSetChanged()
-//        }
-//        lastSearchFrom = from
-//        machineList.add(Machine().apply {
-//            id = "${machineList.size + 1}"
-//            machineNo = "XYZ_${machineList.size + 1}"
-//            okolStatus = "OKOL Status ${machineList.size + 1}"
-//            okolStatusDate = "OKOL Date ${machineList.size + 1}"
-//        })
-//        mAdapter.notifyItemInserted(machineList.lastIndex)
-//    }
 
     private fun initializeMachineList() {
         mAdapter = MachineAdapter(
@@ -148,7 +134,8 @@ class SearchAndExportMachineFragment : BaseFragment() {
             requireActivity().runOnUiThread {
                 log(javaClass.name, "Scan result: ${it.text}")
                 mMachineNo = it.text
-                getMachineByNo()
+                if(!checkIfMachineExist()) return@runOnUiThread
+                getMachineData()
                 scannerView.visibility = View.GONE
             }
         }
@@ -194,14 +181,20 @@ class SearchAndExportMachineFragment : BaseFragment() {
     }
 
 
-    private fun getMachineByNo() {
-        if(!checkIfMachineExist()) return
-        machineViewModel.getMachineByNoVM(
+    private fun getMachineData(date:String = "") {
+        var machineByNoVM = machineViewModel.getMachineByNoVM(
             (activity as MainActivity).defaultPreference.currentUser.id,
             mMachineNo,
             (activity as MainActivity).defaultPreference.currentUser.userType
         )
-            .observe(viewLifecycleOwner, Observer {
+        if(date.isNotBlank())
+            machineByNoVM = machineViewModel.getMachineByStatusAndDate(
+                (activity as MainActivity).defaultPreference.currentUser.id,
+                mMachineNo,
+                (activity as MainActivity).defaultPreference.currentUser.userType,
+                date
+            )
+        machineByNoVM.observe(viewLifecycleOwner, Observer {
                 when (it) {
                     is ResultData.Loading -> {
                         (requireActivity() as MainActivity).showLoadingDialog()
@@ -210,19 +203,17 @@ class SearchAndExportMachineFragment : BaseFragment() {
                         (requireActivity() as MainActivity).hideLoadingDialog()
                         swipeRefresh.isRefreshing = false
                         if (it.data == null) return@Observer
-                        checkPreInsertCondition(it.data.machine[0])
-                        machineViewModel.getMachineByNoVM("", "", "")
-                            .removeObservers(requireActivity())
+                        if(it.data.machine.isEmpty()) return@Observer
+                        checkPreInsertCondition(it.data.machine)
+                        machineByNoVM.removeObservers(requireActivity())
                     }
                     is ResultData.NoContent -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
-                        machineViewModel.getMachineByNoVM("", "", "")
-                            .removeObservers(requireActivity())
+                        machineByNoVM.removeObservers(requireActivity())
                     }
                     is ResultData.Failed -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
-                        machineViewModel.getMachineByNoVM("", "", "")
-                            .removeObservers(requireActivity())
+                        machineByNoVM.removeObservers(requireActivity())
                     }
                     else -> {}
                 }
@@ -234,17 +225,31 @@ class SearchAndExportMachineFragment : BaseFragment() {
         return filter.isEmpty()
     }
 
-    private fun checkPreInsertCondition(machine:Machine){
+
+    private fun checkPreInsertCondition(machines:List<Machine>){
         val preSize = machineList.size
-        when ((activity as MainActivity).defaultPreference.currentUser.userType) {
-            Constants.CONST_USERTYPE_OKOL -> machineList.add(machine)
-            Constants.CONST_USERTYPE_TESTING ->
-                if(machine.testingStatus.isNotBlank()) machineList.add(machine)
-            Constants.CONST_USERTYPE_FINISHING ->
-                if(machine.finishStatus.isNotBlank()) machineList.add(machine)
-            Constants.CONST_USERTYPE_PDI_EXPORT,
-            Constants.CONST_USERTYPE_PDI_DOMESTIC,
-            Constants.CONST_USERTYPE_PDI_GT -> if(machine.pdiStatus.isNotBlank()) machineList.add(machine)
+        machines.forEach { machine ->
+            var isExist = false
+            machineList.forEach {
+                if(it.machineNo == machine.machineNo){
+                    isExist = true
+                    return@forEach
+                }
+            }
+            if(isExist) return@forEach
+            if(!machineList.contains(machine))
+                when ((activity as MainActivity).defaultPreference.currentUser.userType) {
+                    Constants.CONST_USERTYPE_OKOL -> machineList.add(machine)
+                    Constants.CONST_USERTYPE_TESTING ->
+                        if (machine.testingStatus.isNotBlank()) machineList.add(machine)
+                    Constants.CONST_USERTYPE_FINISHING ->
+                        if (machine.finishStatus.isNotBlank()) machineList.add(machine)
+                    Constants.CONST_USERTYPE_PDI_EXPORT,
+                    Constants.CONST_USERTYPE_PDI_DOMESTIC,
+                    Constants.CONST_USERTYPE_PDI_GT -> if (machine.pdiStatus.isNotBlank()) machineList.add(
+                        machine
+                    )
+                }
         }
         if(preSize == machineList.size)
             "Machine is not yet on your line".toast(requireContext())

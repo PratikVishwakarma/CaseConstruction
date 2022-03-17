@@ -21,12 +21,20 @@ class MachineViewModel @Inject constructor(private val dataUseCase: DataUseCase)
         }
     }
 
+    fun getMachineByStatusAndDate(userId: String, machineNo: String, userType: String, date: String): LiveData<ResultData<MachineListAPIDTO>> {
+        return liveData<ResultData<MachineListAPIDTO>> {
+            emit(ResultData.Loading())
+            emit(dataUseCase.getMachineByStatusAndDateUseCase(userId, machineNo, userType, date))
+        }
+    }
+
     fun updateAndAddMachineStatusByNoVM(userId: String, machineNo: String, userType: String, status: String, reworkArray: String): LiveData<ResultData<SuccessAPIDTO>> {
         return liveData<ResultData<SuccessAPIDTO>> {
             emit(ResultData.Loading())
             emit(dataUseCase.updateAndAddMachineStatusByNoUseCase(userId, machineNo, userType, status, reworkArray))
         }
     }
+
     fun updateReworkStatusByIdVM(userId: String, reworkId: String, status: String): LiveData<ResultData<SuccessAPIDTO>> {
         return liveData<ResultData<SuccessAPIDTO>> {
             emit(ResultData.Loading())

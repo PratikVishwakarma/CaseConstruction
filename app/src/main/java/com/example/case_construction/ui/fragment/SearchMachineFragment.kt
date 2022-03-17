@@ -96,14 +96,6 @@ class SearchMachineFragment : BaseFragment() {
                 R.id.fragmentContainerView,
                 "SearchAndExportMachineFragment"
             )
-//            activity?.also { context ->
-//                PrintHelper(context).apply {
-//                    scaleMode = PrintHelper.SCALE_MODE_FIT
-//                }.also { printHelper ->
-//                    val bitmap = BitmapFactory.decodeResource(resources, R.drawable.app_logo)
-//                    printHelper.printBitmap("droids.jpg - test print", bitmap)
-//                }
-//            }
         }
     }
 

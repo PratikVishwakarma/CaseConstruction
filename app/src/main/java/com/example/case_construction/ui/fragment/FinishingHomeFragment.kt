@@ -159,6 +159,7 @@ class FinishingHomeFragment : BaseFragment() {
                 jsonObject.put("reason", it.type)
                 jsonObject.put("rework", it.description)
                 jsonObject.put("status", it.status)
+                jsonObject.put("shortageReason", it.shortageReason)
                 jsonArray.put(jsonObject)
             }
         }

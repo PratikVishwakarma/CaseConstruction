@@ -34,7 +34,7 @@ class SelectDateDialog(
             Calendar.getInstance().get(Calendar.YEAR),
             Calendar.getInstance().get(Calendar.MONTH),
             Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-        ) { p0, year, month, day -> selectedDate = "$year/$month/$day" }
+        ) { p0, year, month, day -> selectedDate = "$year/${month + 1}/$day" }
     }
 
 

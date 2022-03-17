@@ -59,6 +59,22 @@ class DataUseCase @Inject constructor(private val dataRepositories: DataReposito
         }
     }
 
+    suspend fun getMachineByStatusAndDateUseCase(userId: String, machineNo: String, userType: String, date: String): ResultData<MachineListAPIDTO> {
+        return try {
+            val data = dataRepositories.getMachineByStatusAndDateRepo(userId, machineNo, userType, date)
+            when (data.status) {
+                NetworkConstants.INT_STATUS_SUCCESS -> ResultData.Success(data)
+                NetworkConstants.INT_STATUS_NO_DATA_AVAILABLE -> {
+                    ResultData.NoContent(data.message)
+                }
+                else -> ResultData.Failed("Something went wrong. Please try again!")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ResultData.Failed("Something went wrong. Please try again!")
+        }
+    }
+
 
     suspend fun updateAndAddMachineStatusByNoUseCase(userId: String, machineNo: String, userType: String, status: String, reworkArray: String): ResultData<SuccessAPIDTO> {
         return try {

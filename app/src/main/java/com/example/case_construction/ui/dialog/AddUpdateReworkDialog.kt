@@ -9,7 +9,7 @@ import com.example.case_construction.R
 import com.example.case_construction.model.UtilityDTO
 import com.example.case_construction.network.api_model.Rework
 import com.example.case_construction.utility.Constants
-import com.example.case_construction.utility.getDummyUtilData
+import com.example.case_construction.utility.getReworkTypeDataList
 import com.example.case_construction.utility.pauseClick
 import com.example.case_construction.utility.toast
 import kotlinx.android.synthetic.main.dialog_add_rework.*
@@ -20,7 +20,6 @@ class AddUpdateReworkDialog(
     private val listener: DialogListener,
 ) : BaseDialog(activity, R.style.MyThemeDialogSelect), View.OnClickListener {
 
-    private var remarkDescription = ""
     private var remarkType = ""
     private var status = Constants.CONST_NOT_OK
     private val remark = Rework()
@@ -49,10 +48,13 @@ class AddUpdateReworkDialog(
                 object : SingleItemSelectDialog.DialogListener {
                     override fun onConfirmClick(utilityDTO: UtilityDTO) {
                         tvRemarkType.text = utilityDTO.value
+                        if(utilityDTO.value == "Shortage")
+                            llShortageReason.visibility = View.VISIBLE
+                        else llShortageReason.visibility = View.GONE
                         remarkType = utilityDTO.subValue
                     }
                 },
-                getDummyUtilData()
+                getReworkTypeDataList()
             ).show()
         }
         swIsOkay.setOnCheckedChangeListener { _, b ->
@@ -62,15 +64,6 @@ class AddUpdateReworkDialog(
             swIsOkay.text = status
         }
     }
-
-//
-//    private fun getCityList(): ArrayList<UtilityDTO> {
-//        val cityList = ArrayList<UtilityDTO>()
-//        (activity as MainActivity).defaultPreference.baseData.city.forEach {
-//            cityList.add(UtilityDTO(false, it.cityName, it.id))
-//        }
-//        return cityList
-//    }
 
 
     override fun onClick(v: View?) {
@@ -85,6 +78,7 @@ class AddUpdateReworkDialog(
                         remark.description = edRemarkDescription.text.toString().trim()
                         remark.type = remarkType
                         remark.status = swIsOkay.text.toString().trim()
+                        remark.shortageReason = edShortageReason.text.toString().trim()
                         listener.onUpdateClick(
                             remark,
                             ""
@@ -102,6 +96,10 @@ class AddUpdateReworkDialog(
     private fun validation(): Boolean {
         if (edRemarkDescription.text.toString().isBlank()) {
             edRemarkDescription.error = "Required"
+            return false
+        }
+        if (edRemarkDescription.text.toString() == "Shortage" && edShortageReason.text.toString().isEmpty()) {
+            edShortageReason.error = "Required"
             return false
         }
         if (remarkType.isBlank()) {

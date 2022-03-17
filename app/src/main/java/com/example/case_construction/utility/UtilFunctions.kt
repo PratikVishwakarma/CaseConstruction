@@ -5,14 +5,21 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.Point
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.Display
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
 import androidx.core.content.FileProvider
 import com.example.case_construction.R
 import com.example.case_construction.model.UtilityDTO
@@ -20,6 +27,8 @@ import com.example.case_construction.network.api_model.Machine
 import com.example.case_construction.network.api_model.Rework
 import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.utility.PreferenceHelper.currentUser
+import com.google.zxing.WriterException
+import kotlinx.android.synthetic.main.fragment_login.*
 import org.apache.poi.ss.usermodel.*
 import org.apache.poi.xssf.usermodel.IndexedColorMap
 import org.apache.poi.xssf.usermodel.XSSFColor
@@ -99,18 +108,13 @@ fun isToday(date: Date): Boolean {
     return Date().day == date.day
 }
 
-fun getDummyUtilData(): ArrayList<UtilityDTO> {
+fun getReworkTypeDataList(): ArrayList<UtilityDTO> {
     val data: ArrayList<UtilityDTO> = ArrayList()
-    data.add(UtilityDTO(false, "Heading 0", "Value 0", 8))
-    data.add(UtilityDTO(false, "Heading 1", "Value 1", 8))
-    data.add(UtilityDTO(false, "Heading 2", "Value 2", 8))
-    data.add(UtilityDTO(false, "Heading 3", "Value 3", 8))
-    data.add(UtilityDTO(false, "Heading 4", "Value 4", 8))
-    data.add(UtilityDTO(false, "Heading 5", "Value 5", 8))
-    data.add(UtilityDTO(false, "Heading 6", "Value 6", 8))
-    data.add(UtilityDTO(false, "Heading 7", "Value 7", 8))
-    data.add(UtilityDTO(false, "Heading 8", "Value 8", 8))
-    data.add(UtilityDTO(false, "Heading 9", "Value 9", 8))
+    data.add(UtilityDTO(false, "Shortage", "Shortage", 0))
+    data.add(UtilityDTO(false, "Assembly", "Assembly", 1))
+    data.add(UtilityDTO(false, "Quality", "Quality", 2))
+    data.add(UtilityDTO(false, "Paintshop", "Paintshop", 3))
+    data.add(UtilityDTO(false, "Fabrication", "Fabrication", 4))
     return data
 }
 
@@ -367,14 +371,14 @@ private fun addBlankReworkData(
         if (it.status == Constants.CONST_NOT_OK) createCell(
             row,
             3,
-            "${it.description} - ${it.status}",
+            "${it.description} - ${it.shortageReason}",
             IndexedColors.RED,
             workbook
         )
         else createCell(
             row,
             3,
-            "${it.description} - ${it.status}",
+            "${it.description}",
             IndexedColors.GREEN,
             workbook
         ) //Column 3
@@ -460,4 +464,61 @@ private fun startFileShareIntent(
 
     activity.startActivity(Intent.createChooser(shareIntent, null))
 }
-    
+
+
+fun createQRCode(context: Context, text: String): Bitmap?{
+    var bitmap: Bitmap? = null
+
+    // below line is for getting
+    // the windowmanager service.
+    // below line is for getting
+    // the windowmanager service.
+    val manager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager?
+
+    // initializing a variable for default display.
+
+    // initializing a variable for default display.
+    val display: Display = manager!!.defaultDisplay
+
+    // creating a variable for point which
+    // is to be displayed in QR Code.
+
+    // creating a variable for point which
+    // is to be displayed in QR Code.
+    val point = Point()
+    display.getSize(point)
+
+    // getting width and
+    // height of a point
+
+    // getting width and
+    // height of a point
+    val width: Int = point.x
+    val height: Int = point.y
+
+    // generating dimension from width and height.
+
+    // generating dimension from width and height.
+    var dimen = if (width < height) width else height
+    dimen = dimen * 3 / 4
+
+    // setting this dimensions inside our qr code
+    // encoder to generate our qr code.
+
+    // setting this dimensions inside our qr code
+    // encoder to generate our qr code.
+    val qrgEncoder = QRGEncoder(text, null, QRGContents.Type.TEXT, dimen)
+    try {
+        // getting our qrcode in the form of bitmap.
+        bitmap = qrgEncoder.encodeAsBitmap()
+        return bitmap
+        // the bitmap is set inside our image
+        // view using .setimagebitmap method.
+
+    } catch (e: WriterException) {
+        // this method is called for
+        // exception handling.
+        e.toString().printLog("QR CODE Generator")
+    }
+    return bitmap
+}

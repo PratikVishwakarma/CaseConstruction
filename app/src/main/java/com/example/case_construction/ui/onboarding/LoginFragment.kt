@@ -88,6 +88,11 @@ class LoginFragment : BaseFragment() {
                         replaceFragment(SearchMachineFragment(), R.id.fragmentContainerView)
                         removeAllObservable()
                     }
+                    is ResultData.NoContent -> {
+                        (requireActivity() as MainActivity).hideLoadingDialog()
+                        "${it.message}".toast(requireActivity())
+                        removeAllObservable()
+                    }
                     is ResultData.Failed -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
                         removeAllObservable()

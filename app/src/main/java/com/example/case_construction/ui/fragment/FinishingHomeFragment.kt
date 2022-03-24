@@ -1,6 +1,7 @@
 package com.example.case_construction.ui.fragment
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.print.PrintHelper
 import com.example.case_construction.R
 import com.example.case_construction.adapter.RemarkAdapter
 import com.example.case_construction.model.ResultData
@@ -16,12 +18,10 @@ import com.example.case_construction.network.api_model.Rework
 import com.example.case_construction.ui.MainActivity
 import com.example.case_construction.ui.dialog.AddUpdateReworkDialog
 import com.example.case_construction.ui.dialog.ErrorDialog
+import com.example.case_construction.ui.dialog.ShowQrCodeDataDialog
 import com.example.case_construction.ui.machine.MachineViewModel
-import com.example.case_construction.utility.AppOnClick
-import com.example.case_construction.utility.Constants
+import com.example.case_construction.utility.*
 import com.example.case_construction.utility.PreferenceHelper.currentUser
-import com.example.case_construction.utility.pauseClick
-import com.example.case_construction.utility.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_finishing_home.*
 import org.json.JSONArray
@@ -34,6 +34,7 @@ class FinishingHomeFragment : BaseFragment() {
     private val reworkList: ArrayList<Rework> = ArrayList()
     private val machineViewModel by viewModels<MachineViewModel>()
     private var machine = Machine()
+    private var isFirstTime = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -181,7 +182,38 @@ class FinishingHomeFragment : BaseFragment() {
                     is ResultData.Success -> {
                         (requireActivity() as MainActivity).hideLoadingDialog()
                         if (it.data == null) return@Observer
+                        if(it.data.machine.isEmpty())return@Observer
                         machine = it.data.machine[0]
+                        if(!isFirstTime){
+                            val qrCodeData = getQRCodeData(
+                                machine,
+                                (activity as MainActivity).defaultPreference.currentUser.userType
+                            )
+                            "QRCODEDATA: ${qrCodeData.first}".printLog(javaClass.name)
+                            "QRCODEDATA: ${qrCodeData.second}".printLog(javaClass.name)
+                            val createQRCode = createQRCode(requireContext(), qrCodeData.first)
+                            if(createQRCode != null){
+                                ShowQrCodeDataDialog(
+                                    requireActivity(),
+                                    createQRCode,
+                                    qrCodeData.second,
+                                    object : ShowQrCodeDataDialog.DialogListener{
+                                        override fun onDoneClick(bitmap: Bitmap) {
+                                            activity?.also { context ->
+                                                PrintHelper(context).apply {
+                                                    scaleMode = PrintHelper.SCALE_MODE_FIT
+                                                    orientation = PrintHelper.ORIENTATION_PORTRAIT
+                                                }.also { printHelper ->
+//                                                    val bitmap = BitmapFactory.decodeResource(resources, R.drawable.app_logo)
+                                                    printHelper.printBitmap("droids.jpg - test print", bitmap)
+                                                }
+                                            }
+                                        }
+                                    }
+                                ).show()
+                            }
+                        }
+                        isFirstTime = false
                         initView()
                         setMachineView()
                         removeAllObservable()

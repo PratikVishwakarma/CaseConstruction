@@ -38,8 +38,10 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 fun String.toast(context: Context, duration: Int = Toast.LENGTH_SHORT): Toast {
@@ -213,6 +215,54 @@ fun getConfigurationData(machine: Machine): ArrayList<UtilityDTO> {
     return data
 }
 
+fun getQRCodeData(machine: Machine, userType: String): Pair<String, String> {
+    var userTypePDI = userType
+    if (userType == Constants.CONST_USERTYPE_PDI_EXPORT || userType == Constants.CONST_USERTYPE_PDI_DOMESTIC)
+        userTypePDI = "PDI"
+    var bottomText = ""
+    var qrText = machine.machineNo + "-"
+    when(userTypePDI){
+        Constants.CONST_USERTYPE_OKOL -> {
+            bottomText = "${machine.machineNo}${machine.oKOLStatus}${getDateForPrint(machine.oKOLDate)}-${getDateForPrint(machine.lineUpDate)}"
+            qrText += "${machine.oKOLStatus}${getDateForPrint(machine.oKOLDate)}-"
+        }
+        Constants.CONST_USERTYPE_TESTING -> {
+            bottomText = "${machine.machineNo}${machine.testingStatus}${getDateForPrint(machine.testingDate)}-${getDateForPrint(machine.lineUpDate)}"
+            qrText += "${machine.testingStatus}${getDateForPrint(machine.testingDate)}-"
+        }
+        Constants.CONST_USERTYPE_FINISHING -> {
+            bottomText = "${machine.machineNo}${machine.finishStatus}${getDateForPrint(machine.finishDate)}-${getDateForPrint(machine.lineUpDate)}"
+            qrText += "${machine.finishStatus}${getDateForPrint(machine.finishDate)}-"
+        }
+        Constants.CONST_USERTYPE_PDI_DOMESTIC, Constants.CONST_USERTYPE_PDI_EXPORT, Constants.CONST_USERTYPE_PDI_GT -> {
+            bottomText = "${machine.machineNo}${machine.pdiStatus}${getDateForPrint(machine.pdiDate)}-${getDateForPrint(machine.lineUpDate)}"
+            qrText += "${machine.pdiStatus}${getDateForPrint(machine.pdiDate)}-"
+        }
+    }
+    qrText += getReworkText(machine.rework.filter { it.reworkFrom == userTypePDI })
+    return Pair(qrText, bottomText)
+}
+
+fun getDateForPrint(date: String): String{
+    return try {
+        val split = date.split("-")
+        val last = split.last().drop(2)
+        "${split[0]}${split[1]}$last"
+    } catch (e: Exception) {
+        date.replace("-","")
+    }
+
+}
+
+fun getReworkText(reworks: List<Rework>): String{
+    var sRework = ""
+    reworks.forEach {
+        sRework += it.description
+        sRework += if(it.status == Constants.CONST_NOT_OK) " not ok, "
+        else ", "
+    }
+    return sRework.trim().dropLast(1)
+}
 
 fun createWorkbook(machineList: ArrayList<Machine>, userType: String): Workbook {
     // Creating excel workbook

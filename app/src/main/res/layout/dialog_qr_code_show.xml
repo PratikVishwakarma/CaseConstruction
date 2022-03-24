@@ -35,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:text="Machine No."
+                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_18sp"
                 android:textStyle="bold" />
@@ -52,6 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:startYear="2020" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvText"
                     android:layout_width="match_parent"

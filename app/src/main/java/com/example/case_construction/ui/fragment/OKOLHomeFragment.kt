@@ -181,19 +181,24 @@ class OKOLHomeFragment : BaseFragment() {
                         if(it.data.machine.isEmpty())return@Observer
                         machine = it.data.machine[0]
                         if(!isFirstTime){
-                            val QRText = machine.machineNo+machine.oKOLStatus
-                            val createQRCode = createQRCode(requireContext(), QRText)
+                            val qrCodeData = getQRCodeData(
+                                machine,
+                                (activity as MainActivity).defaultPreference.currentUser.userType
+                            )
+                            "QRCODEDATA: ${qrCodeData.first}".printLog(javaClass.name)
+                            "QRCODEDATA: ${qrCodeData.second}".printLog(javaClass.name)
+                            val createQRCode = createQRCode(requireContext(), qrCodeData.first)
                             if(createQRCode != null){
                                 ShowQrCodeDataDialog(
                                     requireActivity(),
                                     createQRCode,
-                                    QRText,
+                                    qrCodeData.second,
                                     object : ShowQrCodeDataDialog.DialogListener{
                                         override fun onDoneClick(bitmap: Bitmap) {
                                             activity?.also { context ->
                                                 PrintHelper(context).apply {
                                                     scaleMode = PrintHelper.SCALE_MODE_FIT
-                                                    orientation = PrintHelper.ORIENTATION_LANDSCAPE
+                                                    orientation = PrintHelper.ORIENTATION_PORTRAIT
                                                 }.also { printHelper ->
 //                                                    val bitmap = BitmapFactory.decodeResource(resources, R.drawable.app_logo)
                                                     printHelper.printBitmap("droids.jpg - test print", bitmap)

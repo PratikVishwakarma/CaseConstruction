@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.print.PrintAttributes
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -198,7 +200,7 @@ class OKOLHomeFragment : BaseFragment() {
                                             activity?.also { context ->
                                                 PrintHelper(context).apply {
                                                     scaleMode = PrintHelper.SCALE_MODE_FIT
-                                                    orientation = PrintHelper.ORIENTATION_PORTRAIT
+                                                    orientation = PrintHelper.ORIENTATION_LANDSCAPE
                                                 }.also { printHelper ->
 //                                                    val bitmap = BitmapFactory.decodeResource(resources, R.drawable.app_logo)
                                                     printHelper.printBitmap("droids.jpg - test print", bitmap)

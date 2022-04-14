@@ -71,7 +71,7 @@
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
         <com.flyco.roundview.RoundTextView
-            android:id="@+id/rtvUpdate"
+            android:id="@+id/rtvNewRework"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_dp45"
             android:layout_margin="@dimen/dimen_dp20"

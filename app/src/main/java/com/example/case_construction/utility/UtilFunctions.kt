@@ -414,6 +414,26 @@ private fun addBlankReworkData(
     var userTypePDI = userType
     if (userType == Constants.CONST_USERTYPE_PDI_EXPORT || userType == Constants.CONST_USERTYPE_PDI_DOMESTIC)
         userTypePDI = "PDI"
+    var value1 = ""
+    var value2 = ""
+    when (userType) {
+        Constants.CONST_USERTYPE_OKOL -> {
+            value1 = machine.oKOLStatus
+            value2 = machine.oKOLDate
+        }
+        Constants.CONST_USERTYPE_TESTING -> {
+            value1 = machine.testingStatus
+            value2 = machine.testingDate
+        }
+        Constants.CONST_USERTYPE_FINISHING -> {
+            value1 = machine.finishStatus
+            value2 = machine.finishDate
+        }
+        Constants.CONST_USERTYPE_PDI_DOMESTIC, Constants.CONST_USERTYPE_PDI_EXPORT, Constants.CONST_USERTYPE_PDI_GT -> {
+            value1 = machine.pdiStatus
+            value2 = machine.pdiDate
+        }
+    }
     machine.rework.filter { it.reworkFrom == userTypePDI }.forEach {
         //Create row based on row index
         val row = sheet.createRow(index)
@@ -432,6 +452,12 @@ private fun addBlankReworkData(
             IndexedColors.GREEN,
             workbook
         ) //Column 3
+        createCell(row, 0, machine.machineNo, workbook = workbook) //Column 2
+        createCell(row, 2, value2, workbook = workbook) //Column 3
+        if (value1 == Constants.CONST_NOT_OK)
+            createCell(row, 1, value1, IndexedColors.RED, workbook)
+        else
+            createCell(row, 1, value1, IndexedColors.GREEN, workbook)
         index++
     }
     return index

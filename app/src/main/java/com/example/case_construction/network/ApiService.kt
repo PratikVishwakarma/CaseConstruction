@@ -36,7 +36,8 @@ interface ApiService {
         @Query("machineNo") machineNo: String,
         @Query("stage") userType: String,
         @Query("status") status: String,
-        @Query("reworkArray") reworkArray: String
+        @Query("reworkArray") reworkArray: String,
+        @Query("isNotUpdateStage") isNotUpdateStage: String
     ): SuccessAPIDTO
 
     @GET(NetworkConstants.URL_UPDATE_REWORK_BY_ID)

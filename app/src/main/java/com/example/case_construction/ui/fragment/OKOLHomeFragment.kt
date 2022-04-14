@@ -109,6 +109,10 @@ class OKOLHomeFragment : BaseFragment() {
             it.pauseClick()
             createReworkJson("OK")
         }
+        rtvNewRework.setOnClickListener {
+            it.pauseClick()
+            createReworkJson("OK")
+        }
     }
 
     private fun setMachineView() {
@@ -130,12 +134,12 @@ class OKOLHomeFragment : BaseFragment() {
                 mAdapter.submitList(reworkList)
                 llBottomButton.visibility = View.GONE
                 rtvAddRemark.visibility = View.VISIBLE
-                rtvUpdate.visibility = View.VISIBLE
+                rtvNewRework.visibility = View.VISIBLE
             }
             else -> {
                 llBottomButton.visibility = View.VISIBLE
                 rtvAddRemark.visibility = View.VISIBLE
-                rtvUpdate.visibility = View.GONE
+                rtvNewRework.visibility = View.GONE
                 reworkList.clear()
                 reworkList.addAll(
                     machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType }
@@ -145,7 +149,7 @@ class OKOLHomeFragment : BaseFragment() {
         }
     }
 
-    private fun createReworkJson(status: String) {
+    private fun createReworkJson(status: String, isNotUpdateStage: String = "0") {
         var jsonString = "[]"
         var newStatus = status
         val jsonArray = JSONArray()
@@ -165,15 +169,16 @@ class OKOLHomeFragment : BaseFragment() {
                 jsonObject.put("rework", it.description)
                 jsonObject.put("status", it.status)
                 jsonObject.put("shortageReason", it.shortageReason)
-                if((status == "OK" || status == "C-OK") && it.status == Constants.CONST_NOT_OK){
-                    newStatus = "C-OK"
-                }
                 jsonArray.put(jsonObject)
             }
         }
         if (jsonArray.length() != 0) jsonString = jsonArray.toString()
-
-        updateAndAddMachineStatusByNo(jsonString, newStatus)
+        reworkList.forEach {
+            if((status == "OK" || status == "COK") && it.status == Constants.CONST_NOT_OK){
+                newStatus = "COK"
+            }
+        }
+        updateAndAddMachineStatusByNo(jsonString, newStatus, isNotUpdateStage)
     }
 
     private fun getMachineByNo() {
@@ -240,15 +245,17 @@ class OKOLHomeFragment : BaseFragment() {
     }
 
 
-    private fun updateAndAddMachineStatusByNo(reworkJSON: String, status: String) {
+    private fun updateAndAddMachineStatusByNo(reworkJSON: String, status: String, isNotUpdateStage: String) {
         "Rework array: $reworkJSON ".printLog(javaClass.name)
         "Rework Status: $status ".printLog(javaClass.name)
+        "isNotUpdateStage : $isNotUpdateStage ".printLog(javaClass.name)
         machineViewModel.updateAndAddMachineStatusByNoVM(
             (activity as MainActivity).defaultPreference.currentUser.id,
             machine.machineNo,
             (activity as MainActivity).defaultPreference.currentUser.userType,
             status,
-            reworkJSON
+            reworkJSON,
+            isNotUpdateStage
         ).observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ResultData.Loading -> {
@@ -302,7 +309,7 @@ class OKOLHomeFragment : BaseFragment() {
     }
 
     private fun removeAllObservable() {
-        machineViewModel.updateAndAddMachineStatusByNoVM("", "", "", "", "")
+        machineViewModel.updateAndAddMachineStatusByNoVM("", "", "", "", "", "")
             .removeObservers(requireActivity())
     }
 

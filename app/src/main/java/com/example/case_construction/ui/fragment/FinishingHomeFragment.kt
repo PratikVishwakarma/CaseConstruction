@@ -240,7 +240,8 @@ class FinishingHomeFragment : BaseFragment() {
             machine.machineNo,
             (activity as MainActivity).defaultPreference.currentUser.userType,
             status,
-            reworkJSON
+            reworkJSON,
+            ""
         ).observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ResultData.Loading -> {

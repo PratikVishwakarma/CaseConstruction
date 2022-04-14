@@ -116,6 +116,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/colorSecondary"
+        android:background="@color/orange_lite"
         android:text="Export Data" />
 </androidx.appcompat.widget.LinearLayoutCompat>

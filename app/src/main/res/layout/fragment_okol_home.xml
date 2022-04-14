@@ -70,7 +70,19 @@
             android:background="@color/white"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
-
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/rtvUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_dp45"
+            android:layout_margin="@dimen/dimen_dp20"
+            android:gravity="center"
+            android:paddingStart="@dimen/dimen_dp12"
+            android:paddingEnd="@dimen/dimen_dp12"
+            android:text="@string/new_rework"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_18sp"
+            app:rv_backgroundColor="@color/colorPrimary"
+            app:rv_isRadiusHalfHeight="true" />
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/llBottomButton"
             android:layout_width="match_parent"

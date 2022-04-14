@@ -10,15 +10,23 @@
         <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/dialog_error.xml" value="0.20416666666666666" />
         <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/dialog_loading.xml" value="0.20416666666666666" />
         <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/dialog_qr_code_show.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/dialog_select_date.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/dialog_single_item_select.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_configuration.xml" value="0.20416666666666666" />
         <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_finishing_home.xml" value="0.1793478260869565" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
         <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_login.xml" value="0.16847826086956522" />
         <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_okol_home.xml" value="0.20416666666666666" />
         <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_pdi_home.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_search_and_export_machine.xml" value="0.33" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_search_and_export_machine.xml" value="0.22" />
         <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_search_machine.xml" value="0.20416666666666666" />
         <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_splash.xml" value="0.16847826086956522" />
         <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/fragment_testing_home.xml" value="0.2" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/item_configuration.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/item_list_selection.xml" value="0.20416666666666666" />
         <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/item_machine.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/item_remark.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android_Projects/prateek/CaseNew/app/src/main/res/layout/nav_header.xml" value="0.20416666666666666" />
         <entry key="..\:/Projects/Android/CaseConstruction/app/src/main/res/layout/dialog_add_remark.xml" value="0.2" />
         <entry key="..\:/Projects/Android/CaseConstruction/app/src/main/res/layout/dialog_enter_machine_no_manually.xml" value="0.33642261353104724" />
         <entry key="..\:/Projects/Android/CaseConstruction/app/src/main/res/layout/dialog_error.xml" value="0.23229166666666667" />

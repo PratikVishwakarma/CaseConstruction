@@ -38,6 +38,7 @@ class OKOLHomeFragment : BaseFragment() {
 
     private lateinit var mAdapter: RemarkAdapter
     private val reworkList: ArrayList<Rework> = ArrayList()
+    private val localReworkList: ArrayList<Rework> = ArrayList()
     private val machineViewModel by viewModels<MachineViewModel>()
     private var machine = Machine()
     private var isFirstTime = true
@@ -71,7 +72,7 @@ class OKOLHomeFragment : BaseFragment() {
                 "click 1".printLog(javaClass.name)
                 when (view!!.id) {
                     R.id.tvStatus -> {
-                        if (machine.stage != (activity as MainActivity).defaultPreference.currentUser.userType) {
+//                        if (machine.stage != (activity as MainActivity).defaultPreference.currentUser.userType) {
                             val rework = item as Rework
                             if (rework.status == Constants.CONST_NOT_OK) rework.status =
                                 Constants.CONST_OK
@@ -80,8 +81,9 @@ class OKOLHomeFragment : BaseFragment() {
                             if (rework.id == "") mAdapter.notifyItemChanged(position)
                             else {
                                 updateRework(rework.id, rework.status)
+                                mAdapter.notifyItemChanged(position)
                             }
-                        }
+//                        }
                     }
                 }
             }
@@ -127,11 +129,13 @@ class OKOLHomeFragment : BaseFragment() {
                 )
                 mAdapter.submitList(reworkList)
                 llBottomButton.visibility = View.GONE
-                rtvAddRemark.visibility = View.GONE
+                rtvAddRemark.visibility = View.VISIBLE
+                rtvUpdate.visibility = View.VISIBLE
             }
             else -> {
                 llBottomButton.visibility = View.VISIBLE
                 rtvAddRemark.visibility = View.VISIBLE
+                rtvUpdate.visibility = View.GONE
                 reworkList.clear()
                 reworkList.addAll(
                     machine.rework.filter { it.reworkFrom == (activity as MainActivity).defaultPreference.currentUser.userType }
@@ -143,6 +147,7 @@ class OKOLHomeFragment : BaseFragment() {
 
     private fun createReworkJson(status: String) {
         var jsonString = "[]"
+        var newStatus = status
         val jsonArray = JSONArray()
         reworkList.forEach {
             if (it.id == "") {
@@ -160,11 +165,15 @@ class OKOLHomeFragment : BaseFragment() {
                 jsonObject.put("rework", it.description)
                 jsonObject.put("status", it.status)
                 jsonObject.put("shortageReason", it.shortageReason)
+                if((status == "OK" || status == "C-OK") && it.status == Constants.CONST_NOT_OK){
+                    newStatus = "C-OK"
+                }
                 jsonArray.put(jsonObject)
             }
         }
         if (jsonArray.length() != 0) jsonString = jsonArray.toString()
-        updateAndAddMachineStatusByNo(jsonString, status)
+
+        updateAndAddMachineStatusByNo(jsonString, newStatus)
     }
 
     private fun getMachineByNo() {
@@ -276,7 +285,7 @@ class OKOLHomeFragment : BaseFragment() {
                 }
                 is ResultData.Success -> {
                     (requireActivity() as MainActivity).hideLoadingDialog()
-                    getMachineByNo()
+//                    getMachineByNo()
                     removeAllObservable()
                 }
                 is ResultData.NoContent -> {

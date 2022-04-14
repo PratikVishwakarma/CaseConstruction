@@ -35,10 +35,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:text="Machine No."
-                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llMain"
@@ -46,11 +46,11 @@
                 android:layout_height="475dp"
                 android:layout_marginTop="@dimen/horizontal_margin_dp16"
                 android:gravity="center"
-                android:paddingLeft="@dimen/dimen_dp40"
-                android:paddingRight="@dimen/dimen_dp40"
+                android:orientation="vertical"
                 android:paddingStart="@dimen/dimen_dp40"
+                android:paddingLeft="@dimen/dimen_dp40"
                 android:paddingEnd="@dimen/dimen_dp40"
-                android:orientation="vertical">
+                android:paddingRight="@dimen/dimen_dp40">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivQRCode"

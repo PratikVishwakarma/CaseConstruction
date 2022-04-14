@@ -214,9 +214,8 @@ class OKOLHomeFragment : BaseFragment() {
                                             activity?.also { context ->
                                                 PrintHelper(context).apply {
                                                     scaleMode = PrintHelper.SCALE_MODE_FIT
-                                                    orientation = PrintHelper.ORIENTATION_LANDSCAPE
+                                                    orientation = PrintHelper.ORIENTATION_PORTRAIT
                                                 }.also { printHelper ->
-//                                                    val bitmap = BitmapFactory.decodeResource(resources, R.drawable.app_logo)
                                                     printHelper.printBitmap("droids.jpg - test print", bitmap)
                                                 }
                                             }

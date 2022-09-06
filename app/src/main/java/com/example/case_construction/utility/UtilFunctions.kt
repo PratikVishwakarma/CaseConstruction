@@ -117,6 +117,8 @@ fun getReworkTypeDataList(): ArrayList<UtilityDTO> {
     data.add(UtilityDTO(false, "Quality", "Quality", 2))
     data.add(UtilityDTO(false, "Paintshop", "Paintshop", 3))
     data.add(UtilityDTO(false, "Fabrication", "Fabrication", 4))
+    data.add(UtilityDTO(false, "ME", "ME", 5))
+    data.add(UtilityDTO(false, "Design", "Design", 6))
     return data
 }
 
@@ -246,7 +248,10 @@ fun getQRCodeData(machine: Machine, userType: String): Pair<String, String> {
 fun getDateForPrint(date: String): String{
     return try {
         val split = date.split("-")
+
+        "date : $date".printLog("Utilfunctions")
         val last = split.last().drop(2)
+        "show date: ${split[0]}${split[1]}$last".printLog("Utilfunctions")
         "${split[0]}${split[1]}$last"
     } catch (e: Exception) {
         date.replace("-","")

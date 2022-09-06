@@ -1,9 +1,10 @@
 package com.example.case_construction.network
 
 object NetworkConstants {
-
-    const val BASE_URL = "http://192.168.29.198/otpm/"
-    //const val BASE_URL = "http://192.168.128.45/otpm/"
+    //otpm/
+    const val BASE_URL = "http://192.168.1.8:90/" //WiFi Url
+    //const val BASE_URL = "http://141.86.185.81:97/" // Case Url
+//    const val BASE_URL = "http://192.168.100.45/" // Mobile Data Url
     const val URL_ALL_REQUIRED_DATA = "Users/commonAPIs.php"
     const val URL_LOGIN = "Account/LoginApi"
     const val URL_GET_MACHINE_BY_NO = "Machine/GetMachineNo"

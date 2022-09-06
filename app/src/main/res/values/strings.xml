@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CASE-OTPM</string>
+    <string name="app_name">CASE-MMM</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="please_check_your_network_connection">Please check your network connection</string>
     <string name="txt_loading">Loading</string>

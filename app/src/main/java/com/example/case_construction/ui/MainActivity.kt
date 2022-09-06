@@ -162,9 +162,15 @@ class MainActivity : BaseActivity() {
     }
 
     fun showLoadingDialog(message: String = "Loading") {
-        loadingDialog?.hide()
-        loadingDialog = LoadingDialog(this, message)
-        loadingDialog?.show()
+        try {
+            loadingDialog?.let {
+                loadingDialog?.hide()
+                loadingDialog = LoadingDialog(this, message)
+                loadingDialog?.show()
+            }
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
     }
 
     fun hideLoadingDialog() {

@@ -177,6 +177,7 @@ class FinishingHomeFragment : BaseFragment() {
             .observe(viewLifecycleOwner, Observer {
                 when (it) {
                     is ResultData.Loading -> {
+                        removeAllObservable()
                         (requireActivity() as MainActivity).showLoadingDialog()
                     }
                     is ResultData.Success -> {

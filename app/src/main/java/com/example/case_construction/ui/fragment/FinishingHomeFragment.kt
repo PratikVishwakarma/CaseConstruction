@@ -16,7 +16,6 @@ import com.example.case_construction.model.ResultData
 import com.example.case_construction.network.api_model.Machine
 import com.example.case_construction.network.api_model.Rework
 import com.example.case_construction.ui.MainActivity
-import com.example.case_construction.ui.dialog.AddUpdateReworkDialog
 import com.example.case_construction.ui.dialog.ErrorDialog
 import com.example.case_construction.ui.dialog.ShowQrCodeDataDialog
 import com.example.case_construction.ui.machine.MachineViewModel
@@ -185,6 +184,7 @@ class FinishingHomeFragment : BaseFragment() {
                         if (it.data == null) return@Observer
                         if(it.data.machine.isEmpty())return@Observer
                         machine = it.data.machine[0]
+                        tvMachineNo.text = machine.machineNo
                         if(!isFirstTime){
                             val qrCodeData = getQRCodeData(
                                 machine,

@@ -80,7 +80,15 @@
             app:layout_constraintTop_toTopOf="parent"
             android:orientation="vertical"
             android:visibility="gone"
+            tools:visibility="visible"
             android:gravity="center">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMachineNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_20sp"
+                android:textColor="@color/text_sec"
+                android:layout_margin="@dimen/dimen_dp12"/>
             <com.flyco.roundview.RoundTextView
                 android:id="@+id/rtvViewConfiguration"
                 android:layout_width="match_parent"

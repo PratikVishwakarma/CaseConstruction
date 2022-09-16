@@ -13,12 +13,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
 import com.example.case_construction.R
 import com.example.case_construction.network.api_model.UserDTO
 import com.example.case_construction.ui.dialog.ErrorDialog
 import com.example.case_construction.ui.dialog.LoadingDialog
 import com.example.case_construction.ui.dialog.NoInternetDialog
+import com.example.case_construction.ui.fragment.SearchMachineFragment
 import com.example.case_construction.ui.fragment.SplashFragment
 import com.example.case_construction.ui.onboarding.LoginFragment
 import com.example.case_construction.ui.onboarding.OnboardViewModel
@@ -26,6 +28,7 @@ import com.example.case_construction.utility.PreferenceHelper
 import com.example.case_construction.utility.PreferenceHelper.currentUser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_search_machine.*
 import kotlinx.android.synthetic.main.nav_header.view.*
 import java.util.*
 
@@ -68,11 +71,22 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        if (my_drawer_layout.isOpen) {
-            my_drawer_layout.closeDrawer(GravityCompat.START)
-            return
+        try {
+            if (my_drawer_layout.isOpen) {
+                my_drawer_layout.closeDrawer(GravityCompat.START)
+                return
+            }
+            val frag = supportFragmentManager.fragments.last()
+            if(frag != null && frag is SearchMachineFragment && (frag.llMiddleButtons.visibility == View.VISIBLE || frag.scannerView.visibility == View.VISIBLE))
+            {
+                frag.llMiddleButtons.visibility = View.GONE
+                frag.scannerView.visibility = View.GONE
+                return
+            }
+                super.onBackPressed()
+        } catch (e: Exception) {
+            super.onBackPressed()
         }
-        super.onBackPressed()
     }
 
 

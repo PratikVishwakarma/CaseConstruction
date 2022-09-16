@@ -27,9 +27,6 @@ import com.example.case_construction.utility.*
 import com.example.case_construction.utility.PreferenceHelper.currentUser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_okol_home.*
-import kotlinx.android.synthetic.main.fragment_okol_home.rtvAddRemark
-import kotlinx.android.synthetic.main.fragment_search_machine.*
-import kotlinx.android.synthetic.main.item_remark.*
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -196,6 +193,7 @@ class OKOLHomeFragment : BaseFragment() {
                         if (it.data == null) return@Observer
                         if(it.data.machine.isEmpty())return@Observer
                         machine = it.data.machine[0]
+                        tvMachineNo.text = machine.machineNo
                         if(!isFirstTime){
                             val qrCodeData = getQRCodeData(
                                 machine,

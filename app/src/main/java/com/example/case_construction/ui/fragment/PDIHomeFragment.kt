@@ -201,6 +201,7 @@ class PDIHomeFragment : BaseFragment() {
                         if (it.data == null) return@Observer
                         if(it.data.machine.isEmpty())return@Observer
                         machine = it.data.machine[0]
+                        tvMachineNo.text = machine.machineNo
                         if(!isFirstTime){
                             val qrCodeData = getQRCodeData(
                                 machine,

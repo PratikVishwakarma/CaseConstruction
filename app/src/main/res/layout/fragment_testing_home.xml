@@ -43,7 +43,14 @@
         android:background="@color/white"
         android:orientation="vertical"
         android:paddingTop="@dimen/dimen_dp20">
-
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMachineNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/text_20sp"
+            android:textColor="@color/text_sec"
+            android:layout_margin="@dimen/dimen_dp12"/>
         <com.flyco.roundview.RoundTextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_dp45"

@@ -2,7 +2,7 @@ package com.example.case_construction.network
 
 object NetworkConstants {
     //otpm/
-    const val BASE_URL = "http://192.168.1.1:90/" //WiFi Url
+    const val BASE_URL = "http://192.168.1.10:90/" //WiFi Url
     //const val BASE_URL = "http://141.86.185.81:97/" // Case Url
 //    const val BASE_URL = "http://192.168.100.45/" // Mobile Data Url
     const val URL_ALL_REQUIRED_DATA = "Users/commonAPIs.php"

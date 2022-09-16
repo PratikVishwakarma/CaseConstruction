@@ -73,7 +73,6 @@ class SearchMachineFragment : BaseFragment() {
         }
         rtvViewConfiguration.setOnClickListener {
             it.pauseClick()
-
             val fragment = ViewConfigurationFragment()
             bundle = Bundle().apply {
                 putSerializable(Constants.CONST_BUNDLE_DATA_1, machine)
@@ -203,6 +202,7 @@ class SearchMachineFragment : BaseFragment() {
                             checkPDIType(it.data.machine[0], userType)
                         } else {
                             machine = it.data.machine[0]
+                            tvMachineNo.text = machine.machineNo
                             llMiddleButtons.visibility = View.VISIBLE
                             removeObserver()
                         }

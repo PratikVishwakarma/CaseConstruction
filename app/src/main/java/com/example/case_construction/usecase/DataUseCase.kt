@@ -92,9 +92,9 @@ class DataUseCase @Inject constructor(private val dataRepositories: DataReposito
         }
     }
 
-    suspend fun updateReworkStatusByIdUseCase(userId: String, reworkId: String, status: String): ResultData<SuccessAPIDTO> {
+    suspend fun updateReworkStatusByIdUseCase(userId: String, reworkId: String, status: String, machineNo: String): ResultData<SuccessAPIDTO> {
         return try {
-            val data = dataRepositories.updateReworkStatusByIdRepo(userId, reworkId, status)
+            val data = dataRepositories.updateReworkStatusByIdRepo(userId, reworkId, status, machineNo)
             when (data.status) {
                 NetworkConstants.INT_STATUS_SUCCESS -> ResultData.Success(data)
                 NetworkConstants.INT_STATUS_NO_DATA_AVAILABLE -> {

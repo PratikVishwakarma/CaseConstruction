@@ -42,9 +42,9 @@ class DataRepositories @Inject constructor(private val apiService: ApiService) {
     }
 
     suspend fun updateReworkStatusByIdRepo(
-        userId: String, reworkId: String, status: String
+        userId: String, reworkId: String, status: String, machineNo: String
     ): SuccessAPIDTO {
-        return apiService.updateReworkStatusById(userId, reworkId, status)
+        return apiService.updateReworkStatusById(userId, reworkId, status, machineNo)
     }
 
 }

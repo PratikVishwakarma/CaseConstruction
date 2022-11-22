@@ -90,7 +90,7 @@
             android:text="@string/new_rework"
             android:textColor="@color/white"
             android:textSize="@dimen/text_18sp"
-            app:rv_backgroundColor="@color/colorPrimary"
+            app:rv_backgroundColor="@color/orange_lite"
             app:rv_isRadiusHalfHeight="true" />
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/llBottomButton"

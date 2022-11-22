@@ -44,7 +44,8 @@ interface ApiService {
     suspend fun updateReworkStatusById(
         @Query("userid") userId: String,
         @Query("id") reworkId: String,
-        @Query("status") status: String
+        @Query("status") status: String,
+        @Query("machineNo") machineNo: String
     ): SuccessAPIDTO
 
 }

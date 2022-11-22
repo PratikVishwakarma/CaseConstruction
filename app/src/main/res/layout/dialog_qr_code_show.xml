@@ -42,8 +42,8 @@
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llMain"
-                android:layout_width="314dp"
-                android:layout_height="475dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/horizontal_margin_dp16"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -54,13 +54,18 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivQRCode"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:scaleType="center"
+                    android:layout_margin="@dimen/dimen_dp8"
+                    android:scaleX="1.0"
+                    android:scaleY="1.0"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvText"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Machine No."

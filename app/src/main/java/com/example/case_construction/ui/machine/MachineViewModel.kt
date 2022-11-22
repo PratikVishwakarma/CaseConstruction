@@ -35,10 +35,10 @@ class MachineViewModel @Inject constructor(private val dataUseCase: DataUseCase)
         }
     }
 
-    fun updateReworkStatusByIdVM(userId: String, reworkId: String, status: String): LiveData<ResultData<SuccessAPIDTO>> {
+    fun updateReworkStatusByIdVM(userId: String, reworkId: String, status: String, machineNo: String = ""): LiveData<ResultData<SuccessAPIDTO>> {
         return liveData<ResultData<SuccessAPIDTO>> {
             emit(ResultData.Loading())
-            emit(dataUseCase.updateReworkStatusByIdUseCase(userId, reworkId, status))
+            emit(dataUseCase.updateReworkStatusByIdUseCase(userId, reworkId, status, machineNo))
         }
     }
 

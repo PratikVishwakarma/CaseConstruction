@@ -212,7 +212,7 @@ class OKOLHomeFragment : BaseFragment() {
                                             activity?.also { context ->
                                                 PrintHelper(context).apply {
                                                     scaleMode = PrintHelper.SCALE_MODE_FIT
-                                                    orientation = PrintHelper.ORIENTATION_PORTRAIT
+                                                    orientation = PrintHelper.ORIENTATION_LANDSCAPE
                                                 }.also { printHelper ->
                                                     printHelper.printBitmap("droids.jpg - test print", bitmap)
                                                 }
@@ -281,7 +281,8 @@ class OKOLHomeFragment : BaseFragment() {
         machineViewModel.updateReworkStatusByIdVM(
             (activity as MainActivity).defaultPreference.currentUser.id,
             reworkId,
-            status
+            status,
+            machine.machineNo
         ).observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ResultData.Loading -> {
@@ -289,7 +290,7 @@ class OKOLHomeFragment : BaseFragment() {
                 }
                 is ResultData.Success -> {
                     (requireActivity() as MainActivity).hideLoadingDialog()
-//                    getMachineByNo()
+                    getMachineByNo()
                     removeAllObservable()
                 }
                 is ResultData.NoContent -> {

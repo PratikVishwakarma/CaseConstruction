@@ -299,7 +299,7 @@ class FinishingHomeFragment : BaseFragment() {
         machineViewModel.updateAndAddMachineStatusByNoVM("", "", "", "", "")
             .removeObservers(requireActivity())
         machineViewModel.getMachineByNoVM("", "", "").removeObservers(requireActivity())
-        machineViewModel.updateReworkStatusByIdVM("", "", "").removeObservers(requireActivity())
+        machineViewModel.updateReworkStatusByIdVM("", "", "", "").removeObservers(requireActivity())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -552,8 +552,6 @@ fun createQRCode(context: Context, text: String): Bitmap?{
 
     // below line is for getting
     // the windowmanager service.
-    // below line is for getting
-    // the windowmanager service.
     val manager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager?
 
     // initializing a variable for default display.
